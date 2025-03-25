@@ -1986,7 +1986,7 @@ BEGIN
                    @ERROR_CODE = CODE_ERROR, 
                    @ERROR_DESCRIPTION = DESCRIPTION_ERROR
             FROM ERROR_CATALOG 
-            WHERE NUM_ERROR = 50016;
+            WHERE NUM_ERROR = 50025;
 
             SET @ID_RETURN = -1;
             ROLLBACK TRANSACTION;

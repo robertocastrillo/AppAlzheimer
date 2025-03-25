@@ -13,66 +13,78 @@ namespace Backend.Logica.Usuario.Varios
         public static List<Error> validarUsuario(ReqInsertarUsuario req)
         {
             List<Error> errores = new List<Error>();
-            Error error = new Error();
 
             if (req == null)
             {
-                error.idError = (int)CatalogoErrores.requestNull;
-                error.error = "Request null";
-                errores.Add(error);
+                errores.Add(new Error
+                {
+                    idError = (int)CatalogoErrores.requestNull,
+                    error = "Request null"
+                });
             }
             else
             {
                 if (String.IsNullOrEmpty(req.Nombre))
                 {
-                    error.idError = (int)CatalogoErrores.nombreNuloVacio;
-                    error.error = "Falta el nombre del usuario";
-                    errores.Add(error);
+                    errores.Add(new Error
+                    {
+                        idError = (int)CatalogoErrores.nombreNuloVacio,
+                        error = "Falta el nombre del usuario"
+                    });
                 }
 
                 if (String.IsNullOrEmpty(req.CorreoElectronico))
                 {
-                    error.idError = (int)CatalogoErrores.correoNuloVacio;
-                    error.error = "Falta el correo electronico del usuario";
-                    errores.Add(error);
+                    errores.Add(new Error
+                    {
+                        idError = (int)CatalogoErrores.correoNuloVacio,
+                        error = "Falta el correo electronico del usuario"
+                    });
                 }
 
                 if (String.IsNullOrEmpty(req.Contrasena))
                 {
-                    error.idError = (int)CatalogoErrores.passwordNuloVacio;
-                    error.error = "Falta la contraseña";
-                    errores.Add(error);
+                    errores.Add(new Error
+                    {
+                        idError = (int)CatalogoErrores.passwordNuloVacio,
+                        error = "Falta la contraseña"
+                    });
                 }
                 else if (!EsCorreoValido(req.CorreoElectronico))
                 {
-                    error.idError = (int)CatalogoErrores.correoIncorrecto;
-                    error.error = "Correo incorrecto";
-                    errores.Add(error);
-
+                    errores.Add(new Error
+                    {
+                        idError = (int)CatalogoErrores.correoIncorrecto,
+                        error = "Correo incorrecto"
+                    });
                 }
+
                 if (String.IsNullOrEmpty(req.Contrasena))
                 {
-                    error.idError = (int)CatalogoErrores.passwordFaltante;
-                    error.error = "Contrasena vacio";
-                    errores.Add(error);
-
+                    errores.Add(new Error
+                    {
+                        idError = (int)CatalogoErrores.passwordFaltante,
+                        error = "Contrasena vacio"
+                    });
                 }
                 else if (!EsPasswordSeguro(req.Contrasena))
                 {
-                    error.idError = (int)CatalogoErrores.passwordMuyDebil;
-                    error.error = "Contrasena debil";
-                    errores.Add(error);
+                    errores.Add(new Error
+                    {
+                        idError = (int)CatalogoErrores.passwordMuyDebil,
+                        error = "Contrasena debil"
+                    });
                 }
                 else if (!EsFechaNacimientoValida(req.FechaNacimiento))
                 {
-                    error.idError = (int)CatalogoErrores.fechaInvalida;
-                    error.error = "Fecha invalida";
-                    errores.Add(error);
-
+                    errores.Add(new Error
+                    {
+                        idError = (int)CatalogoErrores.fechaInvalida,
+                        error = "Fecha invalida"
+                    });
                 }
-
-
             }
+
             return errores;
         }
 

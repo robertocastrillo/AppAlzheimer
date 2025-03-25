@@ -1,6 +1,5 @@
 ﻿using Backend.Entidades;
 using Backend.Entidades.Entity;
-using Backend.Entidades.Enums;
 using System;
 using System.Collections.Generic;
 using System.Linq;

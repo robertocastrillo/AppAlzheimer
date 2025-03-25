@@ -123,7 +123,7 @@ namespace Backend.Logica.Usuario.Varios
             return errores;
         }
 
-        public static List<Error> validarConsSesion(ReqConsultarSesion req)
+        public static List<Error> validarConSesion(ReqConsultarSesion req)
         {
             List<Error> errores = new List<Error>();
             Error error = new Error();

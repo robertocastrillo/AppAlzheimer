@@ -119,7 +119,7 @@ namespace Backend.Logica
 
             try
             {
-                res.listaDeErrores = Validaciones.validarConsSesion(req);
+                res.listaDeErrores = Validaciones.validarConSesion(req);
 
                 if (!res.listaDeErrores.Any())
                 {

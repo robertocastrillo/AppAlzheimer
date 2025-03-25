@@ -58,15 +58,6 @@ namespace Backend.Logica.Usuario.Varios
                         error = "Correo incorrecto"
                     });
                 }
-
-                if (String.IsNullOrEmpty(req.Contrasena))
-                {
-                    errores.Add(new Error
-                    {
-                        idError = (int)CatalogoErrores.passwordFaltante,
-                        error = "Contrasena vacio"
-                    });
-                }
                 else if (!EsPasswordSeguro(req.Contrasena))
                 {
                     errores.Add(new Error

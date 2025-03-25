@@ -29,7 +29,6 @@ namespace Backend.Entidades
         usuarioVerficado = 18,
 
         correoIncorrecto = 19,
-        passwordFaltante = 20,
         passwordMuyDebil = 21,
         fechaInvalida = 22,
         faltaTokem = 23,

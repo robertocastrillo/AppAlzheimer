@@ -82,39 +82,47 @@ namespace Backend.Logica.Usuario.Varios
         public static List<Error> validarLogin(ReqIniciarSesion req)
         {
             List<Error> errores = new List<Error>();
-            Error error = new Error();
 
             if (req == null)
             {
-                error.idError = (int)CatalogoErrores.requestNull;
-                error.error = "Request null";
-                errores.Add(error);
+                errores.Add(new Error
+                {
+                    idError = (int)CatalogoErrores.requestNull,
+                    error = "Request null"
+                });
             }
             else
             {
-                if (String.IsNullOrEmpty(req.CorreoElectronico))
+                if (string.IsNullOrEmpty(req.CorreoElectronico))
                 {
-                    error.idError = (int)CatalogoErrores.correoNuloVacio;
-                    error.error = "Falta el correo electronico del usuario";
-                    errores.Add(error);
-                }
-
-                if (String.IsNullOrEmpty(req.Contrasena))
-                {
-                    error.idError = (int)CatalogoErrores.passwordNuloVacio;
-                    error.error = "Falta la contraseña";
-                    errores.Add(error);
+                    errores.Add(new Error
+                    {
+                        idError = (int)CatalogoErrores.correoNuloVacio,
+                        error = "Falta el correo electronico del usuario"
+                    });
                 }
                 else if (!EsCorreoValido(req.CorreoElectronico))
                 {
-                    error.idError = (int)CatalogoErrores.correoIncorrecto;
-                    error.error = "Correo incorrecto o correo no valido";
-                    errores.Add(error);
+                    errores.Add(new Error
+                    {
+                        idError = (int)CatalogoErrores.correoIncorrecto,
+                        error = "Correo incorrecto o correo no valido"
+                    });
+                }
 
+                if (string.IsNullOrEmpty(req.Contrasena))
+                {
+                    errores.Add(new Error
+                    {
+                        idError = (int)CatalogoErrores.passwordNuloVacio,
+                        error = "Falta la contraseña"
+                    });
                 }
             }
+
             return errores;
         }
+
         public static List<Error> validarConsSesion(ReqConsultarSesion req)
         {
             List<Error> errores = new List<Error>();

@@ -50,6 +50,13 @@ namespace Backend.Entidades
         idCuidadorInvalido = 38,
         idPacienteInvalido = 39,
 
+        nombreJuegoNuloVacio = 40,
+        usuarioInvalido = 41,
+        descripcionNuloVacia = 42,
+        opcionNula = 43,
+        yaExisteOpcionCorrecta = 44,
+        juegoNoValido = 45,
+        noIngresoOpcionCorrecta = 46,
 
 
 

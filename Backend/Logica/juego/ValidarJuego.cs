@@ -26,16 +26,14 @@ namespace Backend.Logica.Juego
             {
                 if (String.IsNullOrEmpty(req.nombre))
                 {
-                    //Cambiar nombre de los errores   <<<--------------
-                    error.idError = (int)ErroresBrandon.nombreJuegoNuloVacio;
+                    error.idError = (int)CatalogoErrores.nombreJuegoNuloVacio;
                     error.error = "Falta el nombre del usuario";
                     errores.Add(error);
                 }
 
                 if (req.idUsuario < 1 )
                 {
-                    //Cambiar nombre de los errores  <<<--------------
-                    error.idError = (int)ErroresBrandon.usuarioInvalido;
+                    error.idError = (int)CatalogoErrores.usuarioInvalido;
                     error.error = "Falta el correo electronico del usuario";
                     errores.Add(error);
                 }
@@ -59,15 +57,15 @@ namespace Backend.Logica.Juego
             {
                 if (String.IsNullOrEmpty(pregunta.Descripcion))
                 {
-                    //Cambiar nombre de los errores   <<<--------------
-                    error.idError = (int)ErroresBrandon.descripcionNuloVacia;
+
+                    error.idError = (int)CatalogoErrores.descripcionNuloVacia;
                     error.error = "Falta la Descripcion";
                     errores.Add(error);
                 }
                 if(idJuego < 1)
                 {
-                    //Cambiar nombre de los errores   <<<--------------
-                    error.idError = (int)ErroresBrandon.juegoNoValido;
+
+                    error.idError = (int)CatalogoErrores.juegoNoValido;
                     error.error = "Juego no valido";
                     errores.Add(error);
                 }
@@ -79,8 +77,8 @@ namespace Backend.Logica.Juego
             {
                 if (opcion == null)
                 {
-                    //Cambiar nombre de los errores   <<<--------------
-                    error.idError = (int)ErroresBrandon.opcionNula;
+
+                    error.idError = (int)CatalogoErrores.opcionNula;
                     error.error = "Opcion Nula";
                     errores.Add(error);
                 }
@@ -88,15 +86,15 @@ namespace Backend.Logica.Juego
                 {
                     if (String.IsNullOrEmpty(opcion.Descripcion))
                     {
-                        //Cambiar nombre de los errores   <<<--------------
-                        error.idError = (int)ErroresBrandon.descripcionNuloVacia;
+
+                        error.idError = (int)CatalogoErrores.descripcionNuloVacia;
                         error.error = "Falta la Descripcion";
                         errores.Add(error);
                     }
                     if (opcionCorrecta && opcion.Condicion)
                     {
-                        //Cambiar nombre de los errores   <<<--------------
-                        error.idError = (int)ErroresBrandon.yaExisteOpcionCorrecta;
+
+                        error.idError = (int)CatalogoErrores.yaExisteOpcionCorrecta;
                         error.error = "Ya se asigno una opcion correcta";
                         errores.Add(error);
                     }
@@ -110,8 +108,7 @@ namespace Backend.Logica.Juego
             }
             if (!opcionCorrecta)
             {
-                //Cambiar nombre de los errores   <<<--------------
-                error.idError = (int)ErroresBrandon.noIngresoOpcionCorrecta;
+                error.idError = (int)CatalogoErrores.noIngresoOpcionCorrecta;
                 error.error = "No se asigno ninguna opcion correcta";
                 errores.Add(error);
             }
@@ -134,19 +131,19 @@ namespace Backend.Logica.Juego
             {
                 if(req.idPaciente < 1 )
                 {
-                    error.idError = (int)ErroresBrandon.usuarioInvalido;
+                    error.idError = (int)CatalogoErrores.usuarioInvalido;
                     error.error = "Usuario Paciente NO valido";
                     errores.Add(error);
                 }
                 if(req.idUsuario < 1)
                 {
-                    error.idError = (int)ErroresBrandon.usuarioInvalido;
+                    error.idError = (int)CatalogoErrores.usuarioInvalido;
                     error.error = "Usuario Cuidador NO valido";
                     errores.Add(error);
                 }
                 if(req.idJuego < 1)
                 {
-                    error.idError = (int)ErroresBrandon.juegoNoValido;
+                    error.idError = (int)CatalogoErrores.juegoNoValido;
                     error.error = "Juego NO valido";
                     errores.Add(error);
                 }
@@ -162,7 +159,7 @@ namespace Backend.Logica.Juego
 
             if (id < 1)
             {
-                error.idError = (int)ErroresBrandon.usuarioInvalido;
+                error.idError = (int)CatalogoErrores.usuarioInvalido;
                 error.error = "Usuario NO valido";
                 errores.Add(error);
             }

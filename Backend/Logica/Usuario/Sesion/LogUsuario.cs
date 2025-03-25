@@ -127,14 +127,14 @@ namespace Backend.Logica
                     int? errorId = 0;
                     string errorCode = "";
                     string errorDescrip = "";
+                    var resultado = new SP_CONSULTAR_SESIONResult();
                     using (MiLinqDataContext linq = new MiLinqDataContext())
                     {
-                        var resultado = linq.SP_CONSULTAR_SESION(req.tokem, ref errorId, ref errorCode, ref errorDescrip).FirstOrDefault(); // ✅ Extraer el primer resultado
-
-                        if (resultado != null)
-                        {
-                            res.usuario = this.factoryUsurario(resultado);
-                        }
+                         resultado = linq.SP_CONSULTAR_SESION(req.tokem, ref errorId, ref errorCode, ref errorDescrip).FirstOrDefault(); 
+                    }
+                    if (resultado != null)
+                    {
+                        res.usuario = this.factoryUsurario(resultado);
                     }
                     if (errorId == null || errorId == 0)
                     {
@@ -185,7 +185,6 @@ namespace Backend.Logica
                         var resultado = linq.SP_CERRAR_SESION(req.IdUsuario, req.Origen, ref idReturn, ref errorId, ref errorCode, ref errorDescrip);
                     }
 
-                    // ✅ Manejo seguro de `idReturn` y `errorId`
                     if (idReturn != null && idReturn == 0)
                     {
                         res.resultado = true;

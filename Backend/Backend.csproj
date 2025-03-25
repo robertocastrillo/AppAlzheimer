@@ -57,13 +57,13 @@
     <Compile Include="Entidades\Entity\Usuario.cs" />
     <Compile Include="Entidades\Enums\CatalogoErrores.cs" />
     <Compile Include="Entidades\Enums\enumEstadoSesion.cs" />
+    <Compile Include="Entidades\Enums\ErroresBrandon.cs" />
     <Compile Include="Entidades\Request\ReqJuego\ReqInsertarJuego.cs" />
     <Compile Include="Entidades\Request\ReqJuego\ReqInsertarPregunta.cs" />
     <Compile Include="Entidades\Request\ReqJuego\ReqInsertarRelacionJuego.cs" />
     <Compile Include="Entidades\Request\ReqJuego\ReqObtenerJuegosCuidador.cs" />
     <Compile Include="Entidades\Request\ReqUsuario\ReqActualizarContrasena.cs" />
     <Compile Include="Entidades\Request\ReqUsuario\ReqActualizarUsuario.cs" />
-    <Compile Include="Entidades\Request\ReqBase.cs" />
     <Compile Include="Entidades\Request\ReqSesion\ReqCerrarSesion.cs" />
     <Compile Include="Entidades\Request\ReqSesion\ReqConsultarSesion.cs" />
     <Compile Include="Entidades\Request\ReqSesion\ReqIniciarSesion.cs" />

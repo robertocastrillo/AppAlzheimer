@@ -1906,7 +1906,7 @@ BEGIN
                    @ERROR_CODE = CODE_ERROR, 
                    @ERROR_DESCRIPTION = DESCRIPTION_ERROR
             FROM ERROR_CATALOG 
-            WHERE NUM_ERROR = 50002;
+            WHERE NUM_ERROR = 50027;
 
             ROLLBACK TRANSACTION;
             RETURN;

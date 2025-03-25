@@ -89,7 +89,7 @@ namespace Backend.Logica.Juego
                         string errorDescrip = "";
                         using (MiLinqDataContext linq = new MiLinqDataContext())
                         {
-                            linq.SP_INSERTAR_PREGUNTA(req.idJuego, preg.Titulo, preg.Descripcion, preg.Imagen, req.idUsuario, ref idReturn, ref errorId, ref errorCode, ref errorDescrip);
+                            linq.SP_INSERTAR_PREGUNTA(req.idJuego, preg.Descripcion, preg.Imagen, req.idUsuario, ref idReturn, ref errorId, ref errorCode, ref errorDescrip);
                             int? idPregunta = idReturn;
 
                             if (idReturn > 0)

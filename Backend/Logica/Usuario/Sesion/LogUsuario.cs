@@ -374,25 +374,26 @@ namespace Backend.Logica
                     int? errorId = 0;
                     string errorCode = "";
                     string errorDescrip = "";
-
+                    var resultado = new List<SP_OBTENER_RELACIONResult>();
                     using (MiLinqDataContext linq = new MiLinqDataContext())
                     {
-                        var resultado = linq.SP_OBTENER_RELACION(req.IdUsuario, ref errorId, ref errorCode, ref errorDescrip).ToList();
+                         resultado = linq.SP_OBTENER_RELACION(req.IdUsuario, ref errorId, ref errorCode, ref errorDescrip).ToList();
 
-                        if (errorId == null || errorId == 0)
+   
+                    }
+                    if (errorId == null || errorId == 0)
+                    {
+                        res.resultado = true;
+                        res.listaUsuarios = resultado.Select(factoryUsuarioRelacion).ToList();
+                    }
+                    else
+                    {
+                        res.resultado = false;
+                        res.listaDeErrores.Add(new Error
                         {
-                            res.resultado = true;
-                            res.listaUsuarios = resultado.Select(factoryUsuarioRelacion).ToList(); 
-                        }
-                        else
-                        {
-                            res.resultado = false;
-                            res.listaDeErrores.Add(new Error
-                            {
-                                idError = (int)errorId,
-                                error = errorCode
-                            });
-                        }
+                            idError = (int)errorId,
+                            error = errorCode
+                        });
                     }
                 }
             }

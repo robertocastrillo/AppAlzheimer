@@ -160,8 +160,20 @@ namespace Backend.Logica.Usuario.Varios
                     error = "Request null"
                 });
             }
+            else
+            {
+                if (req.IdUsuario < 0 )
+                {
+                    errores.Add(new Error
+                    {
+                        idError = (int)CatalogoErrores.usuarioInvalido,
+                        error = "Usuario NO Valido"
+                    });
+                }
 
-            return errores;
+            }
+
+                return errores;
         }
         public static List<Error> validarActualizarUsuario(ReqActualizarUsuario req)
         {

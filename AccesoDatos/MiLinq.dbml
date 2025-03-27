@@ -1,5 +1,15 @@
 ﻿<?xml version="1.0" encoding="utf-8"?><Database Name="APP_ROBERTO" Class="MiLinqDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
   <Connection Mode="AppSettings" ConnectionString="Data Source=(localdb)\BrandonDB;Initial Catalog=APP_ROBERTO;Integrated Security=True" SettingsObjectName="AccesoDatos.Properties.Settings" SettingsPropertyName="APP_ROBERTOConnectionString1" Provider="System.Data.SqlClient" />
+  <Function Name="dbo.SP_ACTUALIZAR_CONTRASENA" Method="SP_ACTUALIZAR_CONTRASENA">
+    <Parameter Name="ID_USUARIO" Parameter="iD_USUARIO" Type="System.Int32" DbType="Int" />
+    <Parameter Name="CONTRASENA_ACTUAL" Parameter="cONTRASENA_ACTUAL" Type="System.String" DbType="VarChar(255)" />
+    <Parameter Name="NUEVA_CONTRASENA" Parameter="nUEVA_CONTRASENA" Type="System.String" DbType="VarChar(255)" />
+    <Parameter Name="PIN" Parameter="pIN" Type="System.String" DbType="VarChar(6)" />
+    <Parameter Name="ERROR_ID" Parameter="eRROR_ID" Type="System.Int32" DbType="Int" Direction="InOut" />
+    <Parameter Name="ERROR_CODE" Parameter="eRROR_CODE" Type="System.String" DbType="NVarChar(255)" Direction="InOut" />
+    <Parameter Name="ERROR_DESCRIPTION" Parameter="eRROR_DESCRIPTION" Type="System.String" DbType="NVarChar(MAX)" Direction="InOut" />
+    <Return Type="System.Int32" />
+  </Function>
   <Function Name="dbo.SP_OBTENER_RELACION" Method="SP_OBTENER_RELACION">
     <Parameter Name="ID_CUIDADOR" Parameter="iD_CUIDADOR" Type="System.Int32" DbType="Int" />
     <Parameter Name="ERROR_ID" Parameter="eRROR_ID" Type="System.Int32" DbType="Int" Direction="InOut" />
@@ -10,16 +20,6 @@
       <Column Name="NOMBRE" Type="System.String" DbType="VarChar(100) NOT NULL" CanBeNull="false" />
       <Column Name="FECHA_NACIMIENTO" Type="System.DateTime" DbType="Date NOT NULL" CanBeNull="false" />
     </ElementType>
-  </Function>
-  <Function Name="dbo.SP_ACTUALIZAR_CONTRASENA" Method="SP_ACTUALIZAR_CONTRASENA">
-    <Parameter Name="ID_USUARIO" Parameter="iD_USUARIO" Type="System.Int32" DbType="Int" />
-    <Parameter Name="CONTRASENA_ACTUAL" Parameter="cONTRASENA_ACTUAL" Type="System.String" DbType="VarChar(255)" />
-    <Parameter Name="NUEVA_CONTRASENA" Parameter="nUEVA_CONTRASENA" Type="System.String" DbType="VarChar(255)" />
-    <Parameter Name="PIN" Parameter="pIN" Type="System.String" DbType="VarChar(6)" />
-    <Parameter Name="ERROR_ID" Parameter="eRROR_ID" Type="System.Int32" DbType="Int" Direction="InOut" />
-    <Parameter Name="ERROR_CODE" Parameter="eRROR_CODE" Type="System.String" DbType="NVarChar(255)" Direction="InOut" />
-    <Parameter Name="ERROR_DESCRIPTION" Parameter="eRROR_DESCRIPTION" Type="System.String" DbType="NVarChar(MAX)" Direction="InOut" />
-    <Return Type="System.Int32" />
   </Function>
   <Function Name="dbo.SP_ACTUALIZAR_ESTADO_MENSAJES" Method="SP_ACTUALIZAR_ESTADO_MENSAJES">
     <Parameter Name="ID_PACIENTE" Parameter="iD_PACIENTE" Type="System.Int32" DbType="Int" />

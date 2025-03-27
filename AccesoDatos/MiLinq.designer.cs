@@ -62,16 +62,6 @@ namespace AccesoDatos
 			OnCreated();
 		}
 		
-		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.SP_OBTENER_RELACION")]
-		public ISingleResult<SP_OBTENER_RELACIONResult> SP_OBTENER_RELACION([global::System.Data.Linq.Mapping.ParameterAttribute(Name="ID_CUIDADOR", DbType="Int")] System.Nullable<int> iD_CUIDADOR, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="ERROR_ID", DbType="Int")] ref System.Nullable<int> eRROR_ID, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="ERROR_CODE", DbType="NVarChar(255)")] ref string eRROR_CODE, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="ERROR_DESCRIPTION", DbType="NVarChar(MAX)")] ref string eRROR_DESCRIPTION)
-		{
-			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), iD_CUIDADOR, eRROR_ID, eRROR_CODE, eRROR_DESCRIPTION);
-			eRROR_ID = ((System.Nullable<int>)(result.GetParameterValue(1)));
-			eRROR_CODE = ((string)(result.GetParameterValue(2)));
-			eRROR_DESCRIPTION = ((string)(result.GetParameterValue(3)));
-			return ((ISingleResult<SP_OBTENER_RELACIONResult>)(result.ReturnValue));
-		}
-		
 		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.SP_ACTUALIZAR_CONTRASENA")]
 		public int SP_ACTUALIZAR_CONTRASENA([global::System.Data.Linq.Mapping.ParameterAttribute(Name="ID_USUARIO", DbType="Int")] System.Nullable<int> iD_USUARIO, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="CONTRASENA_ACTUAL", DbType="VarChar(255)")] string cONTRASENA_ACTUAL, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="NUEVA_CONTRASENA", DbType="VarChar(255)")] string nUEVA_CONTRASENA, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="PIN", DbType="VarChar(6)")] string pIN, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="ERROR_ID", DbType="Int")] ref System.Nullable<int> eRROR_ID, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="ERROR_CODE", DbType="NVarChar(255)")] ref string eRROR_CODE, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="ERROR_DESCRIPTION", DbType="NVarChar(MAX)")] ref string eRROR_DESCRIPTION)
 		{
@@ -80,6 +70,16 @@ namespace AccesoDatos
 			eRROR_CODE = ((string)(result.GetParameterValue(5)));
 			eRROR_DESCRIPTION = ((string)(result.GetParameterValue(6)));
 			return ((int)(result.ReturnValue));
+		}
+		
+		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.SP_OBTENER_RELACION")]
+		public ISingleResult<SP_OBTENER_RELACIONResult> SP_OBTENER_RELACION([global::System.Data.Linq.Mapping.ParameterAttribute(Name="ID_CUIDADOR", DbType="Int")] System.Nullable<int> iD_CUIDADOR, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="ERROR_ID", DbType="Int")] ref System.Nullable<int> eRROR_ID, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="ERROR_CODE", DbType="NVarChar(255)")] ref string eRROR_CODE, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="ERROR_DESCRIPTION", DbType="NVarChar(MAX)")] ref string eRROR_DESCRIPTION)
+		{
+			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), iD_CUIDADOR, eRROR_ID, eRROR_CODE, eRROR_DESCRIPTION);
+			eRROR_ID = ((System.Nullable<int>)(result.GetParameterValue(1)));
+			eRROR_CODE = ((string)(result.GetParameterValue(2)));
+			eRROR_DESCRIPTION = ((string)(result.GetParameterValue(3)));
+			return ((ISingleResult<SP_OBTENER_RELACIONResult>)(result.ReturnValue));
 		}
 		
 		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.SP_ACTUALIZAR_ESTADO_MENSAJES")]
@@ -568,7 +568,7 @@ namespace AccesoDatos
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_FOTO_PERFIL", DbType="VarBinary(MAX)", CanBeNull=true)]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_FOTO_PERFIL", DbType="VarBinary(MAX)")]
 		public System.Data.Linq.Binary FOTO_PERFIL
 		{
 			get
@@ -724,7 +724,7 @@ namespace AccesoDatos
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_FOTO_PERFIL", DbType="VarBinary(MAX)", CanBeNull=true)]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_FOTO_PERFIL", DbType="VarBinary(MAX)")]
 		public System.Data.Linq.Binary FOTO_PERFIL
 		{
 			get

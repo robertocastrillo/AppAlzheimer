@@ -8,7 +8,7 @@ namespace TuApp
 {
     public static class Sesion
     {
-        public static Usuario usuario { get; set; }
+        public static Usuario Usuario { get; set; }
         public static string Tokem { get; set; }
         public static DateTime Expira { get; set; }
     }

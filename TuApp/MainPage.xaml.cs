@@ -42,8 +42,9 @@ namespace TuApp
 
                 if (res != null && res.resultado)
                 {
-                    // Aquí extraes solo el Usuario desde la Sesion
-                    await Navigation.PushAsync(new InicioPage(res.Sesion.usuario));
+                    Sesion.Usuario = res.Usuario; // Guardas en tu clase estática
+
+                    await Navigation.PushAsync(new InicioPage(Sesion.Usuario));
                 }
                 else
                 {

@@ -321,17 +321,17 @@ namespace Backend.Logica
 
                 if (!res.listaDeErrores.Any())
                 {
-                    int? idReturn = 0;
+
                     int? errorId = 0;
                     string errorCode = "";
                     string errorDescrip = "";
 
                     using (MiLinqDataContext linq = new MiLinqDataContext())
                     {
-                        linq.SP_INSERTAR_RELACION(req.IdUsuarioCuidador,req.CodigoPaciente,ref idReturn,ref errorId,ref errorCode,ref errorDescrip);
+                        linq.SP_INSERTAR_RELACION(req.IdUsuarioCuidador,req.CodigoPaciente,ref errorId,ref errorCode,ref errorDescrip);
                     }
 
-                    if (idReturn.HasValue && idReturn > 0)
+                    if (errorId == null || errorId == 0)
                     {
                         res.resultado = true;
                     }

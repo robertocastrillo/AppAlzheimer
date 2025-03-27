@@ -315,13 +315,12 @@ namespace AccesoDatos
 		}
 		
 		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.SP_INSERTAR_RELACION")]
-		public int SP_INSERTAR_RELACION([global::System.Data.Linq.Mapping.ParameterAttribute(Name="ID_USUARIO_CUIDADOR", DbType="Int")] System.Nullable<int> iD_USUARIO_CUIDADOR, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="CODIGO_PACIENTE", DbType="VarChar(6)")] string cODIGO_PACIENTE, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="ID_RETURN", DbType="Int")] ref System.Nullable<int> iD_RETURN, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="ERROR_ID", DbType="Int")] ref System.Nullable<int> eRROR_ID, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="ERROR_CODE", DbType="NVarChar(255)")] ref string eRROR_CODE, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="ERROR_DESCRIPTION", DbType="NVarChar(MAX)")] ref string eRROR_DESCRIPTION)
+		public int SP_INSERTAR_RELACION([global::System.Data.Linq.Mapping.ParameterAttribute(Name="ID_USUARIO_CUIDADOR", DbType="Int")] System.Nullable<int> iD_USUARIO_CUIDADOR, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="CODIGO_PACIENTE", DbType="VarChar(6)")] string cODIGO_PACIENTE, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="ERROR_ID", DbType="Int")] ref System.Nullable<int> eRROR_ID, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="ERROR_CODE", DbType="NVarChar(255)")] ref string eRROR_CODE, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="ERROR_DESCRIPTION", DbType="NVarChar(MAX)")] ref string eRROR_DESCRIPTION)
 		{
-			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), iD_USUARIO_CUIDADOR, cODIGO_PACIENTE, iD_RETURN, eRROR_ID, eRROR_CODE, eRROR_DESCRIPTION);
-			iD_RETURN = ((System.Nullable<int>)(result.GetParameterValue(2)));
-			eRROR_ID = ((System.Nullable<int>)(result.GetParameterValue(3)));
-			eRROR_CODE = ((string)(result.GetParameterValue(4)));
-			eRROR_DESCRIPTION = ((string)(result.GetParameterValue(5)));
+			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), iD_USUARIO_CUIDADOR, cODIGO_PACIENTE, eRROR_ID, eRROR_CODE, eRROR_DESCRIPTION);
+			eRROR_ID = ((System.Nullable<int>)(result.GetParameterValue(2)));
+			eRROR_CODE = ((string)(result.GetParameterValue(3)));
+			eRROR_DESCRIPTION = ((string)(result.GetParameterValue(4)));
 			return ((int)(result.ReturnValue));
 		}
 		

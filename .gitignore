@@ -399,3 +399,5 @@ FodyWeavers.xsd
 # JetBrains Rider
 *.sln.iml    
 
+AccesoDatos/MiLinq.designer.cs
+AccesoDatos/MiLinq.dbml

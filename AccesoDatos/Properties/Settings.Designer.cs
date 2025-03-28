@@ -44,5 +44,16 @@ namespace AccesoDatos.Properties {
                 return ((string)(this["APP_ROBERTOConnectionString1"]));
             }
         }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.ConnectionString)]
+        [global::System.Configuration.DefaultSettingValueAttribute("Data Source=HP;Initial Catalog=APP_ROBERTO;Integrated Security=True;Encrypt=True;" +
+            "TrustServerCertificate=True")]
+        public string APP_ROBERTOConnectionString2 {
+            get {
+                return ((string)(this["APP_ROBERTOConnectionString2"]));
+            }
+        }
     }
 }

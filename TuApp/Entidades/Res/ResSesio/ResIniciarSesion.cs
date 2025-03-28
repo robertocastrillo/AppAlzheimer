@@ -8,7 +8,9 @@ namespace TuApp
 {
     public class ResIniciarSesion : ResBase
     {
-        public Usuario Usuario { get; set; } 
+        public  Usuario usuario { get; set; } 
+        public string tokem {  get; set; }
+        public DateTime expira { get; set; }   
     }
 }
 

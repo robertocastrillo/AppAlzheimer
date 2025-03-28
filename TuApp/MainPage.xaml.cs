@@ -38,11 +38,12 @@ namespace TuApp
             if (respuestaHttp.IsSuccessStatusCode)
             {
                 var contenido = await respuestaHttp.Content.ReadAsStringAsync();
-                ResIniciarSesion res = JsonConvert.DeserializeObject<ResIniciarSesion>(contenido);
+                ResIniciarSesion res = new ResIniciarSesion();
+                    res = JsonConvert.DeserializeObject<ResIniciarSesion>(contenido);
 
                 if (res != null && res.resultado)
                 {
-                    Sesion.Usuario = res.Usuario; // Guardas en tu clase estática
+                    //Sesion.Usuario = res.Usuario; // Guardas en tu clase estática
 
                     await Navigation.PushAsync(new InicioPage(Sesion.Usuario));
                 }

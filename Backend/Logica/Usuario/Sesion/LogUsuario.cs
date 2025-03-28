@@ -78,25 +78,23 @@ namespace Backend.Logica
                     string errorDescrip = "";
                     using (MiLinqDataContext linq = new MiLinqDataContext())
                     {
-                        var resultado = linq.SP_INSERTAR_SESION(req.CorreoElectronico, req.Contrasena, req.Origen, ref idReturn, ref errorId, ref errorCode, ref errorDescrip).FirstOrDefault(); //  Extraer el primer resultado
+                        var resultado = linq.SP_INSERTAR_SESION(req.CorreoElectronico, req.Contrasena, req.Origen,
+                                                                 ref idReturn, ref errorId, ref errorCode, ref errorDescrip).FirstOrDefault();
 
                         if (resultado != null)
                         {
                             res.Sesion = this.factorySesion(resultado);
+                            res.resultado = true; // <--- AQUÍ VA EL TRUE
                         }
-                    }
-                    if (idReturn > 0) // Si el ID devuelto es mayor que 0, el usuario se insertó correctamente
-                    {
-                        res.resultado = true;
-                    }
-                    else // Si no se insertó, manejar el error devuelto por el SP
-                    {
-                        res.resultado = false;
-                        res.listaDeErrores.Add(new Error
+                        else
                         {
-                            idError = (int)errorId,
-                            error = errorCode
-                        });
+                            res.resultado = false;
+                            res.listaDeErrores.Add(new Error
+                            {
+                                idError = (int)(errorId ?? -1),
+                                error = errorCode
+                            });
+                        }
                     }
                 }
             }

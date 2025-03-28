@@ -17,7 +17,7 @@
             <!-- Panel superior con bienvenida -->
             <Frame BackgroundColor="White" CornerRadius="20" Padding="25" Opacity="0.15" HasShadow="False">
                 <Label x:Name="lblBienvenida"
-                       Text="Bienvenido John..!!"
+                       Text="lblNombre"
                        FontSize="28"
                        TextColor="White"
                        HorizontalTextAlignment="Center"

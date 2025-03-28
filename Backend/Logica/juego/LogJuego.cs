@@ -2,6 +2,7 @@
 using Backend.Entidades;
 using Backend.Entidades.Entity;
 using Backend.Logica.Usuario.Varios;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Data.Linq;
@@ -132,7 +133,7 @@ namespace Backend.Logica.Juego
 
                         resPregunta.ResBase = resBase;
 
-                        
+
                     }
                     else
                     {
@@ -178,7 +179,7 @@ namespace Backend.Logica.Juego
                     string errorDescrip = "";
                     using (MiLinqDataContext linq = new MiLinqDataContext())
                     {
-                        linq.SP_INSERTAR_PACIENTE_JUEGO(req.idJuego, req.idUsuario, req.idPaciente, ref idReturn, ref errorId, ref errorCode , ref errorDescrip);
+                        linq.SP_INSERTAR_PACIENTE_JUEGO(req.idJuego, req.idUsuario, req.idPaciente, ref idReturn, ref errorId, ref errorCode, ref errorDescrip);
                     }
                     if (errorId == null) // Si el ID devuelto es mayor que 0, el usuario se insertó correctamente
                     {
@@ -206,31 +207,153 @@ namespace Backend.Logica.Juego
             return res;
         }
 
-        public ResObtenerJuegosCuidador obtenerJuegosCuidador(ReqObtenerJuegosCuidador req)
+        public List<ResObtenerJuegosCuidador> obtenerJuegosCuidador(ReqObtenerJuegosCuidador req)
         {
 
-            ResObtenerJuegosCuidador res = new ResObtenerJuegosCuidador();
-            res.listaDeErrores = new List<Error>();
+            List<ResObtenerJuegosCuidador> res = new List<ResObtenerJuegosCuidador>();
+            ResObtenerJuegosCuidador juego = new ResObtenerJuegosCuidador();
+            juego.listaDeErrores = new List<Error>();
 
             try
             {
-                res.listaDeErrores = ValidarJuego.validarUsuario(req.idCuidador);
+                juego.listaDeErrores = ValidarJuego.validarUsuario(req.idCuidador);
 
-                if (!res.listaDeErrores.Any())
+                if (!juego.listaDeErrores.Any())
                 {
-                    int? idReturn = 0;
                     int? errorId = 0;
                     string errorCode = "";
                     string errorDescrip = "";
                     using (MiLinqDataContext linq = new MiLinqDataContext())
                     {
-                        linq.SP_OBTENER_JUEGOS_CREADOS(req.idCuidador, ref errorId, ref errorCode, ref errorDescrip);
+                        var resultado = linq.SP_OBTENER_JUEGOS_CREADOS(req.idCuidador, ref errorId, ref errorCode, ref errorDescrip);
+
+                        if (errorId == null) // Si el ID devuelto es mayor que 0, el usuario se insertó correctamente
+                        {
+                            juego.resultado = true;
+                            foreach (var item in resultado)
+                            {
+                                juego.idJuego = item.ID_JUEGO;
+                                juego.nombre = item.NOMBRE;
+                                juego.numPreguntas = (int)item.TOTAL_PREGUNTAS;
+                                res.Add(juego);
+                            }
+
+                        }
+                        else // Si no se insertó, manejar el error devuelto por el SP
+                        {
+                            juego.resultado = false;
+                            juego.listaDeErrores.Add(new Error
+                            {
+                                idError = (int)errorId,
+                                error = errorCode
+                            });
+                            res.Add(juego);
+                        }
+
+
+
                     }
-                    if (errorId == null) // Si el ID devuelto es mayor que 0, el usuario se insertó correctamente
+
+                }
+            }
+            catch (Exception ex)
+            {
+                juego.resultado = false;
+                Error error = new Error();
+                error.idError = -1;
+                error.error = ex.Message;
+                juego.listaDeErrores.Add(error);
+                res.Add(juego);
+            }
+
+            return res;
+        }
+
+        public List<ResObtenerJuegosPaciente> obtenerJuegosPaciente(ReqObtenerJuegosPaciente req)
+        {
+
+            List<ResObtenerJuegosPaciente> res = new List<ResObtenerJuegosPaciente>();
+            ResObtenerJuegosPaciente juego = new ResObtenerJuegosPaciente();
+            juego.listaDeErrores = new List<Error>();
+
+            try
+            {
+                juego.listaDeErrores = ValidarJuego.validarUsuario(req.idPaciente);
+
+                if (!juego.listaDeErrores.Any())
+                {
+                    int? errorId = 0;
+                    string errorCode = "";
+                    string errorDescrip = "";
+                    using (MiLinqDataContext linq = new MiLinqDataContext())
+                    {
+                        var resultado = linq.SP_OBTENER_JUEGOS_DISPONIBLES(req.idPaciente, ref errorId, ref errorCode, ref errorDescrip);
+
+                        if (errorId == null) // Si el ID devuelto es mayor que 0, el usuario se insertó correctamente
+                        {
+                            juego.resultado = true;
+                            foreach (var item in resultado)
+                            {
+                                juego.idJuego = item.ID_JUEGO;
+                                juego.nombre = item.NOMBRE;
+                                juego.numPreguntas = (int)item.TOTAL_PREGUNTAS;
+                                res.Add(juego);
+                            }
+
+                        }
+                        else // Si no se insertó, manejar el error devuelto por el SP
+                        {
+                            juego.resultado = false;
+                            juego.listaDeErrores.Add(new Error
+                            {
+                                idError = (int)errorId,
+                                error = errorCode
+                            });
+                            res.Add(juego);
+                        }
+
+
+
+                    }
+
+                }
+            }
+            catch (Exception ex)
+            {
+                juego.resultado = false;
+                Error error = new Error();
+                error.idError = -1;
+                error.error = ex.Message;
+                juego.listaDeErrores.Add(error);
+                res.Add(juego);
+            }
+
+            return res;
+        }
+
+        public ResObtenerPregunta obtenerPregunta(ReqObtenerPregunta req)
+        {
+            ResObtenerPregunta res = new ResObtenerPregunta();
+            try
+            {
+                res.listaDeErrores = ValidarJuego.validarJuego(req.idJuego);
+                int? errorId = 0;
+                string errorCode = "";
+                string errorDescrip = "";
+                if (!res.listaDeErrores.Any())
+                {
+                    var resultado = new List<SP_OBTENER_PREGUNTASResult>();
+                    using (MiLinqDataContext linq = new MiLinqDataContext())
+                    {
+                        resultado = linq.SP_OBTENER_PREGUNTAS(req.idJuego, ref errorId, ref errorCode, ref errorDescrip).ToList();
+
+                    }
+                    if (errorId == null || errorId > 0)
                     {
                         res.resultado = true;
+                        res.juego = factoryJuego(resultado);
                     }
-                    else // Si no se insertó, manejar el error devuelto por el SP
+                    else
                     {
                         res.resultado = false;
                         res.listaDeErrores.Add(new Error
@@ -243,13 +366,195 @@ namespace Backend.Logica.Juego
             }
             catch (Exception ex)
             {
+                Error error = new Error();
+                error.idError = -1;
+                error.error = ex.Message;
+                res.resultado = false;
+                res.listaDeErrores.Add(error);
+            }
+            return res;
+        }
+
+        public ResEliminarJuego eliminarJuego(ReqEliminarJuego req)
+        {
+            ResEliminarJuego res = new ResEliminarJuego();
+            try
+            {
+                res.listaDeErrores = ValidarJuego.validarJuego(req.idJuego);
+                res.listaDeErrores = ValidarJuego.validarUsuario(req.idCuidador);
+                int? errorId = 0;
+                string errorCode = "";
+                string errorDescrip = "";
+                if (!res.listaDeErrores.Any())
+                {
+                    using (MiLinqDataContext linq = new MiLinqDataContext())
+                    {
+                        linq.SP_ELIMINAR_JUEGO(req.idJuego, req.idCuidador, ref errorId, ref errorCode, ref errorDescrip);
+                    }
+                    if (errorId > 0)
+                    {
+                        res.resultado = false;
+                        res.listaDeErrores.Add(new Error
+                        {
+                            idError = (int)errorId,
+                            error = errorCode
+                        });
+                    }
+                    else
+                    {
+                        res.resultado = true;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Error error = new Error();
+                error.idError = -1;
+                error.error = ex.Message;
+                res.resultado = false;
+                res.listaDeErrores.Add(error);
+            }
+            return res;
+        }
+
+        public ResObtenerPuntaje obtenerPuntaje(ReqObtenerPuntaje req)
+        {
+            ResObtenerPuntaje res = new ResObtenerPuntaje();
+            try
+            {
+                res.listaDeErrores = ValidarJuego.validarUsuario(req.idPaciente);
+
+                if (!res.listaDeErrores.Any())
+                {
+                    int? errorId = 0;
+                    string errorCode = "";
+                    string errorDescrip = "";
+
+                    var resultado = new List<SP_OBTENER_PUNTAJEResult>();
+                    using (MiLinqDataContext linq = new MiLinqDataContext())
+                    {
+                        resultado = linq.SP_OBTENER_PUNTAJE(req.idPaciente, ref errorId, ref errorCode, ref errorDescrip).ToList();
+
+                    }
+                    if (errorId > 0) // Si el ID devuelto es mayor que 0, el usuario se insertó correctamente
+                    {
+                        res.resultado = false;
+                        res.listaDeErrores.Add(new Error
+                        {
+                            idError = (int)errorId,
+                            error = errorCode
+                        });
+                    }
+                    else // Si no se insertó, manejar el error devuelto por el SP
+                    {
+                        res.puntajes = factoryPuntaje(resultado);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
                 res.resultado = false;
                 Error error = new Error();
                 error.idError = -1;
                 error.error = ex.Message;
                 res.listaDeErrores.Add(error);
             }
+
             return res;
+        }
+
+        public ResInsertarPuntaje insertarPuntaje(ReqInsertarPuntaje req)
+        {
+            ResInsertarPuntaje res = new ResInsertarPuntaje();
+            try
+            {
+                res.listaDeErrores = ValidarJuego.validarJuego(req.idJuego);
+                res.listaDeErrores = ValidarJuego.validarUsuario(req.idPaciente);
+                int? idReturn = null;
+                int? errorId = 0;
+                string errorCode = "";
+                string errorDescrip = "";
+                if (!res.listaDeErrores.Any())
+                {
+                    using (MiLinqDataContext linq = new MiLinqDataContext())
+                    {
+                        linq.SP_INSERTAR_PUNTAJE(req.idJuego, req.idPaciente, req.puntaje, ref idReturn, ref errorId, ref errorCode, ref errorDescrip);
+                    }
+                    if (errorId > 0)
+                    {
+                        res.resultado = false;
+                        res.listaDeErrores.Add(new Error
+                        {
+                            idError = (int)errorId,
+                            error = errorCode
+                        });
+                    }
+                    else
+                    {
+                        res.resultado = true;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Error error = new Error();
+                error.idError = -1;
+                error.error = ex.Message;
+                res.resultado = false;
+                res.listaDeErrores.Add(error);
+            }
+            return res;
+        }
+
+        private Backend.Entidades.Juego factoryJuego(List<SP_OBTENER_PREGUNTASResult> tc)
+        {
+
+            Backend.Entidades.Juego juego = new Backend.Entidades.Juego();
+
+            foreach (var preguntas in tc)
+            {
+                Pregunta pregunta = new Pregunta();
+                List<Opcion> opciones = new List<Opcion>();
+
+                if (!string.IsNullOrWhiteSpace(preguntas.OPCIONES))
+                {
+                    opciones = JsonConvert.DeserializeObject<List<Opcion>>(preguntas.OPCIONES);
+                }
+                foreach (Opcion item in opciones)
+                {
+                    Opcion opcion = new Opcion();
+                    opcion.Id_Opcion = (int)item.Id_Opcion;
+                    opcion.Descripcion = item.Descripcion;
+                    opcion.Condicion = item.Condicion;
+                    pregunta.opciones.Add(opcion);
+                }
+                pregunta.IdPregunta = preguntas.ID_PREGUNTA;
+                pregunta.Descripcion = preguntas.DESCRIPCION;
+                pregunta.Imagen = preguntas.IMAGEN_BINARIA.ToArray();
+
+                juego.preguntas.Add(pregunta);
+            }
+
+            return juego;
+        }
+
+
+        private List<Puntaje> factoryPuntaje(List<SP_OBTENER_PUNTAJEResult> tc)
+        {
+            List<Puntaje> puntajes = new List<Puntaje>();
+            foreach (var item in tc)
+            {
+                Puntaje puntaje = new Puntaje();
+                puntaje.IdPuntaje = item.ID_PUNTAJE;
+                puntaje.IdJuego = item.ID_JUEGO;
+                puntaje.nombreJuego = item.NOMBRE_JUEGO;
+                puntaje.ValorPuntaje = item.PUNTAJE;
+                puntaje.FechaHora = (DateTime)item.FECHA_HORA;
+                puntaje.IdUsuario = item.ID_USUARIO;
+                puntajes.Add(puntaje);
+            }
+
+            return puntajes;
         }
     }
 }

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Backend.Entidades
 {
-    public class ResObtenerJuegosCuidador : ResBase
+    public class ResObtenerJuegosPaciente : ResBase
     {
         public int idJuego { get; set; }
         public string nombre { get; set; }

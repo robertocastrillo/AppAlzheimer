@@ -6,10 +6,7 @@ using System.Threading.Tasks;
 
 namespace Backend.Entidades
 {
-    public class Opcion
+    public class ResEliminarJuego : ResBase
     {
-        public int Id_Opcion { get; set; }
-        public string Descripcion { get; set; }
-        public bool Condicion { get; set; }
     }
 }

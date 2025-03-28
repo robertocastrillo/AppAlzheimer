@@ -1,19 +1,19 @@
-using TuApp; 
+using TuApp;
+using TuApp.Entidades.Entity;
 namespace TuApp;
 
 public partial class InicioPage : ContentPage
 {
-    private Usuario usuario;
 
-    public InicioPage(Usuario usuario)
+
+    public InicioPage()
     {
         InitializeComponent();
-        this.usuario = usuario;
 
-        lblBienvenida.Text = $"¡Bienvenido, {usuario.Nombre}!";
-        lblCorreo.Text = usuario.CorreoElectronico;
-        lblDireccion.Text = string.IsNullOrEmpty(usuario.Direccion) ? "No definida" : usuario.Direccion;
-        lblFechaNacimiento.Text = usuario.FechaNacimiento.ToString("dd/MM/yyyy");
-        lblTipoUsuario.Text = usuario.IdTipoUsuario == 1 ? "Paciente" : "Cuidador";
+        lblBienvenida.Text = $"¡Bienvenido, {SesionActiva.sesionActiva.usuario.Nombre}!";
+        lblCorreo.Text = SesionActiva.sesionActiva.usuario.CorreoElectronico;
+        lblDireccion.Text = string.IsNullOrEmpty(SesionActiva.sesionActiva.usuario.Direccion) ? "No definida" : SesionActiva.sesionActiva.usuario.Direccion;
+        lblFechaNacimiento.Text = SesionActiva.sesionActiva.usuario.FechaNacimiento.ToString("dd/MM/yyyy");
+        lblTipoUsuario.Text = SesionActiva.sesionActiva.usuario.IdTipoUsuario == 1 ? "Paciente" : "Cuidador";
     }
 }

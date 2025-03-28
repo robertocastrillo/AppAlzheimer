@@ -4,11 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TuApp
+namespace TuApp.Entidades.Entity
 {
-    public class ResIniciarSesion : ResBase
+    public static class SesionActiva
     {
-        public Sesion Sesion { get; set; }
+        public static Sesion sesionActiva { get; set; }
     }
 }
-

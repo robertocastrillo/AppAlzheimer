@@ -26,33 +26,11 @@ namespace AccesoDatos.Properties {
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.ConnectionString)]
-        [global::System.Configuration.DefaultSettingValueAttribute("Data Source=HP;Initial Catalog=APP_ROBERTO;Integrated Security=True;TrustServerCe" +
-            "rtificate=True")]
-        public string APP_ROBERTOConnectionString {
-            get {
-                return ((string)(this["APP_ROBERTOConnectionString"]));
-            }
-        }
-        
-        [global::System.Configuration.ApplicationScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.ConnectionString)]
         [global::System.Configuration.DefaultSettingValueAttribute("Data Source=(localdb)\\BrandonDB;Initial Catalog=APP_ROBERTO;Integrated Security=T" +
-            "rue")]
-        public string APP_ROBERTOConnectionString1 {
+            "rue;TrustServerCertificate=True\n")]
+        public string APP_ROBERTOConnectionString3 {
             get {
-                return ((string)(this["APP_ROBERTOConnectionString1"]));
-            }
-        }
-        
-        [global::System.Configuration.ApplicationScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.ConnectionString)]
-        [global::System.Configuration.DefaultSettingValueAttribute("Data Source=HP;Initial Catalog=APP_ROBERTO;Integrated Security=True;Encrypt=True;" +
-            "TrustServerCertificate=True")]
-        public string APP_ROBERTOConnectionString2 {
-            get {
-                return ((string)(this["APP_ROBERTOConnectionString2"]));
+                return ((string)(this["APP_ROBERTOConnectionString3"]));
             }
         }
     }

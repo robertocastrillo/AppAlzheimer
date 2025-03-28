@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json;
 using System.Text;
+using TuApp.Entidades.Entity;
 
 namespace TuApp
 {
@@ -43,9 +44,10 @@ namespace TuApp
 
                 if (res != null && res.resultado)
                 {
-                    //Sesion.Usuario = res.Usuario; // Guardas en tu clase estática
+                    SesionActiva.sesionActiva = res.Sesion;
 
-                    await Navigation.PushAsync(new InicioPage(Sesion.Usuario));
+
+                    await Navigation.PushAsync(new InicioPage());
                 }
                 else
                 {

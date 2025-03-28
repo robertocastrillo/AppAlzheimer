@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 
 namespace TuApp
 {
-    public static class Sesion
+    public class Sesion
     {
-        public static Usuario Usuario { get; set; }
-        public static string Tokem { get; set; }
-        public static DateTime Expira { get; set; }
+        public Usuario usuario { get; set; }
+        public string tokem { get; set; }
+        public DateTime expira { get; set; }
     }
 
 }

@@ -1,0 +1,11 @@
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="TuApp.Vistas.PerfilPage"
+             Title="Perfil">
+    <VerticalStackLayout Padding="20" Spacing="15">
+        <Label x:Name="lblNombre" FontSize="20" FontAttributes="Bold"/>
+        <Label x:Name="lblCorreo"/>
+        <Label x:Name="lblDireccion"/>
+        <Label x:Name="lblFechaNacimiento"/>
+    </VerticalStackLayout>
+</ContentPage>

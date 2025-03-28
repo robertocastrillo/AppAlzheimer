@@ -26,8 +26,8 @@ namespace AccesoDatos.Properties {
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.ConnectionString)]
-        [global::System.Configuration.DefaultSettingValueAttribute("Data Source=(localdb)\\BrandonDB;Initial Catalog=APP_ROBERTO;Integrated Security=T" +
-            "rue;TrustServerCertificate=True\n")]
+        [global::System.Configuration.DefaultSettingValueAttribute("Data Source=HP;Initial Catalog=APP_ROBERTO;Integrated Security=True;TrustServerCe" +
+            "rtificate=True\n")]
         public string APP_ROBERTOConnectionString3 {
             get {
                 return ((string)(this["APP_ROBERTOConnectionString3"]));

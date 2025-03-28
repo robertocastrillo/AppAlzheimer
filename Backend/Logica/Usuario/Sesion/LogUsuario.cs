@@ -78,7 +78,7 @@ namespace Backend.Logica
                     string errorDescrip = "";
                     using (MiLinqDataContext linq = new MiLinqDataContext())
                     {
-                        var resultado = linq.SP_INSERTAR_SESION(req.CorreoElectronico, req.Contrasena, req.Origen, ref idReturn, ref errorId, ref errorCode, ref errorDescrip).FirstOrDefault(); // ✅ Extraer el primer resultado
+                        var resultado = linq.SP_INSERTAR_SESION(req.CorreoElectronico, req.Contrasena, req.Origen, ref idReturn, ref errorId, ref errorCode, ref errorDescrip).FirstOrDefault(); //  Extraer el primer resultado
 
                         if (resultado != null)
                         {
@@ -328,7 +328,7 @@ namespace Backend.Logica
 
                     using (MiLinqDataContext linq = new MiLinqDataContext())
                     {
-                        linq.SP_INSERTAR_RELACION(req.IdUsuarioCuidador,req.CodigoPaciente,ref errorId,ref errorCode,ref errorDescrip);
+                        linq.SP_INSERTAR_RELACION(req.IdUsuarioCuidador, req.CodigoPaciente, ref errorId, ref errorCode, ref errorDescrip);
                     }
 
                     if (errorId == null || errorId == 0)

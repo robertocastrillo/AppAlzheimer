@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json;
 using System.Text;
 using TuApp.Entidades.Entity;
+using TuApp.Vistas;
 
 namespace TuApp
 {
@@ -47,7 +48,7 @@ namespace TuApp
                     SesionActiva.sesionActiva = res.Sesion;
 
 
-                    await Navigation.PushAsync(new InicioPage());
+                    await Navigation.PushAsync(new JuegoCuidador());
                 }
                 else
                 {

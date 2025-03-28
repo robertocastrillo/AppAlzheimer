@@ -229,12 +229,14 @@ namespace Backend.Logica.Juego
 
                         if (errorId == null) // Si el ID devuelto es mayor que 0, el usuario se insertó correctamente
                         {
-                            juego.resultado = true;
+                            
                             foreach (var item in resultado)
                             {
+                                juego = new ResObtenerJuegosCuidador();
                                 juego.idJuego = item.ID_JUEGO;
                                 juego.nombre = item.NOMBRE;
                                 juego.numPreguntas = (int)item.TOTAL_PREGUNTAS;
+                                juego.resultado = true;
                                 res.Add(juego);
                             }
 

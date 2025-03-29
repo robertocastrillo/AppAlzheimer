@@ -1846,7 +1846,8 @@ BEGIN
             P.ID_JUEGO,
             J.NOMBRE AS NOMBRE_JUEGO,
             P.PUNTAJE,
-            P.FECHA_HORA
+            P.FECHA_HORA,
+            P.ID_USUARIO
         FROM PUNTAJE P
         INNER JOIN JUEGO J ON P.ID_JUEGO = J.ID_JUEGO
         WHERE P.ID_USUARIO = @ID_PACIENTE

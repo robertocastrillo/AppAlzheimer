@@ -17,5 +17,6 @@ namespace Backend.Entidades
         public string Codigo { get; set; } // Puede ser `null`
         public string Direccion { get; set; } // Puede ser `null`
         public int IdTipoUsuario { get; set; }
+        public Pin Pin { get; set; }
     }
 }

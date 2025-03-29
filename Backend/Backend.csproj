@@ -50,7 +50,7 @@
     <Compile Include="Entidades\Entity\Juego.cs" />
     <Compile Include="Entidades\Entity\Mensaje.cs" />
     <Compile Include="Entidades\Entity\Opcion.cs" />
-    <Compile Include="Entidades\Entity\Ping.cs" />
+    <Compile Include="Entidades\Entity\Pin.cs" />
     <Compile Include="Entidades\Entity\Pregunta.cs" />
     <Compile Include="Entidades\Entity\Puntaje.cs" />
     <Compile Include="Entidades\Entity\Sesion.cs" />

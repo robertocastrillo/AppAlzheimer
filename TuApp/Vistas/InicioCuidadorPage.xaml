@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="TuApp.Vistas.InicioCuidadorPage">
+
+    <ContentPage.Background>
+        <LinearGradientBrush EndPoint="1,1">
+            <GradientStop Color="#5e1675" Offset="0.0" />
+            <GradientStop Color="#9333ea" Offset="0.5" />
+            <GradientStop Color="#3b0764" Offset="1.0" />
+        </LinearGradientBrush>
+    </ContentPage.Background>
+
+    <ScrollView>
+        <VerticalStackLayout Padding="30" Spacing="30" VerticalOptions="Center">
+
+            <!-- Panel superior con bienvenida -->
+            <Frame BackgroundColor="White" CornerRadius="20" Padding="25" Opacity="0.15" HasShadow="False">
+                <Label x:Name="lblBienvenida"
+                       Text="lblNombre"
+                       FontSize="28"
+                       TextColor="White"
+                       HorizontalTextAlignment="Center"
+                       FontAttributes="Bold"/>
+            </Frame>
+
+            <!-- Botones -->
+            <Button Text="Juegos"
+                    x:Name="btnJuegos"
+                    BackgroundColor="#7c3aed"
+                    TextColor="White"
+                    FontAttributes="Bold"
+                    CornerRadius="12"
+                    HeightRequest="50"/>
+
+            <Button Text="Pacientes"
+                    x:Name="btnPacientes"
+                    BackgroundColor="#7c3aed"
+                    TextColor="White"
+                    FontAttributes="Bold"
+                    CornerRadius="12"
+                    HeightRequest="50"/>
+
+            <Button Text="Eventos"
+                    x:Name="btnEventos"
+                    BackgroundColor="#7c3aed"
+                    TextColor="White"
+                    FontAttributes="Bold"
+                    CornerRadius="12"
+                    HeightRequest="50"/>
+
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

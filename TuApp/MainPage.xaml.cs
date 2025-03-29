@@ -40,15 +40,22 @@ namespace TuApp
             if (respuestaHttp.IsSuccessStatusCode)
             {
                 var contenido = await respuestaHttp.Content.ReadAsStringAsync();
+
                 ResIniciarSesion res = new ResIniciarSesion();
                     res = JsonConvert.DeserializeObject<ResIniciarSesion>(contenido);
 
                 if (res != null && res.resultado)
                 {
                     SesionActiva.sesionActiva = res.Sesion;
+                    if (SesionActiva.sesionActiva.usuario.IdTipoUsuario == 1)
+                    {
+                        Application.Current.MainPage = new MenuCuidadorPage(); // ← ESTE es el contenedor
+                    }
+                    else
+                    {
+                        await Navigation.PushAsync(new InicioPage());
 
-
-                    await Navigation.PushAsync(new JuegoCuidador());
+                    }
                 }
                 else
                 {

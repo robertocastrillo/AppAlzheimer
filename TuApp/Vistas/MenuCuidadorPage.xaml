@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<FlyoutPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+            xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+            xmlns:local="clr-namespace:TuApp.Vistas"
+            x:Class="TuApp.Vistas.MenuCuidadorPage">
+
+    <!-- Menú lateral -->
+    <FlyoutPage.Flyout>
+        <ContentPage Title="Menú" BackgroundColor="#E0BBE4">
+            <StackLayout Padding="20" Spacing="20">
+                <Frame BackgroundColor="White" CornerRadius="20" Padding="10" HasShadow="True">
+                    <HorizontalStackLayout Spacing="10">
+                        <Image Source="perfil.png" WidthRequest="50" HeightRequest="50" Aspect="AspectFill" />
+                        <VerticalStackLayout>
+                            <Label Text="John Smith"
+                                   FontSize="18"
+                                   FontAttributes="Bold" />
+                        </VerticalStackLayout>
+                    </HorizontalStackLayout>
+                </Frame>
+
+                <Button Text="Perfil" Clicked="Perfil_Clicked" />
+                <Button Text="Configuración" Clicked="Configuracion_Clicked" />
+                <Button Text="Cerrar Sesión" BackgroundColor="DarkRed" TextColor="White" Clicked="CerrarSesion_Clicked" />
+            </StackLayout>
+        </ContentPage>
+    </FlyoutPage.Flyout>
+
+    <!-- Página principal: InicioCuidador -->
+    <FlyoutPage.Detail>
+        <NavigationPage>
+            <x:Arguments>
+                <local:InicioCuidadorPage />
+            </x:Arguments>
+        </NavigationPage>
+    </FlyoutPage.Detail>
+</FlyoutPage>

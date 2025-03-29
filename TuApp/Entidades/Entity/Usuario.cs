@@ -17,5 +17,6 @@ namespace TuApp
         public string Codigo { get; set; }
         public string Direccion { get; set; }
         public int IdTipoUsuario { get; set; }
+        public string Pin {  get; set; }   
     }
 }

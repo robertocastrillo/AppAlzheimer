@@ -106,8 +106,20 @@ namespace TuApp.Vistas
             if (!huboCambios)
             {
                 await DisplayAlert("Sin cambios", "No se ha hecho ningún cambio.", "Aceptar");
-                modoEdicion = false;
+
+                // Restaurar la vista a modo lectura
+                txtNombre.IsVisible = false;
+                dpFechaNacimiento.IsVisible = false;
+                txtDireccion.IsVisible = false;
+                txtPasswordActual.IsVisible = false;
+                txtPasswordNueva.IsVisible = false;
+
+                lblNombre.IsVisible = true;
+                lblFecha.IsVisible = true;
+                lblDireccion.IsVisible = true;
+
                 btnEditar.Text = "Editar Datos";
+                modoEdicion = false;
                 return;
             }
 

@@ -17,35 +17,46 @@
 
             <!-- Imagen de perfil -->
             <Frame WidthRequest="120"
-              HeightRequest="120"
-              CornerRadius="60"
-              IsClippedToBounds="True"
-              Padding="0"
-              BackgroundColor="White"
-              HorizontalOptions="Center">
+                   HeightRequest="120"
+                   CornerRadius="60"
+                   IsClippedToBounds="True"
+                   Padding="0"
+                   BackgroundColor="White"
+                   HorizontalOptions="Center">
                 <Image x:Name="imgPerfil"
-              Aspect="AspectFill"
-              WidthRequest="120"
-              HeightRequest="120" />
+                       Aspect="AspectFill"
+                       WidthRequest="120"
+                       HeightRequest="120" />
             </Frame>
 
-
+            <!-- Bienvenida -->
             <Label TextColor="White"
                    FontSize="20"
                    FontAttributes="Bold"
                    HorizontalTextAlignment="Center"
                    x:Name="lblBienvenida" />
 
+            <!-- Datos del usuario -->
             <Frame BackgroundColor="Black" CornerRadius="20" Padding="20">
                 <VerticalStackLayout Spacing="10">
-                    <Label x:Name="lblNombre" Text="Tu nombre:" />
-                    <Label x:Name="lblFecha" Text="Fecha de Nacimiento:" />
-                    <Label x:Name="lblDireccion" Text="Dirección de domicilio:" />
-                    <Label x:Name="lblUbicacion" Text="Codigo:" />
+                    <Label x:Name="lblNombre" Text="Tu nombre:" IsVisible="True" TextColor="White"/>
+                    <Entry x:Name="txtNombre" Placeholder="Nombre" IsVisible="False" />
+
+                    <Label x:Name="lblFecha" Text="Fecha de Nacimiento:" IsVisible="True" TextColor="White"/>
+                    <DatePicker x:Name="dpFechaNacimiento" IsVisible="False" />
+
+                    <Label x:Name="lblDireccion" Text="Dirección de domicilio:" IsVisible="True" TextColor="White"/>
+                    <Entry x:Name="txtDireccion" Placeholder="Dirección" IsVisible="False" />
+
+                    <Label x:Name="lblUbicacion" Text="Código:" TextColor="White"/>
+
+                    <Entry x:Name="txtPasswordActual" Placeholder="Contraseña Actual" IsVisible="False" IsPassword="True"/>
+                    <Entry x:Name="txtPasswordNueva" Placeholder="Nueva Contraseña" IsVisible="False" IsPassword="True"/>
                 </VerticalStackLayout>
             </Frame>
 
             <Button Text="Editar Datos"
+                    x:Name="btnEditar"
                     BackgroundColor="#7c3aed"
                     TextColor="White"
                     Clicked="EditarDatos_Clicked"/>

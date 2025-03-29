@@ -499,6 +499,10 @@ namespace AccesoDatos
 		
 		private int _ID_TIPO_USUARIO;
 		
+		private int _ID_PING;
+		
+		private string _PIN;
+		
 		public SP_CONSULTAR_SESIONResult()
 		{
 		}
@@ -630,6 +634,38 @@ namespace AccesoDatos
 				}
 			}
 		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ID_PING", DbType="Int NOT NULL")]
+		public int ID_PING
+		{
+			get
+			{
+				return this._ID_PING;
+			}
+			set
+			{
+				if ((this._ID_PING != value))
+				{
+					this._ID_PING = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PIN", DbType="VarChar(6) NOT NULL", CanBeNull=false)]
+		public string PIN
+		{
+			get
+			{
+				return this._PIN;
+			}
+			set
+			{
+				if ((this._PIN != value))
+				{
+					this._PIN = value;
+				}
+			}
+		}
 	}
 	
 	public partial class SP_INSERTAR_SESIONResult
@@ -654,6 +690,10 @@ namespace AccesoDatos
 		private string _TOKEN_SESION;
 		
 		private System.Nullable<System.DateTime> _EXPIRACION;
+		
+		private int _ID_PING;
+		
+		private string _PIN;
 		
 		public SP_INSERTAR_SESIONResult()
 		{
@@ -815,6 +855,38 @@ namespace AccesoDatos
 				if ((this._EXPIRACION != value))
 				{
 					this._EXPIRACION = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ID_PING", DbType="Int NOT NULL")]
+		public int ID_PING
+		{
+			get
+			{
+				return this._ID_PING;
+			}
+			set
+			{
+				if ((this._ID_PING != value))
+				{
+					this._ID_PING = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PIN", DbType="VarChar(6) NOT NULL", CanBeNull=false)]
+		public string PIN
+		{
+			get
+			{
+				return this._PIN;
+			}
+			set
+			{
+				if ((this._PIN != value))
+				{
+					this._PIN = value;
 				}
 			}
 		}

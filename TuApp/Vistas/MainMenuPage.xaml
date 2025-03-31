@@ -19,7 +19,6 @@
         </HorizontalStackLayout>
 
         <Button Text="Perfil" Clicked="Perfil_Clicked"/>
-        <Button Text="Configuración" Clicked="Configuracion_Clicked"/>
         <Button Text="Cerrar sesión" TextColor="Red" Clicked="CerrarSesion_Clicked"/>
     </VerticalStackLayout>
 </ContentPage>

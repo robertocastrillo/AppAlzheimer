@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:TuApp.ViewModels"
+             x:Class="TuApp.Vistas.RelacionPage"
+             Title="Relaciones">
+
+    <ContentPage.BindingContext>
+        <vm:RelacionViewModel />
+    </ContentPage.BindingContext>
+
+    <ContentPage.Background>
+        <LinearGradientBrush EndPoint="1,1">
+            <GradientStop Color="#5e1675" Offset="0.0" />
+            <GradientStop Color="#9333ea" Offset="0.5" />
+            <GradientStop Color="#3b0764" Offset="1.0" />
+        </LinearGradientBrush>
+    </ContentPage.Background>
+
+    <ScrollView>
+        <VerticalStackLayout Padding="20" Spacing="15">
+            <Label Text="Pacientes Relacionados"
+                   FontSize="20"
+                   FontAttributes="Bold"
+                   TextColor="White"/>
+
+            <CollectionView x:Name="listaPacientes"
+                            ItemsSource="{Binding Relaciones}"
+                            SelectionMode="None">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Frame BorderColor="White" CornerRadius="15" Padding="10" Margin="0,5">
+                            <Grid ColumnDefinitions="*,Auto">
+                                <Label Text="{Binding Nombre}" FontSize="18" VerticalOptions="Center" />
+                                <Button Text="Eliminar"
+                                      BackgroundColor="DarkRed"
+                                      TextColor="White"
+                                      Command="{Binding BindingContext.EliminarCommand, Source={x:Reference listaPacientes}}"
+                                      CommandParameter="{Binding .}"
+                                      Grid.Column="1" />
+                            </Grid>
+                        </Frame>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+
+            <Label Text="Agregar relación con paciente (código):"
+                   FontSize="16"
+                   TextColor="White" />
+            <Entry Placeholder="Ej: ABC123"
+                   Text="{Binding CodigoPaciente}" />
+
+            <Button Text="Agregar Relación"
+                    BackgroundColor="#7c3aed"
+                    TextColor="White"
+                    Command="{Binding AgregarCommand}" />
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

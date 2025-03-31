@@ -53,8 +53,7 @@ namespace TuApp
                     }
                     else
                     {
-                        await Navigation.PushAsync(new InicioPage());
-
+                        Application.Current.MainPage = new MenuCuidadorPage();
                     }
                 }
                 else

@@ -56,7 +56,7 @@ public partial class MenuCuidadorPage : FlyoutPage
                 Sesion sesion = new Sesion();
 
                 SesionActiva.sesionActiva = sesion;
-                await Navigation.PushAsync(new InicioPage());
+                await Navigation.PushAsync(new MainPage());
 
                 
             }

@@ -16,10 +16,7 @@ public partial class MainMenuPage : ContentPage
         await Navigation.PushAsync(new PerfilPage());
     }
 
-    private async void Configuracion_Clicked(object sender, EventArgs e)
-    {
-        //await Shell.Current.Navigation.PushAsync(new ConfiguracionPage());
-    }
+
 
     private async void CerrarSesion_Clicked(object sender, EventArgs e)
     {

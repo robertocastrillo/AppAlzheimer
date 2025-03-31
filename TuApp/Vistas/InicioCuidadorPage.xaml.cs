@@ -1,3 +1,6 @@
+using Newtonsoft.Json;
+using System.Text;
+using TuApp.Entidades;
 using TuApp.Entidades.Entity;
 
 namespace TuApp.Vistas;
@@ -12,9 +15,11 @@ public partial class InicioCuidadorPage : ContentPage
         {
             lblBienvenida.Text = $"Bienvenido {SesionActiva.sesionActiva.usuario.Nombre}..!!";
         }
-        else
-        {
-            lblBienvenida.Text = "Bienvenido..!!";
-        }
+
+    }
+
+    private async void btnRealacion_Clicked(object sender, EventArgs e)
+    {
+        await Navigation.PushAsync(new RelacionPage()); 
     }
 }

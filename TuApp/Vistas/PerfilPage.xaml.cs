@@ -26,9 +26,18 @@ namespace TuApp.Vistas
             lblNombre.Text = $"Tu nombre: {usuario.Nombre}";
             lblFecha.Text = $"Fecha de Nacimiento: {usuario.FechaNacimiento:yyyy-MM-dd}";
             lblDireccion.Text = $"Dirección de domicilio: {usuario.Direccion}";
-            lblUbicacion.Text = $"Código: {usuario.Codigo}";
+            if (usuario.Codigo != null)
+            {
+                lblUbicacion.Text = $"Código: {usuario.Codigo}";
 
-            nombreOriginal = usuario.Nombre;
+            }
+            else
+            {
+                lblUbicacion.IsVisible = false;
+            }
+
+
+                nombreOriginal = usuario.Nombre;
             fechaNacimientoOriginal = usuario.FechaNacimiento;
             direccionOriginal = usuario.Direccion;
 
@@ -52,7 +61,7 @@ namespace TuApp.Vistas
         {
             var usuario = SesionActiva.sesionActiva.usuario;
 
-            if (!modoEdicion && usuario.IdTipoUsuario == 1 && !string.IsNullOrEmpty(usuario.pin.Codigo))
+            if (!modoEdicion && usuario.IdTipoUsuario == 1 && usuario.pin != null && !string.IsNullOrEmpty(usuario.pin.Codigo))
             {
                 string pinIngresado = await DisplayPromptAsync("PIN Requerido", "Ingresa tu PIN para editar:", "Aceptar", "Cancelar", keyboard: Keyboard.Numeric);
                 if (pinIngresado != usuario.pin.Codigo)

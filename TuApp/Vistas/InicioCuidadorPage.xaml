@@ -19,7 +19,7 @@
                 <Label x:Name="lblBienvenida"
                        Text="lblNombre"
                        FontSize="28"
-                       TextColor="White"
+                       TextColor="Black"
                        HorizontalTextAlignment="Center"
                        FontAttributes="Bold"/>
             </Frame>
@@ -48,6 +48,15 @@
                     FontAttributes="Bold"
                     CornerRadius="12"
                     HeightRequest="50"/>
+
+            <Button Text="Relacion"
+                    x:Name="btnRealacion"
+                    BackgroundColor="#7c3aed"
+                    TextColor="White"
+                    FontAttributes="Bold"
+                    CornerRadius="12"
+                    HeightRequest="50"
+                    Clicked="btnRealacion_Clicked"/>
 
         </VerticalStackLayout>
     </ScrollView>

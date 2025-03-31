@@ -52,10 +52,10 @@ namespace TuApp.Vistas
         {
             var usuario = SesionActiva.sesionActiva.usuario;
 
-            if (!modoEdicion && usuario.IdTipoUsuario == 1 && !string.IsNullOrEmpty(usuario.Pin))
+            if (!modoEdicion && usuario.IdTipoUsuario == 1 && !string.IsNullOrEmpty(usuario.pin.Codigo))
             {
                 string pinIngresado = await DisplayPromptAsync("PIN Requerido", "Ingresa tu PIN para editar:", "Aceptar", "Cancelar", keyboard: Keyboard.Numeric);
-                if (pinIngresado != usuario.Pin)
+                if (pinIngresado != usuario.pin.Codigo)
                 {
                     await DisplayAlert("Error", "PIN incorrecto.", "OK");
                     return;
@@ -123,7 +123,7 @@ namespace TuApp.Vistas
                 return;
             }
 
-            string ping = usuario.Pin;
+            string ping = usuario.pin.Codigo;
             ReqActualizarUsuario reqUsuario = new ReqActualizarUsuario
             {
                 IdUsuario = usuario.IdUsuario,

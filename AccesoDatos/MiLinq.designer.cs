@@ -691,7 +691,7 @@ namespace AccesoDatos
 		
 		private System.Nullable<System.DateTime> _EXPIRACION;
 		
-		private int _ID_PING;
+		private System.Nullable<int> _ID_PING;
 		
 		private string _PIN;
 		
@@ -859,8 +859,8 @@ namespace AccesoDatos
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ID_PING", DbType="Int NOT NULL")]
-		public int ID_PING
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ID_PING", DbType="Int")]
+		public System.Nullable<int> ID_PING
 		{
 			get
 			{
@@ -875,7 +875,7 @@ namespace AccesoDatos
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PIN", DbType="VarChar(6) NOT NULL", CanBeNull=false)]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PIN", DbType="VarChar(6)")]
 		public string PIN
 		{
 			get
@@ -1511,6 +1511,8 @@ namespace AccesoDatos
 		
 		private System.Nullable<System.DateTime> _FECHA_HORA;
 		
+		private int _ID_USUARIO;
+		
 		public SP_OBTENER_PUNTAJEResult()
 		{
 		}
@@ -1591,6 +1593,22 @@ namespace AccesoDatos
 				if ((this._FECHA_HORA != value))
 				{
 					this._FECHA_HORA = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ID_USUARIO", DbType="Int NOT NULL")]
+		public int ID_USUARIO
+		{
+			get
+			{
+				return this._ID_USUARIO;
+			}
+			set
+			{
+				if ((this._ID_USUARIO != value))
+				{
+					this._ID_USUARIO = value;
 				}
 			}
 		}

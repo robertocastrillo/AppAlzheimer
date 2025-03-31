@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TuApp.Entidades.Entity;
 
 namespace TuApp
 {
@@ -17,6 +18,6 @@ namespace TuApp
         public string Codigo { get; set; }
         public string Direccion { get; set; }
         public int IdTipoUsuario { get; set; }
-        public string Pin {  get; set; }   
+        public Pin pin { get; set; } 
     }
 }

@@ -646,6 +646,10 @@ namespace Backend.Logica
             usuario.Direccion = tc.DIRECCION;
             usuario.IdTipoUsuario = tc.ID_TIPO_USUARIO;
 
+            Pin pin = new Pin();
+            pin.Codigo = tc.PIN;
+            usuario.Pin = pin;
+
             Sesion sesion = new Sesion();
             sesion.usuario = usuario;
             sesion.tokem = tc.TOKEN_SESION;
@@ -658,6 +662,7 @@ namespace Backend.Logica
         {
 
             Backend.Entidades.Usuario usuario = new Backend.Entidades.Usuario();
+            Pin pin = new Pin();
             usuario.IdUsuario = (int)tc.ID_USUARIO;
             usuario.Nombre = tc.NOMBRE;
             usuario.CorreoElectronico = tc.CORREO_ELECTRONICO;
@@ -666,7 +671,8 @@ namespace Backend.Logica
             usuario.Codigo = tc.CODIGO;
             usuario.Direccion = tc.DIRECCION;
             usuario.IdTipoUsuario = tc.ID_TIPO_USUARIO;
-
+            pin.Codigo = tc.PIN;
+            usuario.Pin = pin;
 
             return usuario;
         }

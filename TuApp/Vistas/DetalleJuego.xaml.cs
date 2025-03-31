@@ -1,13 +1,28 @@
+using TuApp.Entidades;
 using TuApp.Entidades.Entity;
+using TuApp.VistasModelo;
 
 
 namespace TuApp.Vistas;
 
 public partial class DetalleJuego : ContentPage
 {
-    public DetalleJuego(Juego juego)
+    private PreguntaViewModel viewModel;
+
+    public DetalleJuego(ResObtenerJuegosCuidador juego)
     {
         InitializeComponent();
-        BindingContext = juego;
+
+        viewModel = new PreguntaViewModel();
+        BindingContext = viewModel;
+
+        // Llama a un método async aparte
+        CargarDatos(juego);
+    }
+
+    private async void CargarDatos(ResObtenerJuegosCuidador juego)
+    {
+        await viewModel.CargarPreguntas(juego);
     }
 }
+

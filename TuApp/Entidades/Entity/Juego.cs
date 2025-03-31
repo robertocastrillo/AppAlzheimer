@@ -10,6 +10,7 @@ namespace TuApp.Entidades.Entity
     {
         public int IdJuego { get; set; }
         public string Nombre { get; set; }
-        public int numPreg {get; set; }
+        public List<Pregunta> preguntas { get; set; } = new List<Pregunta>();
+
     }
 }

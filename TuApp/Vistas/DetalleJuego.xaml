@@ -2,19 +2,44 @@
 
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:TuApp.VistasModelo"
              x:Class="TuApp.Vistas.DetalleJuego">
 
-    <VerticalStackLayout Padding="20" Spacing="15">
-        <Label Text="ID del Juego:"
-               FontAttributes="Bold" />
-        <Label Text="{Binding IdJuego}" />
+    <ContentPage.BindingContext>
+        <vm:PreguntaViewModel />
+    </ContentPage.BindingContext>
+    <Grid RowDefinitions="Auto, * , Auto" Padding="20">
 
-        <Label Text="Nombre:"
-               FontAttributes="Bold" />
-        <Label Text="{Binding Nombre}" />
 
-        <Label Text="Cantidad de preguntas:"
-               FontAttributes="Bold" />
-        <Label Text="{Binding numPreg}" />
-    </VerticalStackLayout>
+
+        <!-- Lista deslizable -->
+        <CollectionView Grid.Row="1"
+                        ItemsSource="{Binding ListaPregunta}">
+            <!--SelectionMode="Single" SelectionChanged="JuegoSeleccionado">-->
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <Frame BackgroundColor="White" CornerRadius="20" Padding="10" Margin="0,5" BorderColor="#E0E0E0">
+                        <StackLayout>
+                            <Label Text="{Binding Descripcion}"
+                                   FontSize="16"
+                                   TextColor="Black"
+                                   FontAttributes="Bold" />
+                            <Label Text="{Binding Imagen}"
+                                   FontSize="14"
+                                   TextColor="Gray" />
+                        </StackLayout>
+                    </Frame>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+
+        <!-- Botón fijo abajo -->
+        <Button Text="+" FontSize="32"
+                BackgroundColor="Transparent"
+                TextColor="Purple"
+                HorizontalOptions="Center"
+                VerticalOptions="End"
+                Grid.Row="2"
+                Margin="0,10"/>
+    </Grid>
 </ContentPage>

@@ -1511,8 +1511,6 @@ namespace AccesoDatos
 		
 		private System.Nullable<System.DateTime> _FECHA_HORA;
 		
-		private int _ID_USUARIO;
-		
 		public SP_OBTENER_PUNTAJEResult()
 		{
 		}
@@ -1593,22 +1591,6 @@ namespace AccesoDatos
 				if ((this._FECHA_HORA != value))
 				{
 					this._FECHA_HORA = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ID_USUARIO", DbType="Int NOT NULL")]
-		public int ID_USUARIO
-		{
-			get
-			{
-				return this._ID_USUARIO;
-			}
-			set
-			{
-				if ((this._ID_USUARIO != value))
-				{
-					this._ID_USUARIO = value;
 				}
 			}
 		}

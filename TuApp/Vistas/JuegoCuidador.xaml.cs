@@ -1,6 +1,7 @@
 using Newtonsoft.Json;
 using System.Collections.ObjectModel;
 using System.Text;
+using TuApp.Entidades;
 using TuApp.Entidades.Entity;
 
 namespace TuApp.Vistas;
@@ -15,7 +16,7 @@ public partial class JuegoCuidador : ContentPage
 
     private async void JuegoSeleccionado(object sender, SelectionChangedEventArgs e)
     {
-        var juego = e.CurrentSelection.FirstOrDefault() as Juego;
+        var juego = e.CurrentSelection.FirstOrDefault() as ResObtenerJuegosCuidador;
         if (juego != null)
         {
             await Navigation.PushAsync(new DetalleJuego(juego));

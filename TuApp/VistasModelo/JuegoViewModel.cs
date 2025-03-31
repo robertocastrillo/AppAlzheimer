@@ -14,7 +14,7 @@ namespace TuApp.VistasModelo
 {
     public class JuegoViewModel: INotifyPropertyChanged
     {
-        public ObservableCollection<Juego> ListaJuegos { get; set; } = new ObservableCollection<Juego>();
+        public ObservableCollection<ResObtenerJuegosCuidador> ListaJuegos { get; set; } = new ObservableCollection<ResObtenerJuegosCuidador>();
 
         public ICommand CargarCommand { get; }
         public JuegoViewModel()
@@ -48,7 +48,7 @@ namespace TuApp.VistasModelo
                     ListaJuegos.Clear();
                     foreach (var juego in res)
                     {
-                        Juego juegonuevo = new Juego();
+                        ResObtenerJuegosCuidador juegonuevo = new ResObtenerJuegosCuidador();
                         juegonuevo.IdJuego = juego.IdJuego;
                         juegonuevo.Nombre = juego.Nombre;
                         juegonuevo.numPreg = juego.numPreg;

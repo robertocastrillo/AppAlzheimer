@@ -15,4 +15,5 @@ namespace TuApp.Entidades
         public int IdPrioridad { get; set; }
         public int IdUsuario { get; set; } // Cuidador
     }
+}
 

@@ -4,11 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TuApp.Entidades.Entity
+namespace TuApp.Entidades
 {
-    public static class SesionActiva
+    class ResObtenerEvento
     {
-        public static Sesion sesionActiva { get; set; }
-
     }
 }

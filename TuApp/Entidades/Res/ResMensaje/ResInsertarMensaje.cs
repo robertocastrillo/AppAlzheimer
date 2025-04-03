@@ -4,11 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TuApp.Entidades.Entity
+namespace TuApp.Entidades.Res.ResMensaje
 {
-    public static class SesionActiva
+    public class ResInsertarMensaje : ResBase
     {
-        public static Sesion sesionActiva { get; set; }
 
     }
 }

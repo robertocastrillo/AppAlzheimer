@@ -57,6 +57,15 @@
                     CornerRadius="12"
                     HeightRequest="50"
                     Clicked="btnRealacion_Clicked"/>
+            <Button Text="Mensajes"
+                    x:Name="btnMensajes"
+                    BackgroundColor="#7c3aed"
+                    TextColor="White"
+                    FontAttributes="Bold"
+                    CornerRadius="12"
+                    HeightRequest="50"
+                    Clicked="btnMensajes_Clicked"/>
+
 
         </VerticalStackLayout>
     </ScrollView>

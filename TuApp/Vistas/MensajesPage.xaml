@@ -1,0 +1,62 @@
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:TuApp.VistasModelo"
+             x:Class="TuApp.Vistas.MensajesPage"
+             Title="Mensajes">
+
+    <ContentPage.BindingContext>
+        <vm:MensajeViewModel />
+    </ContentPage.BindingContext>
+
+    <ScrollView>
+        <StackLayout Padding="10" Spacing="20">
+
+            <!-- Lista de pacientes -->
+            <CollectionView ItemsSource="{Binding ListaPacientesRelacionados}"
+                            SelectedItem="{Binding PacienteSeleccionado}"
+                            SelectionMode="Single"
+                            HeightRequest="80"
+                            ItemsLayout="HorizontalList">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Frame BorderColor="Gray" CornerRadius="10" Padding="10" Margin="5">
+                            <Label Text="{Binding Nombre}" />
+                        </Frame>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+
+            <!-- Nombre del paciente -->
+            <Label Text="{Binding NombrePacienteConversacion}" 
+                   FontSize="18" 
+                   FontAttributes="Bold"
+                   HorizontalOptions="Center"
+                   TextColor="DarkSlateBlue"
+                   Margin="0,10,0,0"/>
+
+            <!-- Mensajes -->
+            <CollectionView ItemsSource="{Binding ListaMensajes}" HeightRequest="300">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Frame Padding="10" Margin="5" BackgroundColor="LightGray">
+                            <Label Text="{Binding Contenido}" />
+                        </Frame>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+
+            <!-- Entrada de texto y botón -->
+            <StackLayout Orientation="Horizontal" Spacing="10">
+                <Entry Placeholder="Escribe un mensaje..." 
+                       Text="{Binding ContenidoNuevoMensaje}" 
+                       HorizontalOptions="FillAndExpand"
+                       BackgroundColor="LightYellow"/>
+                <Button Text="Enviar"
+                        Command="{Binding EnviarMensajeCommand}"
+                        BackgroundColor="#4B3D8C"
+                        TextColor="White" />
+            </StackLayout>
+
+        </StackLayout>
+    </ScrollView>
+</ContentPage>

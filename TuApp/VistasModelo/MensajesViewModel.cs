@@ -10,6 +10,7 @@ using System.Timers;
 using TuApp.Entidades.Entity;
 using Timer = System.Timers.Timer;
 using System.Diagnostics;
+
 namespace TuApp.VistasModelo
 {
     public class MensajeViewModel : INotifyPropertyChanged
@@ -26,7 +27,7 @@ namespace TuApp.VistasModelo
                 _pacienteSeleccionado = value;
                 OnPropertyChanged();
                 OnPropertyChanged(nameof(NombrePacienteConversacion));
-                if (value != null)
+                if (SesionActiva.sesionActiva.usuario.IdTipoUsuario == 2 && value != null)
                     _ = ObtenerMensajesAsync();
             }
         }
@@ -47,6 +48,8 @@ namespace TuApp.VistasModelo
 
         public int IdUsuarioLogueado => SesionActiva.sesionActiva.usuario.IdUsuario;
 
+        public bool PuedeEnviarMensajes => SesionActiva.sesionActiva.usuario.IdTipoUsuario == 2;
+
         public MensajeViewModel()
         {
             EnviarMensajeCommand = new Command(async () => await EnviarMensajeAsync());
@@ -62,7 +65,12 @@ namespace TuApp.VistasModelo
         {
             try
             {
-                await CargarPacientesRelacionados();
+                var tipo = SesionActiva.sesionActiva.usuario.IdTipoUsuario;
+
+                if (tipo == 2)
+                    await CargarPacientesRelacionados();
+                else if (tipo == 1)
+                    await ObtenerMensajesAsync();
             }
             catch (Exception ex)
             {
@@ -72,7 +80,7 @@ namespace TuApp.VistasModelo
 
         private async Task AutoRefreshMensajes()
         {
-            if (PacienteSeleccionado != null)
+            if (SesionActiva.sesionActiva.usuario.IdTipoUsuario == 1 || PacienteSeleccionado != null)
                 await ObtenerMensajesAsync();
         }
 
@@ -112,9 +120,23 @@ namespace TuApp.VistasModelo
 
         private async Task ObtenerMensajesAsync()
         {
-            if (PacienteSeleccionado == null) return;
+            var usuario = SesionActiva.sesionActiva.usuario;
 
-            var req = new ReqObtenerMensajes { IdPaciente = PacienteSeleccionado.IdUsuario };
+            int idPaciente;
+            if (usuario.IdTipoUsuario == 1)
+            {
+                idPaciente = usuario.IdUsuario;
+            }
+            else if (PacienteSeleccionado != null)
+            {
+                idPaciente = PacienteSeleccionado.IdUsuario;
+            }
+            else
+            {
+                return;
+            }
+
+            var req = new ReqObtenerMensajes { IdPaciente = idPaciente };
             var json = JsonConvert.SerializeObject(req);
             var content = new StringContent(json, Encoding.UTF8, "application/json");
 
@@ -138,7 +160,7 @@ namespace TuApp.VistasModelo
 
         private async Task EnviarMensajeAsync()
         {
-            if (string.IsNullOrWhiteSpace(ContenidoNuevoMensaje) || PacienteSeleccionado == null)
+            if (SesionActiva.sesionActiva.usuario.IdTipoUsuario != 2 || string.IsNullOrWhiteSpace(ContenidoNuevoMensaje) || PacienteSeleccionado == null)
                 return;
 
             var req = new ReqInsertarMensaje

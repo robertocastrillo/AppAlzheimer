@@ -33,14 +33,6 @@
                     CornerRadius="12"
                     HeightRequest="50"/>
 
-            <Button Text="Pacientes"
-                    x:Name="btnPacientes"
-                    BackgroundColor="#7c3aed"
-                    TextColor="White"
-                    FontAttributes="Bold"
-                    CornerRadius="12"
-                    HeightRequest="50"/>
-
             <Button Text="Eventos"
                     x:Name="btnEventos"
                     BackgroundColor="#7c3aed"

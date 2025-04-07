@@ -47,9 +47,13 @@ namespace TuApp
                 if (res != null && res.resultado)
                 {
                     SesionActiva.sesionActiva = res.Sesion;
-                    if (SesionActiva.sesionActiva.usuario.IdTipoUsuario == 1)
+                    if (SesionActiva.sesionActiva.usuario.IdTipoUsuario == 2)
                     {
                         Application.Current.MainPage = new MenuCuidadorPage(); // ← ESTE es el contenedor
+                    }
+                    if (SesionActiva.sesionActiva.usuario.IdTipoUsuario == 1)
+                    {
+                        Application.Current.MainPage = new InicioPaciente(); // ← ESTE es el contenedor
                     }
                     else
                     {

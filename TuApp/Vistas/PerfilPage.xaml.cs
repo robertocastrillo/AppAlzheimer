@@ -96,7 +96,7 @@ namespace TuApp.Vistas
                 await GuardarCambios();
             }
         }
-
+       
         private async Task GuardarCambios()
         {
             var usuario = SesionActiva.sesionActiva.usuario;

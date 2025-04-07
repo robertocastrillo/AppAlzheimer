@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="TuApp.Vistas.InicioPaciente"
+             BackgroundColor="Transparent">
+
+    <ContentPage.Background>
+        <LinearGradientBrush EndPoint="1,1">
+            <GradientStop Color="#5e1675" Offset="0.0" />
+            <GradientStop Color="#9333ea" Offset="0.5" />
+            <GradientStop Color="#3b0764" Offset="1.0" />
+        </LinearGradientBrush>
+    </ContentPage.Background>
+
+    <VerticalStackLayout Padding="20">
+
+        <!-- Panel superior con bienvenida -->
+        <Frame BackgroundColor="White"
+               CornerRadius="20"
+               Padding="25"
+               Opacity="0.15"
+               HasShadow="False">
+            <Label x:Name="lblBienvenida"
+                   Text="Bienvenido, Usuario"
+                   FontSize="28"
+                   TextColor="White"
+                   HorizontalTextAlignment="Center"
+                   FontAttributes="Bold"/>
+        </Frame>
+
+        <!-- Menú de botones -->
+        <VerticalStackLayout Spacing="10">
+            <Button Text="Perfil" Clicked="OnPerfilClicked" BackgroundColor="White" TextColor="Black" />
+            <Button Text="Juegos" Clicked="OnJuegosClicked" BackgroundColor="White" TextColor="Black" />
+            <Button Text="Eventos" Clicked="OnEventosClicked" BackgroundColor="White" TextColor="Black" />
+            <Button Text="Chats" Clicked="OnChatsClicked" BackgroundColor="White" TextColor="Black" />
+            <Button Text="Configuración" Clicked="OnConfiguracionClicked" BackgroundColor="White" TextColor="Black" />
+        </VerticalStackLayout>
+
+    </VerticalStackLayout>
+
+</ContentPage>

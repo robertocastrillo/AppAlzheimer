@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="TuApp.Vistas.ChatsPacientePage">
+
+    <!-- Ícono de casa en la esquina superior izquierda -->
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Inicio" Clicked="RegresarInicio_Clicked" />
+    </ContentPage.ToolbarItems>
+
+    <ContentPage.Background>
+        <LinearGradientBrush EndPoint="1,1">
+            <GradientStop Color="#a855f7" Offset="0.0" />
+            <GradientStop Color="#6366f1" Offset="1.0" />
+        </LinearGradientBrush>
+    </ContentPage.Background>
+
+    <ScrollView>
+        <VerticalStackLayout Padding="20" Spacing="15">
+            <Label Text="Mensajes"
+                   FontSize="28"
+                   FontAttributes="Bold"
+                   HorizontalTextAlignment="Center"
+                   TextColor="Black" />
+
+            <!-- CollectionView para mostrar los mensajes -->
+            <CollectionView x:Name="MensajesCollectionView"
+                            ItemsSource="{Binding Mensajes}" 
+                            SelectionMode="None">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Frame Padding="10" Margin="0,5" BackgroundColor="White" BorderColor="LightGray" CornerRadius="10">
+                            <StackLayout>
+                                <Label Text="{Binding Contenido}"
+                                       FontSize="16"
+                                       TextColor="Black"
+                                       LineBreakMode="WordWrap"
+                                       HorizontalTextAlignment="Start" />
+                                <Label Text="{Binding FechaEnviado, StringFormat='{0:dd MMM yyyy HH:mm}'}"
+                                       FontSize="12"
+                                       TextColor="Gray"
+                                       HorizontalTextAlignment="End" />
+                            </StackLayout>
+                        </Frame>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

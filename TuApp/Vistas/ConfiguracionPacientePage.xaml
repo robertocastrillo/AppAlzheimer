@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="TuApp.Vistas.ConfiguracionPacientePage">
+
+    <!-- Ícono de casa en la esquina superior izquierda -->
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Inicio" Clicked="RegresarInicio_Clicked" />
+    </ContentPage.ToolbarItems>
+
+    <ContentPage.Background>
+        <LinearGradientBrush EndPoint="1,1">
+            <GradientStop Color="#a855f7" Offset="0.0" />
+            <GradientStop Color="#6366f1" Offset="1.0" />
+        </LinearGradientBrush>
+    </ContentPage.Background>
+
+    <ScrollView>
+        <VerticalStackLayout Padding="30" Spacing="25" VerticalOptions="Center">
+
+            <Label Text="Configuraciones"
+                   FontSize="28"
+                   FontAttributes="Bold"
+                   HorizontalTextAlignment="Center"
+                   TextColor="Black" />
+
+            <Button Text="ACTUALIZAR CONTRASEÑA"
+                    BackgroundColor="#3B82F6"
+                    TextColor="White"
+                    FontAttributes="Bold"
+                    CornerRadius="10"
+                    HeightRequest="55"
+                    Clicked="ActualizarContrasena_Clicked"/>
+
+            <Button Text="Editar Pin"
+                    BackgroundColor="#3B82F6"
+                    TextColor="White"
+                    FontAttributes="Bold"
+                    CornerRadius="10"
+                    HeightRequest="55"
+                    Clicked="EditarPin_Clicked"/>
+            <Button Text="Crear Pin"
+         BackgroundColor="#3B82F6"
+         TextColor="White"
+         FontAttributes="Bold"
+         CornerRadius="10"
+         HeightRequest="55"
+         Clicked="GenerarPin_Clicked"/>
+
+            <Button Text="Eliminar Pin"
+                    BackgroundColor="#3B82F6"
+                    TextColor="White"
+                    FontAttributes="Bold"
+                    CornerRadius="10"
+                    HeightRequest="55"
+                    Clicked="EliminarPin_Clicked"/>
+            <Button Text="Relacion cuidador"
+          BackgroundColor="#3B82F6"
+          TextColor="White"
+          FontAttributes="Bold"
+          CornerRadius="10"
+          HeightRequest="55"
+          Clicked="RelacionCuidador_Clicked"/>
+
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

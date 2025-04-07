@@ -38,7 +38,7 @@
             <CollectionView ItemsSource="{Binding ListaMensajes}" HeightRequest="300">
                 <CollectionView.ItemTemplate>
                     <DataTemplate>
-                        <Frame Padding="10" Margin="5" BackgroundColor="LightGray">
+                        <Frame Padding="10" Margin="5" BackgroundColor="Black">
                             <Label Text="{Binding Contenido}" />
                         </Frame>
                     </DataTemplate>
@@ -50,7 +50,7 @@
                 <Entry Placeholder="Escribe un mensaje..." 
                        Text="{Binding ContenidoNuevoMensaje}" 
                        HorizontalOptions="FillAndExpand"
-                       BackgroundColor="LightYellow"/>
+                       BackgroundColor="Black"/>
                 <Button Text="Enviar"
                         Command="{Binding EnviarMensajeCommand}"
                         BackgroundColor="#4B3D8C"

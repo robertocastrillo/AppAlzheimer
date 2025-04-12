@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="TuApp.Vistas.DetallePregunta"
+             Title="DetallePregunta">
+    <Grid RowDefinitions="Auto, * , Auto" Padding="20">
+
+
+        <StackLayout Grid.Row="0" Spacing="10">
+            <Label Text="{Binding Descripcion}"
+               FontSize="20"
+               FontAttributes="Bold"
+               TextColor="Black" />
+
+            <Image Source="{Binding ImagenSource}"
+               HeightRequest="200"
+               Aspect="AspectFit" />
+        </StackLayout>
+        <!-- Lista deslizable -->
+        <CollectionView Grid.Row="1"
+                        ItemsSource="{Binding opciones}">
+            <!--SelectionMode="Single" SelectionChanged="JuegoSeleccionado">-->
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <Frame BackgroundColor="White" CornerRadius="20" Padding="10" Margin="0,5" BorderColor="#E0E0E0">
+                        <Grid ColumnDefinitions="*, Auto, Auto" VerticalOptions="Center">
+
+                            <!-- Descripción (columna 0) -->
+                            <Label Grid.Column="0"
+                   Text="{Binding Descripcion}"
+                   FontSize="16"
+                   TextColor="Black"
+                   VerticalOptions="Center" />
+
+                            <!-- Círculo de condición (columna 1) -->
+                            <BoxView Grid.Column="1"
+                     WidthRequest="20"
+                     HeightRequest="20"
+                     Color="{Binding SwitchColor}"
+                     CornerRadius="10"
+                     VerticalOptions="Center"
+                     Margin="10,0" />
+
+                            <!-- Botón eliminar (columna 2) -->
+                            <Button Grid.Column="2"
+                    Text="🗑️"
+                    FontSize="20"
+                    BackgroundColor="Transparent"
+                    TextColor="Red"
+                    Padding="0"
+                    CommandParameter="{Binding .}"
+                    VerticalOptions="Center" />
+                        </Grid>
+                    </Frame>
+                </DataTemplate>
+
+
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+
+        <!-- Botón fijo abajo -->
+        <Button Text="+" FontSize="32"
+                Clicked="AgregarOpcion_Clicked"
+                BackgroundColor="Transparent"
+                TextColor="Purple"
+                HorizontalOptions="Center"
+                VerticalOptions="End"
+                Grid.Row="2"
+                Margin="0,10"/>
+
+    </Grid>
+</ContentPage>

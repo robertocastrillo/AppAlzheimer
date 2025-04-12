@@ -26,5 +26,8 @@ public partial class InicioCuidadorPage : ContentPage
     {
         await Navigation.PushAsync(new MensajesPage());
     }
-
+    private async void btnJuegos_Cliked(object sender, EventArgs e)
+    {
+        await Navigation.PushAsync(new JuegoCuidador());
+    }
 }

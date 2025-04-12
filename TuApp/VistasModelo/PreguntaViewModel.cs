@@ -16,8 +16,8 @@ namespace TuApp.VistasModelo
     {
         public ObservableCollection<Pregunta> ListaPregunta { get; set; } = new ObservableCollection<Pregunta>();
 
-        
-        public PreguntaViewModel() 
+
+        public PreguntaViewModel()
         {
         }
 
@@ -43,7 +43,7 @@ namespace TuApp.VistasModelo
                 ResObtenerPreguntas res = new ResObtenerPreguntas();
                 res = JsonConvert.DeserializeObject<ResObtenerPreguntas>(contenido);
 
-                if (res != null && res.resultado)
+                if (res != null && res.juego.preguntas.Any())
                 {
                     ListaPregunta.Clear();
                     foreach (Pregunta pregunta in res.juego.preguntas)
@@ -52,7 +52,7 @@ namespace TuApp.VistasModelo
                         preg.IdPregunta = pregunta.IdPregunta;
                         preg.Descripcion = pregunta.Descripcion;
                         preg.Imagen = pregunta.Imagen;
-                        foreach(Opcion opcion in pregunta.opciones)
+                        foreach (Opcion opcion in pregunta.opciones)
                         {
                             Opcion opc = new Opcion();
                             opc.Id_Opcion = opcion.Id_Opcion;
@@ -61,13 +61,14 @@ namespace TuApp.VistasModelo
                             preg.opciones.Add(opcion);
                         }
                         ListaPregunta.Add(preg);
-                        
                     }
                 }
 
             }
 
         }
+
+
 
         public event PropertyChangedEventHandler PropertyChanged;
     }

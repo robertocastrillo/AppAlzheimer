@@ -31,7 +31,8 @@
                     TextColor="White"
                     FontAttributes="Bold"
                     CornerRadius="12"
-                    HeightRequest="50"/>
+                    HeightRequest="50"
+                    Clicked="btnJuegos_Cliked"/>
 
             <Button Text="Eventos"
                     x:Name="btnEventos"

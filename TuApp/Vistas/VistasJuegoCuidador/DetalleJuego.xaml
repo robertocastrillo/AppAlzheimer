@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:TuApp.VistasModelo"
+             x:Class="TuApp.Vistas.DetalleJuego">
+
+    <ContentPage.BindingContext>
+        <vm:PreguntaViewModel />
+    </ContentPage.BindingContext>
+    <Grid RowDefinitions="Auto, * , Auto" Padding="20">
+
+
+
+        <!-- Lista deslizable -->
+        <CollectionView Grid.Row="1"
+                        ItemsSource="{Binding ListaPregunta}"
+                        SelectionMode="Single"
+                        SelectionChanged="PreguntaSeleccionada">
+            <!--SelectionMode="Single" SelectionChanged="JuegoSeleccionado">-->
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <Frame BackgroundColor="White" CornerRadius="20" Padding="10" Margin="0,5" BorderColor="#E0E0E0">
+                        <Grid ColumnDefinitions="*, Auto"
+              RowDefinitions="Auto, Auto"
+              VerticalOptions="Center">
+
+                            <!-- Descripción -->
+                            <Label Grid.Row="0" Grid.Column="0"
+                   Text="{Binding Descripcion}"
+                   FontSize="16"
+                   TextColor="Black"
+                   FontAttributes="Bold"
+                   VerticalOptions="Center"
+                   HorizontalOptions="Start" />
+
+                            <!-- Botón eliminar arriba a la derecha -->
+                            <Button Grid.Row="0" Grid.Column="1"
+                    Text="🗑️"
+                    FontSize="18"
+                    BackgroundColor="Transparent"
+                    TextColor="Red"
+                    Padding="5"
+                    CommandParameter="{Binding .}"
+                    VerticalOptions="Center"
+                    HorizontalOptions="End" />
+
+                            <!-- Imagen debajo de la descripción -->
+                            <Image Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2"
+                   Source="{Binding ImagenSource}"
+                   HeightRequest="160"
+                   Aspect="AspectFit"
+                   VerticalOptions="Center"
+                   Margin="0,10,0,0" />
+
+                        </Grid>
+                    </Frame>
+                </DataTemplate>
+
+
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+
+        <!-- Botón fijo abajo -->
+        <Button Text="+" FontSize="32"
+                BackgroundColor="Transparent"
+                Clicked="AgregarPregunta_Clicked"
+                TextColor="Purple"
+                HorizontalOptions="Center"
+                VerticalOptions="End"
+                Grid.Row="2"
+                Margin="0,10"/>
+
+    </Grid>
+</ContentPage>

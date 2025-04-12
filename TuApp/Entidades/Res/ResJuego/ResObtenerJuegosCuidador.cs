@@ -11,6 +11,6 @@ namespace TuApp.Entidades
     {
         public int IdJuego { get; set; }
         public string Nombre { get; set; }
-        public int numPreg { get; set; }
+        public int numPreguntas { get; set; }
     }
 }

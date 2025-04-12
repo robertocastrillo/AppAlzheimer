@@ -12,5 +12,15 @@ namespace TuApp.Entidades
         public string Descripcion { get; set; }
         public byte[] Imagen { get; set; }
         public List<Opcion> opciones { get; set; } = new List<Opcion>();
+        public ImageSource ImagenSource
+        {
+            get
+            {
+                if (Imagen == null || Imagen.Length == 0)
+                    return null;
+
+                return ImageSource.FromStream(() => new MemoryStream(Imagen));
+            }
+        }
     }
 }

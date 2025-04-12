@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<toolkit:Popup
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+    x:Class="TuApp.InsertarPreguntaPopup"
+    Size="300,350">
+
+    <VerticalStackLayout Padding="20" Spacing="15">
+        <Label Text="Agregar Pregunta" FontSize="20" HorizontalOptions="Center" />
+
+        <Entry x:Name="descripcionEntry" Placeholder="Descripción de la pregunta" />
+
+        <Button Text="Subir Imagen" Clicked="OnSubirImagenClicked" />
+        <Label x:Name="lblResultado" FontSize="12" TextColor="Gray" />
+
+        <Button Text="Guardar" Clicked="OnGuardarClicked" />
+    </VerticalStackLayout>
+</toolkit:Popup>

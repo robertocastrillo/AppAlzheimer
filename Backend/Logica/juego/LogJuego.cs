@@ -417,10 +417,10 @@ namespace Backend.Logica.Juego
                     var resultado = new List<SP_OBTENER_PUNTAJEResult>();
                     using (MiLinqDataContext linq = new MiLinqDataContext())
                     {
-                        resultado = linq.SP_OBTENER_PUNTAJE(req.idPaciente, ref errorId, ref errorCode, ref errorDescrip).ToList();
+                        resultado = linq.SP_OBTENER_PUNTAJE(req.idPaciente, req.idJuego, req.idCuidador, ref errorId, ref errorCode, ref errorDescrip).ToList();
 
                     }
-                    if (errorId > 0) // Si el ID devuelto es mayor que 0, el usuario se insertó correctamente
+                    if (errorId > 0 || errorId != null) // Si el ID devuelto es mayor que 0, el usuario se insertó correctamente
                     {
                         res.resultado = false;
                         res.listaDeErrores.Add(new Error
@@ -431,6 +431,7 @@ namespace Backend.Logica.Juego
                     }
                     else // Si no se insertó, manejar el error devuelto por el SP
                     {
+                        res.resultado = true;
                         res.puntajes = factoryPuntaje(resultado);
                     }
                 }

@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Backend.Entidades
+namespace TuApp.Entidades
 {
-    public class ReqObtenerPuntaje
+    public class ReqObtenerPuntajes
     {
         public int idPaciente { get; set; }
         public int idCuidador { get; set; }

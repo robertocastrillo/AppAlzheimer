@@ -408,12 +408,12 @@ namespace AccesoDatos
 		}
 		
 		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.SP_OBTENER_PUNTAJE")]
-		public ISingleResult<SP_OBTENER_PUNTAJEResult> SP_OBTENER_PUNTAJE([global::System.Data.Linq.Mapping.ParameterAttribute(Name="ID_PACIENTE", DbType="Int")] System.Nullable<int> iD_PACIENTE, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="ERROR_ID", DbType="Int")] ref System.Nullable<int> eRROR_ID, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="ERROR_CODE", DbType="NVarChar(255)")] ref string eRROR_CODE, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="ERROR_DESCRIPTION", DbType="NVarChar(MAX)")] ref string eRROR_DESCRIPTION)
+		public ISingleResult<SP_OBTENER_PUNTAJEResult> SP_OBTENER_PUNTAJE([global::System.Data.Linq.Mapping.ParameterAttribute(Name="ID_PACIENTE", DbType="Int")] System.Nullable<int> iD_PACIENTE, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="ID_JUEGO", DbType="Int")] System.Nullable<int> iD_JUEGO, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="ID_CUIDADOR", DbType="Int")] System.Nullable<int> iD_CUIDADOR, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="ERROR_ID", DbType="Int")] ref System.Nullable<int> eRROR_ID, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="ERROR_CODE", DbType="NVarChar(255)")] ref string eRROR_CODE, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="ERROR_DESCRIPTION", DbType="NVarChar(MAX)")] ref string eRROR_DESCRIPTION)
 		{
-			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), iD_PACIENTE, eRROR_ID, eRROR_CODE, eRROR_DESCRIPTION);
-			eRROR_ID = ((System.Nullable<int>)(result.GetParameterValue(1)));
-			eRROR_CODE = ((string)(result.GetParameterValue(2)));
-			eRROR_DESCRIPTION = ((string)(result.GetParameterValue(3)));
+			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), iD_PACIENTE, iD_JUEGO, iD_CUIDADOR, eRROR_ID, eRROR_CODE, eRROR_DESCRIPTION);
+			eRROR_ID = ((System.Nullable<int>)(result.GetParameterValue(3)));
+			eRROR_CODE = ((string)(result.GetParameterValue(4)));
+			eRROR_DESCRIPTION = ((string)(result.GetParameterValue(5)));
 			return ((ISingleResult<SP_OBTENER_PUNTAJEResult>)(result.ReturnValue));
 		}
 	}
@@ -571,7 +571,7 @@ namespace AccesoDatos
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_FOTO_PERFIL", DbType="VarBinary(MAX)")]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_FOTO_PERFIL", DbType="VarBinary(MAX)", CanBeNull=true)]
 		public System.Data.Linq.Binary FOTO_PERFIL
 		{
 			get
@@ -763,7 +763,7 @@ namespace AccesoDatos
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_FOTO_PERFIL", DbType="VarBinary(MAX)")]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_FOTO_PERFIL", DbType="VarBinary(MAX)", CanBeNull=true)]
 		public System.Data.Linq.Binary FOTO_PERFIL
 		{
 			get

@@ -50,7 +50,19 @@ public partial class PacientesJuego : ContentPage
             // La recarga ya está implícita en InsertarRelacionJuego (hace await CargarJuegos)
         }
     }
+    private async void VerPuntajes_Clicked(object sender, EventArgs e)
+    {
+        var button = sender as Button;
+        if (button?.CommandParameter is PacienteAsignado paciente)
+        {
+            int idPaciente = paciente.id_Usuario; // Ajusta si tu propiedad se llama distinto
+            int idJuego = juego.idJuego;
 
+            // Abre el popup
+            var popup = new PuntajesPopup(idPaciente, idJuego);
+            await Application.Current.MainPage.ShowPopupAsync(popup);
+        }
+    }
 
 
 }

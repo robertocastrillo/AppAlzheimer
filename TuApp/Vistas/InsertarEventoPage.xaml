@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:TuApp.VistasModelo"
+             x:Class="TuApp.Vistas.InsertarEventoPage"
+             Title="Nuevo Evento">
+
+    <ContentPage.BindingContext>
+        <vm:EventoViewModel />
+    </ContentPage.BindingContext>
+
+    <ScrollView>
+        <StackLayout Padding="20" Spacing="15">
+
+            <Label Text="Título" />
+            <Entry Placeholder="Ingrese título del evento" Text="{Binding Titulo}" />
+
+            <Label Text="Descripción" />
+            <Editor Placeholder="Descripción del evento (opcional)" Text="{Binding Descripcion}" />
+
+            <Label Text="Fecha del evento" />
+            <DatePicker Date="{Binding Fecha}" />
+
+            <Label Text="Hora del evento" />
+            <TimePicker Time="{Binding Hora}" />
+
+            <Label Text="Prioridad" />
+            <Picker Title="Seleccione prioridad"
+                    ItemsSource="{Binding ListaPrioridades}"
+                    ItemDisplayBinding="{Binding Descripcion}"
+                    SelectedItem="{Binding PrioridadSeleccionada}" />
+
+            <Button Text="Guardar evento"
+                    BackgroundColor="#10b981"
+                    TextColor="White"
+                    FontAttributes="Bold"
+                    CornerRadius="12"
+                    HeightRequest="50"
+                    Command="{Binding InsertarEventoCommand}" />
+        </StackLayout>
+    </ScrollView>
+</ContentPage>

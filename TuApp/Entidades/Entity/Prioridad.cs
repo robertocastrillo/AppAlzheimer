@@ -6,7 +6,9 @@ using System.Threading.Tasks;
 
 namespace TuApp.Entidades
 {
-    public class ResObtenerEvento : ResBase
+    public class Prioridad
     {
+        public int IdPrioridad { get; set; }
+        public string Descripcion { get; set; }
     }
 }

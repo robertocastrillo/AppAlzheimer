@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:TuApp.VistasModelo"
+             x:Class="TuApp.Vistas.EventosPage"
+             Title="Mis Eventos">
+
+    <ContentPage.BindingContext>
+        <vm:EventoViewModel />
+    </ContentPage.BindingContext>
+
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="+" Clicked="OnAgregarEventoClicked"/>
+    </ContentPage.ToolbarItems>
+
+    <StackLayout Padding="15">
+
+        <Label Text="Eventos asignados" 
+               FontAttributes="Bold" 
+               FontSize="20" 
+               HorizontalOptions="Center"/>
+
+        <CollectionView ItemsSource="{Binding ListaEventos}"
+                        SelectionMode="Single"
+                        SelectionChanged="CollectionView_SelectionChanged"
+                        Margin="0,15,0,0">
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <Frame Margin="5"
+                           Padding="10"
+                           CornerRadius="10"
+                           BorderColor="#7c3aed"
+                           HasShadow="True">
+                        <StackLayout>
+                            <Label Text="{Binding Titulo}" FontSize="18" FontAttributes="Bold"/>
+                            <Label Text="{Binding FechaHora, StringFormat='Fecha: {0:dd/MM/yyyy HH:mm}'}" FontSize="14"/>
+                            <Label Text="{Binding Descripcion}" FontSize="13" TextColor="Gray"/>
+                        </StackLayout>
+                    </Frame>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+
+    </StackLayout>
+</ContentPage>

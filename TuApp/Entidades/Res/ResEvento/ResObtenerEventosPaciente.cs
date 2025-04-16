@@ -6,7 +6,9 @@ using System.Threading.Tasks;
 
 namespace TuApp.Entidades
 {
-    public class ResObtenerEvento : ResBase
+    public class ResObtenerEventosPaciente : ResBase
     {
+        public List<Evento> eventos { get; set; }
+
     }
 }

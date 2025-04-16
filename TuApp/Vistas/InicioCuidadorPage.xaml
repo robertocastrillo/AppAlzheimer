@@ -40,7 +40,9 @@
                     TextColor="White"
                     FontAttributes="Bold"
                     CornerRadius="12"
-                    HeightRequest="50"/>
+                    HeightRequest="50"
+                    Clicked="btnEventos_Clicked"/>
+
 
             <Button Text="Relacion"
                     x:Name="btnRealacion"

@@ -207,67 +207,49 @@ namespace Backend.Logica.Juego
             return res;
         }
 
-        public List<ResObtenerJuegosCuidador> obtenerJuegosCuidador(ReqObtenerJuegosCuidador req)
+        public ResObtenerJuegosCuidador obtenerJuegosCuidador(ReqObtenerJuegosCuidador req)
         {
 
-            List<ResObtenerJuegosCuidador> res = new List<ResObtenerJuegosCuidador>();
-            ResObtenerJuegosCuidador juego = new ResObtenerJuegosCuidador();
-            juego.listaDeErrores = new List<Error>();
+            ResObtenerJuegosCuidador res = new ResObtenerJuegosCuidador();
 
             try
             {
-                juego.listaDeErrores = ValidarJuego.validarUsuario(req.idCuidador);
-
-                if (!juego.listaDeErrores.Any())
+                res.listaDeErrores = ValidarJuego.validarJuego(req.idCuidador);
+                int? errorId = 0;
+                string errorCode = "";
+                string errorDescrip = "";
+                if (!res.listaDeErrores.Any())
                 {
-                    int? errorId = 0;
-                    string errorCode = "";
-                    string errorDescrip = "";
+                    var resultado = new List<SP_OBTENER_JUEGOS_CREADOSResult>();
                     using (MiLinqDataContext linq = new MiLinqDataContext())
                     {
-                        var resultado = linq.SP_OBTENER_JUEGOS_CREADOS(req.idCuidador, ref errorId, ref errorCode, ref errorDescrip);
-
-                        if (errorId == null) // Si el ID devuelto es mayor que 0, el usuario se insertó correctamente
-                        {
-                            
-                            foreach (var item in resultado)
-                            {
-                                juego = new ResObtenerJuegosCuidador();
-                                juego.idJuego = item.ID_JUEGO;
-                                juego.nombre = item.NOMBRE;
-                                juego.numPreguntas = (int)item.TOTAL_PREGUNTAS;
-                                juego.resultado = true;
-                                res.Add(juego);
-                            }
-
-                        }
-                        else // Si no se insertó, manejar el error devuelto por el SP
-                        {
-                            juego.resultado = false;
-                            juego.listaDeErrores.Add(new Error
-                            {
-                                idError = (int)errorId,
-                                error = errorCode
-                            });
-                            res.Add(juego);
-                        }
-
-
+                        resultado = linq.SP_OBTENER_JUEGOS_CREADOS(req.idCuidador, ref errorId, ref errorCode, ref errorDescrip).ToList();
 
                     }
-
+                    if (errorId == null || errorId > 0)
+                    {
+                        res.resultado = true;
+                        res.juegosCuidadorList = factoryJuegosPacientes(resultado);
+                    }
+                    else
+                    {
+                        res.resultado = false;
+                        res.listaDeErrores.Add(new Error
+                        {
+                            idError = (int)errorId,
+                            error = errorCode
+                        });
+                    }
                 }
             }
             catch (Exception ex)
             {
-                juego.resultado = false;
                 Error error = new Error();
                 error.idError = -1;
                 error.error = ex.Message;
-                juego.listaDeErrores.Add(error);
-                res.Add(juego);
+                res.resultado = false;
+                res.listaDeErrores.Add(error);
             }
-
             return res;
         }
 
@@ -557,6 +539,38 @@ namespace Backend.Logica.Juego
             }
 
             return puntajes;
+        }
+
+
+        private List<JuegoCuidador> factoryJuegosPacientes(List<SP_OBTENER_JUEGOS_CREADOSResult> tc)
+        {
+            List<JuegoCuidador> res = new List<JuegoCuidador>();
+
+            List<PacienteAsignado> pacientes = new List<PacienteAsignado>();
+
+            foreach (var juego in tc)
+            {
+                JuegoCuidador Juego = new JuegoCuidador();
+                List<PacienteAsignado> listaPacientes = new List<PacienteAsignado>();
+                if (!string.IsNullOrWhiteSpace(juego.PACIENTES))
+                {
+                    
+                    pacientes = JsonConvert.DeserializeObject<List<PacienteAsignado>>(juego.PACIENTES);
+                }
+                foreach (PacienteAsignado paciente in pacientes)
+                {
+                    PacienteAsignado pacAsig = new PacienteAsignado();
+                    pacAsig.id_Usuario = (int)paciente.id_Usuario;
+                    pacAsig.nombre = paciente.nombre;
+                    listaPacientes.Add(pacAsig);
+                }
+                Juego.pacientes = listaPacientes;
+                Juego.idJuego = juego.ID_JUEGO;
+                Juego.nombre = juego.NOMBRE.ToString();
+                Juego.numPreguntas = (int)juego.TOTAL_PREGUNTAS;
+                res.Add(Juego);
+            }
+            return res;
         }
     }
 }

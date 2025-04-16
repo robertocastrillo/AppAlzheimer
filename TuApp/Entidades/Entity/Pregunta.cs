@@ -1,17 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace TuApp.Entidades
 {
-    public class Pregunta
+    public class Pregunta : INotifyPropertyChanged
     {
         public int IdPregunta { get; set; }
         public string Descripcion { get; set; }
         public byte[] Imagen { get; set; }
-        public List<Opcion> opciones { get; set; } = new List<Opcion>();
+        public ObservableCollection<Opcion> opciones { get; set; } = new();
         public ImageSource ImagenSource
         {
             get
@@ -22,5 +24,7 @@ namespace TuApp.Entidades
                 return ImageSource.FromStream(() => new MemoryStream(Imagen));
             }
         }
+
+        public event PropertyChangedEventHandler PropertyChanged;
     }
 }

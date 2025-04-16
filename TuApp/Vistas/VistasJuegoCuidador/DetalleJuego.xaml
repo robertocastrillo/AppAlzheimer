@@ -34,16 +34,6 @@
                    VerticalOptions="Center"
                    HorizontalOptions="Start" />
 
-                            <!-- Botón eliminar arriba a la derecha -->
-                            <Button Grid.Row="0" Grid.Column="1"
-                    Text="🗑️"
-                    FontSize="18"
-                    BackgroundColor="Transparent"
-                    TextColor="Red"
-                    Padding="5"
-                    CommandParameter="{Binding .}"
-                    VerticalOptions="Center"
-                    HorizontalOptions="End" />
 
                             <!-- Imagen debajo de la descripción -->
                             <Image Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2"

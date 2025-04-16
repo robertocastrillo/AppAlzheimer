@@ -1606,7 +1606,6 @@ BEGIN
 END;
 GO
 
--- SP026: OBTENER JUEGOS CREADOS (POR USUARIO CUIDADOR)
 CREATE OR ALTER PROCEDURE SP_OBTENER_JUEGOS_CREADOS
     @ID_CUIDADOR INT,
     @ERROR_ID INT OUTPUT,
@@ -1617,7 +1616,13 @@ BEGIN
     BEGIN TRY
         BEGIN TRANSACTION; 
 
-        IF NOT EXISTS (SELECT 1 FROM USUARIO WHERE ID_USUARIO = @ID_CUIDADOR AND ID_TIPO_USUARIO = 2)
+        -- Validar que el usuario sea un cuidador
+        IF NOT EXISTS (
+            SELECT 1 
+            FROM USUARIO 
+            WHERE ID_USUARIO = @ID_CUIDADOR 
+              AND ID_TIPO_USUARIO = 2
+        )
         BEGIN
             SELECT @ERROR_ID = NUM_ERROR, 
                    @ERROR_CODE = CODE_ERROR, 
@@ -1629,27 +1634,44 @@ BEGIN
             RETURN;
         END
 
+        -- Juegos creados con pacientes asignados
         SELECT 
             J.ID_JUEGO,
             J.NOMBRE,
-            (SELECT COUNT(*) FROM PREGUNTA WHERE ID_JUEGO = J.ID_JUEGO) AS TOTAL_PREGUNTAS
-        FROM JUEGO J
-        WHERE ID_USUARIO_CREADOR = @ID_CUIDADOR;
+            (SELECT COUNT(*) 
+            FROM PREGUNTA 
+            WHERE ID_JUEGO = J.ID_JUEGO) AS TOTAL_PREGUNTAS,
+            
+            -- Pacientes asignados al juego
+            ISNULL((
+                SELECT 
+                    U.ID_USUARIO,
+                    U.NOMBRE
+                FROM JUEGO_PACIENTE JP
+                INNER JOIN USUARIO U ON JP.ID_PACIENTE = U.ID_USUARIO
+                WHERE JP.ID_JUEGO = J.ID_JUEGO
+                FOR JSON PATH, INCLUDE_NULL_VALUES
+            ), '[]') AS PACIENTES
 
-        COMMIT TRANSACTION; 
+        FROM JUEGO J
+        WHERE J.ID_USUARIO_CREADOR = @ID_CUIDADOR
+
+
+        COMMIT TRANSACTION;
 
         SET @ERROR_ID = NULL;
         SET @ERROR_CODE = NULL;
         SET @ERROR_DESCRIPTION = NULL;
     END TRY
     BEGIN CATCH
+        ROLLBACK TRANSACTION;
         SET @ERROR_ID = ERROR_NUMBER();
         SET @ERROR_CODE = 'ERROR_SQL';
         SET @ERROR_DESCRIPTION = ERROR_MESSAGE();
-        ROLLBACK TRANSACTION;
     END CATCH
 END;
 GO
+
 
 -- SP027: OBTENER JUEGOS DISPONIBLES (PARA USUARIO PACIENTE)
 CREATE OR ALTER PROCEDURE SP_OBTENER_JUEGOS_DISPONIBLES

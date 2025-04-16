@@ -1,0 +1,79 @@
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:TuApp.VistasModelo"
+             x:Class="TuApp.Vistas.JuegosCuidador"
+             Title="JuegosCuidador">
+
+    <ContentPage.BindingContext>
+        <vm:JuegoViewModel />
+    </ContentPage.BindingContext>
+
+    <Grid RowDefinitions="Auto, *, Auto" Padding="20" BackgroundColor="#fafafa">
+
+        <!-- Lista de juegos -->
+        <CollectionView Grid.Row="1"
+                        ItemsSource="{Binding ListaJuegos}"
+                        SelectionMode="Single"
+                        SelectionChanged="JuegoSeleccionado">
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <Frame BackgroundColor="White"
+                           CornerRadius="20"
+                           Padding="15"
+                           Margin="0,8"
+                           HasShadow="True"
+                           BorderColor="#e0e0e0">
+
+                        <Grid ColumnDefinitions="*, Auto"
+                              RowDefinitions="Auto, Auto"
+                              ColumnSpacing="10"
+                              RowSpacing="8"
+                              VerticalOptions="Center">
+
+                            <!-- Nombre del juego -->
+                            <Label Grid.Row="0" Grid.Column="0"
+                                   Text="{Binding nombre}"
+                                   FontSize="18"
+                                   FontAttributes="Bold"
+                                   TextColor="#1a1a1a" />
+
+                            <!-- Botón de pacientes asignados -->
+                            <Button Grid.Row="0" Grid.Column="1"
+                                    Clicked="AbrirPacientesAsignados_Clicked"
+                                    Text="Pacientes Asignados"
+                                    FontSize="14"
+                                    Padding="10,5"
+                                    BackgroundColor="#ede7f6"
+                                    TextColor="#5e35b1"
+                                    BorderColor="#5e35b1"
+                                    BorderWidth="1"
+                                    CornerRadius="20"
+                                    CommandParameter="{Binding}" />
+
+                            <!-- Total de preguntas -->
+                            <Label Grid.Row="1" Grid.Column="0"
+                                   Text="{Binding numPreguntas, StringFormat='Preguntas: {0}'}"
+                                   FontSize="14"
+                                   TextColor="#555" />
+
+                        </Grid>
+                    </Frame>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+
+        <!-- Botón flotante de agregar -->
+        <Button Text="+"
+                FontSize="32"
+                Clicked="AgregarJuego_Clicked"
+                BackgroundColor="#ede7f6"
+                TextColor="#5e35b1"
+                CornerRadius="30"
+                WidthRequest="60"
+                HeightRequest="60"
+                HorizontalOptions="Center"
+                VerticalOptions="End"
+                Grid.Row="2"
+                Margin="0,10"/>
+    </Grid>
+</ContentPage>

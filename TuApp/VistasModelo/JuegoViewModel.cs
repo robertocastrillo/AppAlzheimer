@@ -15,7 +15,7 @@ namespace TuApp.VistasModelo
 {
     public class JuegoViewModel : INotifyPropertyChanged
     {
-        public ObservableCollection<ResObtenerJuegosCuidador> ListaJuegos { get; set; } = new ObservableCollection<ResObtenerJuegosCuidador>();
+        public ObservableCollection<JuegoCuidador> ListaJuegos { get; set; } = new ObservableCollection<JuegoCuidador>();
 
         public ICommand CargarCommand { get; }
         public JuegoViewModel()
@@ -41,19 +41,30 @@ namespace TuApp.VistasModelo
             if (respuestaHttp.IsSuccessStatusCode)
             {
                 var contenido = await respuestaHttp.Content.ReadAsStringAsync();
-                List<ResObtenerJuegosCuidador> res = new List<ResObtenerJuegosCuidador>();
-                res = JsonConvert.DeserializeObject<List<ResObtenerJuegosCuidador>>(contenido);
+                ResObtenerJuegosCuidador res = new ResObtenerJuegosCuidador();
+                res = JsonConvert.DeserializeObject<ResObtenerJuegosCuidador>(contenido);
 
-                if (res != null && res.First().resultado)
+                if (res != null && res.resultado)
                 {
                     ListaJuegos.Clear();
-                    foreach (ResObtenerJuegosCuidador juego in res)
+                    foreach (JuegoCuidador juego in res.juegosCuidadorList)
                     {
-                        ResObtenerJuegosCuidador juegonuevo = new ResObtenerJuegosCuidador();
-                        juegonuevo.IdJuego = juego.IdJuego;
-                        juegonuevo.Nombre = juego.Nombre;
-                        juegonuevo.numPreguntas = juego.numPreguntas;
-                        ListaJuegos.Add(juegonuevo);
+                        JuegoCuidador juegoCuidador = new JuegoCuidador();
+                        
+                        List<PacienteAsignado> pacientes = new List<PacienteAsignado>();
+
+                        foreach (PacienteAsignado pac in juego.pacientes)
+                        {
+                            PacienteAsignado paciente = new PacienteAsignado();
+                            paciente.id_Usuario = pac.id_Usuario;
+                            paciente.nombre = pac.nombre;
+                            pacientes.Add(paciente);
+                        }
+                        juegoCuidador.idJuego = juego.idJuego;
+                        juegoCuidador.nombre = juego.nombre;
+                        juegoCuidador.numPreguntas = juego.numPreguntas;
+                        juegoCuidador.pacientes = new ObservableCollection<PacienteAsignado>(pacientes);
+                        ListaJuegos.Add(juegoCuidador);
                     }
                 }
 
@@ -126,6 +137,51 @@ namespace TuApp.VistasModelo
             }
 
         }
+        public async Task InsertarRelacionJuego(int idJuego, int idPaciente)
+        {
+            try
+            {
+                var req = new ReqInsertarRelacionJuego
+                {
+                    idJuego = idJuego,
+                    idUsuario = SesionActiva.sesionActiva.usuario.IdUsuario,
+                    idPaciente = idPaciente
+                };
+
+                var jsonContent = new StringContent(JsonConvert.SerializeObject(req), Encoding.UTF8, "application/json");
+
+                using (HttpClient httpClient = new HttpClient())
+                {
+                    httpClient.BaseAddress = new Uri("https://localhost:44347/api/");
+                    var respuestaHttp = await httpClient.PostAsync("juego/insertarrelacion", jsonContent);
+
+                    if (respuestaHttp.IsSuccessStatusCode)
+                    {
+                        var contenido = await respuestaHttp.Content.ReadAsStringAsync();
+                        var resultado = JsonConvert.DeserializeObject<ResBase>(contenido);
+
+                        if (resultado != null && resultado.resultado)
+                        {
+                            await App.Current.MainPage.DisplayAlert("Éxito", "Paciente asignado al juego correctamente", "Aceptar");
+                            await CargarJuegos(); // Recarga lista con nuevos datos
+                        }
+                        else
+                        {
+                            await App.Current.MainPage.DisplayAlert("Error", "No se pudo asignar el paciente al juego", "Aceptar");
+                        }
+                    }
+                    else
+                    {
+                        await App.Current.MainPage.DisplayAlert("Error", "Error en la conexión con el servidor", "Aceptar");
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                await App.Current.MainPage.DisplayAlert("Excepción", ex.Message, "OK");
+            }
+        }
+
         public event PropertyChangedEventHandler PropertyChanged;
     }
 }

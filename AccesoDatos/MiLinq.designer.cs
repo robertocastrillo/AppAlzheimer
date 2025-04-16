@@ -1187,6 +1187,8 @@ namespace AccesoDatos
 		
 		private System.Nullable<int> _TOTAL_PREGUNTAS;
 		
+		private string _PACIENTES;
+		
 		public SP_OBTENER_JUEGOS_CREADOSResult()
 		{
 		}
@@ -1235,6 +1237,22 @@ namespace AccesoDatos
 				if ((this._TOTAL_PREGUNTAS != value))
 				{
 					this._TOTAL_PREGUNTAS = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PACIENTES", DbType="NVarChar(MAX) NOT NULL", CanBeNull=false)]
+		public string PACIENTES
+		{
+			get
+			{
+				return this._PACIENTES;
+			}
+			set
+			{
+				if ((this._PACIENTES != value))
+				{
+					this._PACIENTES = value;
 				}
 			}
 		}

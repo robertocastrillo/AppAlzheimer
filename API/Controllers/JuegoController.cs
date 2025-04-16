@@ -34,7 +34,7 @@ namespace API.Controllers
 
         [System.Web.Http.HttpPost]
         [System.Web.Http.Route("api/juego/obtenerjuegoscuidador")]
-        public List<ResObtenerJuegosCuidador> obtenerJuegosCuidador(ReqObtenerJuegosCuidador req) //INVESTIGAR: Recibir y retornar HTTP
+        public ResObtenerJuegosCuidador obtenerJuegosCuidador(ReqObtenerJuegosCuidador req) //INVESTIGAR: Recibir y retornar HTTP
         {
             return new LogJuego().obtenerJuegosCuidador(req);
         }

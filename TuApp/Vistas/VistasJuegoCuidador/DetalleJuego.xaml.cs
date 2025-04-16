@@ -13,14 +13,15 @@ namespace TuApp.Vistas;
 public partial class DetalleJuego : ContentPage
 {
     private PreguntaViewModel viewModel;
-
-    public DetalleJuego(ResObtenerJuegosCuidador juego)
+    private JuegoCuidador juego;
+    public DetalleJuego(JuegoCuidador juego)
     {
         InitializeComponent();
 
         try
         {
             viewModel = BindingContext as PreguntaViewModel;
+            this.juego = juego;
             CargarDatos(juego);
         }
         catch (Exception ex)
@@ -29,9 +30,9 @@ public partial class DetalleJuego : ContentPage
         }
     }
 
-    private async void CargarDatos(ResObtenerJuegosCuidador juego)
+    private async void CargarDatos(JuegoCuidador juegocuidador)
     {
-        await viewModel.CargarPreguntas(juego);
+        await viewModel.CargarPreguntas(juegocuidador);
 
         // Si no hay preguntas, muestra una alerta
         if (viewModel.ListaPregunta == null || !viewModel.ListaPregunta.Any())
@@ -53,11 +54,15 @@ public partial class DetalleJuego : ContentPage
         var popup = new InsertarPreguntaPopup();
         var pregunta = await this.ShowPopupAsync(popup) as Pregunta;
 
-        if (pregunta != null && BindingContext is PreguntaViewModel vm)
+        if (pregunta != null)
         {
-            vm.ListaPregunta.Add(pregunta);
+            int idJuego = juego.idJuego;
+            int idUsuario = SesionActiva.sesionActiva.usuario.IdUsuario;
+
+            await Navigation.PushAsync(new DetallePregunta(pregunta, viewModel, idJuego, idUsuario));
         }
     }
+
 
 
 }

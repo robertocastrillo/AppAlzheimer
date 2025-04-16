@@ -14,7 +14,7 @@ namespace TuApp
         private async void OnGuardarClicked(object sender, EventArgs e)
         {
             string descripcion = descripcionEntry.Text?.Trim();
-            bool condicion = condicionSwitch.IsToggled;
+            bool condicion = condicionCheck.IsChecked;
 
             if (string.IsNullOrEmpty(descripcion))
             {

@@ -16,17 +16,17 @@ namespace TuApp.VistasModelo
     {
         public ObservableCollection<Pregunta> ListaPregunta { get; set; } = new ObservableCollection<Pregunta>();
 
-
+        public Pregunta PreguntaNueva {get; set;} = new Pregunta();
         public PreguntaViewModel()
         {
         }
 
 
-        public async Task CargarPreguntas(ResObtenerJuegosCuidador juegoselec)
+        public async Task CargarPreguntas(JuegoCuidador juegoselec)
         {
             ReqObtenerPreguntas req = new ReqObtenerPreguntas
             {
-                idJuego = juegoselec.IdJuego
+                idJuego = juegoselec.idJuego
             };
             var jsonContent = new StringContent(JsonConvert.SerializeObject(req), Encoding.UTF8, "application/json");
 
@@ -68,6 +68,55 @@ namespace TuApp.VistasModelo
 
         }
 
+        public async Task InsertarPregunta(Pregunta pregunta, int idJuego, int idUsuario)
+        {
+            try
+            {
+                // Preparamos la pregunta (convertimos imagen a base64)
+                var preguntaJson = new
+                {
+                    Descripcion = pregunta.Descripcion,
+                    Imagen = Convert.ToBase64String(pregunta.Imagen),
+                    opciones = pregunta.opciones.Select(o => new
+                    {
+                        Descripcion = o.Descripcion,
+                        Condicion = o.Condicion
+                    }).ToList()
+                };
+
+                var req = new
+                {
+                    idUsuario = idUsuario,
+                    idJuego = idJuego,
+                    preguntas = new[] { preguntaJson }
+                };
+
+                var json = JsonConvert.SerializeObject(req);
+                var content = new StringContent(json, Encoding.UTF8, "application/json");
+
+                HttpResponseMessage respuestaHttp;
+
+                using (HttpClient httpClient = new HttpClient())
+                {
+                    httpClient.BaseAddress = new Uri("https://localhost:44347/api/");
+                    respuestaHttp = await httpClient.PostAsync("juego/insertarpregunta", content);
+                }
+
+                if (respuestaHttp.IsSuccessStatusCode)
+                {
+                    // Podés asumir que fue insertada, o podrías leer la respuesta si retorna ID
+                    ListaPregunta.Add(pregunta);
+                }
+                else
+                {
+                    await Application.Current.MainPage.DisplayAlert("Error", "No se pudo insertar la pregunta", "OK");
+                }
+            }
+            catch (Exception ex)
+            {
+                await Application.Current.MainPage.DisplayAlert("Error inesperado", ex.Message, "OK");
+            }
+        }
 
 
         public event PropertyChangedEventHandler PropertyChanged;

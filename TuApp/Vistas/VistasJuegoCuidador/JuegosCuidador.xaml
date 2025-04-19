@@ -12,7 +12,7 @@
 
         <!-- Lista de juegos -->
         <CollectionView Grid.Row="1"
-                        ItemsSource="{Binding ListaJuegos}"
+                        ItemsSource="{Binding ListaJuegosCuidador}"
                         SelectionMode="Single"
                         SelectionChanged="JuegoSeleccionado">
             <CollectionView.ItemTemplate>

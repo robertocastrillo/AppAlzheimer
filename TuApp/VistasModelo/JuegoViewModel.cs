@@ -15,13 +15,21 @@ namespace TuApp.VistasModelo
 {
     public class JuegoViewModel : INotifyPropertyChanged
     {
-        public ObservableCollection<JuegoCuidador> ListaJuegos { get; set; } = new ObservableCollection<JuegoCuidador>();
-
+        public ObservableCollection<JuegoCuidador> ListaJuegosCuidador { get; set; } = new ObservableCollection<JuegoCuidador>();
+        public ObservableCollection<ResObtenerJuegosPaciente> ListaJuegosPaciente { get; set; } = new ObservableCollection<ResObtenerJuegosPaciente>();
         public ICommand CargarCommand { get; }
         public JuegoViewModel()
         {
-            CargarCommand = new Command(async () => await CargarJuegos());
-            _ = CargarJuegos(); // Carga al instanciarse
+            if(SesionActiva.sesionActiva.usuario.IdTipoUsuario == 1)
+            {
+                CargarCommand = new Command(async () => await CargarJuegosPaciente());
+                _ = CargarJuegosPaciente(); // Carga al instanciarse
+            } else if (SesionActiva.sesionActiva.usuario.IdTipoUsuario == 1)
+            {
+                CargarCommand = new Command(async () => await CargarJuegos());
+                _ = CargarJuegos(); // Carga al instanciarse
+            }
+
         }
         private async Task CargarJuegos()
         {
@@ -46,7 +54,7 @@ namespace TuApp.VistasModelo
 
                 if (res != null && res.resultado)
                 {
-                    ListaJuegos.Clear();
+                    ListaJuegosCuidador.Clear();
                     foreach (JuegoCuidador juego in res.juegosCuidadorList)
                     {
                         JuegoCuidador juegoCuidador = new JuegoCuidador();
@@ -64,7 +72,7 @@ namespace TuApp.VistasModelo
                         juegoCuidador.nombre = juego.nombre;
                         juegoCuidador.numPreguntas = juego.numPreguntas;
                         juegoCuidador.pacientes = new ObservableCollection<PacienteAsignado>(pacientes);
-                        ListaJuegos.Add(juegoCuidador);
+                        ListaJuegosCuidador.Add(juegoCuidador);
                     }
                 }
 
@@ -97,7 +105,7 @@ namespace TuApp.VistasModelo
 
                 if (res != null && res.resultado)
                 {
-                    ListaJuegos.Clear();
+                    ListaJuegosCuidador.Clear();
                     CargarJuegos();
                 }
 
@@ -130,7 +138,7 @@ namespace TuApp.VistasModelo
 
                 if (res != null && res.resultado)
                 {
-                    ListaJuegos.Clear();
+                    ListaJuegosCuidador.Clear();
                     CargarJuegos();
                 }
 
@@ -180,6 +188,44 @@ namespace TuApp.VistasModelo
             {
                 await App.Current.MainPage.DisplayAlert("Excepción", ex.Message, "OK");
             }
+        }
+
+        private async Task CargarJuegosPaciente()
+        {
+            ReqObtenerJuegosPaciente req = new ReqObtenerJuegosPaciente
+            {
+                idPaciente = SesionActiva.sesionActiva.usuario.IdUsuario
+            };
+            var jsonContent = new StringContent(JsonConvert.SerializeObject(req), Encoding.UTF8, "application/json");
+
+            HttpResponseMessage respuestaHttp = null;
+
+            using (HttpClient httpClient = new HttpClient())
+            {
+                httpClient.BaseAddress = new Uri("https://localhost:44347/api/");
+                respuestaHttp = await httpClient.PostAsync("juego/obtenerjuegospaciente", jsonContent);
+            }
+            if (respuestaHttp.IsSuccessStatusCode)
+            {
+                var contenido = await respuestaHttp.Content.ReadAsStringAsync();
+                List<ResObtenerJuegosPaciente> res = new List<ResObtenerJuegosPaciente>();
+                res = JsonConvert.DeserializeObject<List<ResObtenerJuegosPaciente>>(contenido);
+
+                if (res != null && res.First().resultado)
+                {
+                    ListaJuegosCuidador.Clear();
+                    foreach (ResObtenerJuegosPaciente juego in res)
+                    {
+                        ResObtenerJuegosPaciente juegoPac = new ResObtenerJuegosPaciente();
+                        juegoPac.idJuego = juego.idJuego;
+                        juegoPac.nombre = juego.nombre;
+                        juegoPac.numPreguntas = juego.numPreguntas;
+                        ListaJuegosPaciente.Add(juegoPac);
+                    }
+                }
+
+            }
+
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

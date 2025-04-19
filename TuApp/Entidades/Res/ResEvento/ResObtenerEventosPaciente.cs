@@ -8,7 +8,9 @@ namespace TuApp.Entidades
 {
     public class ResObtenerEventosPaciente : ResBase
     {
-        public List<Evento> eventos { get; set; }
-
-    }
+      
+            public List<Evento> eventos { get; set; }
+           
+        }
+    
 }

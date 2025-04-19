@@ -2,37 +2,34 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="TuApp.Vistas.GenerarPinPacientePage">
-
     <!-- Ícono de casa en la esquina superior izquierda -->
     <ContentPage.ToolbarItems>
         <ToolbarItem Text="Inicio" Clicked="RegresarInicio_Clicked" />
     </ContentPage.ToolbarItems>
-
     <ContentPage.Background>
         <LinearGradientBrush EndPoint="1,1">
             <GradientStop Color="#a855f7" Offset="0.0" />
             <GradientStop Color="#6366f1" Offset="1.0" />
         </LinearGradientBrush>
     </ContentPage.Background>
-
     <ScrollView>
         <VerticalStackLayout Padding="30" Spacing="25" VerticalOptions="Center">
-
             <!-- Título centrado -->
             <Label Text="Generar Pin"
                    FontSize="28"
                    FontAttributes="Bold"
                    HorizontalTextAlignment="Center"
                    TextColor="Black" />
-
             <!-- Campo para ingresar el Pin -->
             <Entry x:Name="PinEntry"
+                   Text="{Binding Pin}"
                    Placeholder="Ingresa tu nuevo Pin"
                    TextColor="Black"
                    BackgroundColor="White"
                    Margin="0,10"
-                   Keyboard="Numeric"/>
-
+                   Keyboard="Numeric"
+                   MaxLength="6"
+                   IsPassword="True"/>
             <!-- Botón para generar el Pin -->
             <Button Text="Generar Pin"
                     BackgroundColor="#3B82F6"
@@ -42,6 +39,17 @@
                     HeightRequest="55"
                     Clicked="GenerarPin_Clicked"/>
 
+            <!-- Indicador de carga -->
+            <ActivityIndicator IsRunning="{Binding IsLoading}" 
+                               IsVisible="{Binding IsLoading}"
+                               Color="White"
+                               HorizontalOptions="Center" />
+
+            <!-- Mensaje de error (opcional) -->
+            <Label Text="{Binding ErrorMessage}"
+                   TextColor="Red"
+                   IsVisible="{Binding ErrorMessage, Converter={StaticResource StringNotEmptyConverter}}"
+                   HorizontalOptions="Center" />
         </VerticalStackLayout>
     </ScrollView>
 </ContentPage>

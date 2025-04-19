@@ -2,63 +2,39 @@ using Newtonsoft.Json;
 using TuApp.Entidades.Entity;
 using TuApp.Entidades.Req.ReqUsuario;
 using TuApp.Entidades.Res.ResUsuario;
+using TuApp.ViewModels;
+
+using CommunityToolkit.Mvvm.Input;
+
+
 
 namespace TuApp.Vistas;
 
 public partial class EditarPinPacientePage : ContentPage
 {
+    private EditarPinPacienteViewModel _viewModel;
+
     public EditarPinPacientePage()
     {
         InitializeComponent();
+        _viewModel = new EditarPinPacienteViewModel(Navigation, this);
+        BindingContext = _viewModel;
     }
+
+    // Keeping the original event handlers to maintain compatibility with the XAML
     private async void RegresarInicio_Clicked(object sender, EventArgs e)
     {
         await Navigation.PushAsync(new InicioPaciente());
     }
-    private async void ActualizarPin_Clicked(object sender, EventArgs e)
+
+    private void ActualizarPin_Clicked(object sender, EventArgs e)
     {
-        
-     
-        ReqActualizarPinPaciente req = new ReqActualizarPinPaciente();
-        req.PinActual = PinActualEntry.Text;
-        req.NuevoPin = NuevoPinEntry.Text;
-        req.IdUsuario = SesionActiva.sesionActiva.usuario.IdUsuario;
+        // Update ViewModel properties with current Entry values
+        _viewModel.PinActual = PinActualEntry.Text;
+        _viewModel.NuevoPin = NuevoPinEntry.Text;
 
-        HttpResponseMessage respuestaHttp = new HttpResponseMessage();
-
-            var jsonContent = new StringContent(JsonConvert.SerializeObject(req), System.Text.Encoding.UTF8, "application/json");
-
-            using (HttpClient httpClient = new HttpClient())
-            {
-                respuestaHttp = await httpClient.PostAsync("https://localhost:44328/api/usuario/actualizarping", jsonContent);
-            }
-
-            if (respuestaHttp.IsSuccessStatusCode)
-            {
-                var responseContent = await respuestaHttp.Content.ReadAsStringAsync();
-
-                ResActualizarPinPaciente res = new ResActualizarPinPaciente();
-                res = JsonConvert.DeserializeObject<ResActualizarPinPaciente>(responseContent);
-
-                if (res.resultado)
-                {
-                SesionActiva.sesionActiva.usuario.pin.Codigo = req.NuevoPin;
-                await DisplayAlert("Actualización correcta", "Pin actualizado correctamente", "Aceptar");
-                await Navigation.PushAsync(new InicioPaciente());
-
-            }
-                else
-                {
-                    await DisplayAlert("Error cambiando pin", "Pin actual erroneo", "Aceptar");
-                }
-
-            }
-            else
-            {
-                await DisplayAlert("Error de conexion", "No hay respuesta del servidor", "Aceptar");
-
-
-            }
-        
+        // Execute the command directly
+        if (_viewModel.ActualizarPinCommand.CanExecute(null))
+            _viewModel.ActualizarPinCommand.Execute(null);
     }
 }

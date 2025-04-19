@@ -342,6 +342,7 @@ namespace Backend.Logica
             return eventosretornar;
 
         }
+
         public List<ResObtenerEventosCuidador> obtenerEventosCuidador(ReqObtenerEventosCuidador req)
         {
             List<ResObtenerEventosCuidador> res = new List<ResObtenerEventosCuidador>();

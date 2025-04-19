@@ -2,19 +2,16 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="TuApp.Vistas.ChatsPacientePage">
-
     <!-- Ícono de casa en la esquina superior izquierda -->
     <ContentPage.ToolbarItems>
         <ToolbarItem Text="Inicio" Clicked="RegresarInicio_Clicked" />
     </ContentPage.ToolbarItems>
-
     <ContentPage.Background>
         <LinearGradientBrush EndPoint="1,1">
             <GradientStop Color="#a855f7" Offset="0.0" />
             <GradientStop Color="#6366f1" Offset="1.0" />
         </LinearGradientBrush>
     </ContentPage.Background>
-
     <ScrollView>
         <VerticalStackLayout Padding="20" Spacing="15">
             <Label Text="Mensajes"
@@ -22,7 +19,6 @@
                    FontAttributes="Bold"
                    HorizontalTextAlignment="Center"
                    TextColor="Black" />
-
             <!-- CollectionView para mostrar los mensajes -->
             <CollectionView x:Name="MensajesCollectionView"
                             ItemsSource="{Binding Mensajes}" 
@@ -44,8 +40,28 @@
                         </Frame>
                     </DataTemplate>
                 </CollectionView.ItemTemplate>
+                <CollectionView.EmptyView>
+                    <StackLayout HorizontalOptions="Center" VerticalOptions="Center">
+                        <Label Text="No hay mensajes disponibles" 
+                               TextColor="White"
+                               FontSize="16"
+                               HorizontalTextAlignment="Center" />
+                    </StackLayout>
+                </CollectionView.EmptyView>
             </CollectionView>
 
+            <!-- Error message display -->
+            <Label Text="{Binding ErrorMessage}"
+                   IsVisible="{Binding ErrorMessage, Converter={StaticResource StringNotEmptyConverter}}"
+                   TextColor="Red"
+                   FontSize="14"
+                   HorizontalTextAlignment="Center" />
+
+            <!-- Optional loading indicator -->
+            <ActivityIndicator IsRunning="{Binding IsLoading}" 
+                               IsVisible="{Binding IsLoading}"
+                               Color="White"
+                               HorizontalOptions="Center" />
         </VerticalStackLayout>
     </ScrollView>
 </ContentPage>

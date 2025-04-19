@@ -9,7 +9,7 @@ namespace TuApp.Entidades.Req.ReqUsuario
     public class ReqActualizarPinPaciente
     {
         public string PinActual { get; set; }
-        public string NuevoPin { get; set; }
+        public string NuevoCodigo { get; set; }
         public int IdUsuario { get; set; }
     }
 }

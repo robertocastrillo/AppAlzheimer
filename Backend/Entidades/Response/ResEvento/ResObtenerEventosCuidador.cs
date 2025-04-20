@@ -8,7 +8,14 @@ namespace Backend.Entidades.Response.ResEvento
 {
     public class ResObtenerEventosCuidador : ResBase
     {
-        public Evento eventos { get; set; }
-        public List<Usuario> usuarios { get; set; }
+        public Evento evento { get; set; }
+        public List<UsuarioEvento> usuarios { get; set; }
+
+ 
+    }
+    public class UsuarioEvento
+    {
+        public int Id { get; set; }
+        public string Nombre { get; set; }
     }
 }

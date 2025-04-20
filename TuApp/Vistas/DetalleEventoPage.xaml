@@ -33,9 +33,13 @@
 
             <!-- Asignación -->
             <Label Text="Asignar a paciente:" FontAttributes="Bold" />
-            <Picker ItemsSource="{Binding PacientesRelacionados}"
-                    ItemDisplayBinding="{Binding Nombre}"
-                    SelectedItem="{Binding PacienteSeleccionado}" />
+            <Button Text="Asignar pacientes "
+                  Command="{Binding MostrarPopupAsignacionCommand}"
+                    BackgroundColor="#10b981"
+                    TextColor="White"
+                    CornerRadius="10"
+                    HeightRequest="45" />
+
 
             <Button Text="Asignar evento"
                     Command="{Binding AsignarEventoCommand}"

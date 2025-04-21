@@ -167,6 +167,9 @@
 	  <MauiXaml Update="Vistas\VistasJuegoPaciente\JuegosPaciente.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
+	  <MauiXaml Update="Vistas\VistasJuegoPaciente\ResponderPregunta.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	</ItemGroup>
 
 </Project>

@@ -32,7 +32,7 @@ public partial class DetalleJuego : ContentPage
 
     private async void CargarDatos(JuegoCuidador juegocuidador)
     {
-        await viewModel.CargarPreguntas(juegocuidador);
+        await viewModel.CargarPreguntas(juegocuidador.idJuego);
 
         // Si no hay preguntas, muestra una alerta
         if (viewModel.ListaPregunta == null || !viewModel.ListaPregunta.Any())

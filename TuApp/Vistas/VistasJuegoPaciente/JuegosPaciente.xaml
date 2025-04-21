@@ -2,8 +2,7 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:vm="clr-namespace:TuApp.VistasModelo"
-             x:Class="TuApp.JuegosPaciente"
-             Title="JuegosPaciente">
+             x:Class="TuApp.JuegosPaciente">
     <ContentPage.BindingContext>
         <vm:JuegoViewModel />
     </ContentPage.BindingContext>
@@ -12,8 +11,9 @@
 
         <!-- Lista de juegos -->
         <CollectionView Grid.Row="1"
-                    ItemsSource="{Binding ListaJuegosPaciente}"
-                    SelectionMode="Single">
+                ItemsSource="{Binding ListaJuegosPaciente}"
+                SelectionMode="Single"
+                SelectionChanged="CollectionView_SelectionChanged">
             <CollectionView.ItemTemplate>
                 <DataTemplate>
                     <Frame BackgroundColor="White"
@@ -36,18 +36,6 @@
                                FontAttributes="Bold"
                                TextColor="#1a1a1a" />
 
-                            <!-- Botón de pacientes asignados -->
-                            <Button Grid.Row="0" Grid.Column="1"
-                                Text="Pacientes Asignados"
-                                FontSize="14"
-                                Padding="10,5"
-                                BackgroundColor="#ede7f6"
-                                TextColor="#5e35b1"
-                                BorderColor="#5e35b1"
-                                BorderWidth="1"
-                                CornerRadius="20"
-                                CommandParameter="{Binding}" />
-
                             <!-- Total de preguntas -->
                             <Label Grid.Row="1" Grid.Column="0"
                                Text="{Binding numPreguntas, StringFormat='Preguntas: {0}'}"
@@ -59,18 +47,5 @@
                 </DataTemplate>
             </CollectionView.ItemTemplate>
         </CollectionView>
-
-        <!-- Botón flotante de agregar -->
-        <Button Text="+"
-            FontSize="32"
-            BackgroundColor="#ede7f6"
-            TextColor="#5e35b1"
-            CornerRadius="30"
-            WidthRequest="60"
-            HeightRequest="60"
-            HorizontalOptions="Center"
-            VerticalOptions="End"
-            Grid.Row="2"
-            Margin="0,10"/>
     </Grid>
 </ContentPage>

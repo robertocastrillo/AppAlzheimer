@@ -1084,18 +1084,22 @@ CREATE OR ALTER PROCEDURE SP_OBTENER_EVENTOS_PACIENTE
 AS
 BEGIN
     BEGIN TRY
-        IF NOT EXISTS (SELECT 1 FROM USUARIO WHERE ID_USUARIO = @ID_PACIENTE AND ID_TIPO_USUARIO = 1)
+        
+        IF NOT EXISTS (
+            SELECT 1 
+            FROM USUARIO 
+            WHERE ID_USUARIO = @ID_PACIENTE AND ID_TIPO_USUARIO = 1
+        )
         BEGIN
-            SELECT @ERROR_ID = NUM_ERROR, 
-                   @ERROR_CODE = CODE_ERROR, 
-                   @ERROR_DESCRIPTION = DESCRIPTION_ERROR
-            FROM ERROR_CATALOG 
-            WHERE NUM_ERROR = 50003;
-
+          
+            SET @ERROR_ID = 50003;
+            SET @ERROR_CODE = 'PACIENTE_NO_VALIDO';
+            SET @ERROR_DESCRIPTION = 'El usuario no existe o no es un paciente.';
             SET @ID_RETURN = -1;
             RETURN;
         END
-
+        
+      
         SELECT 
             E.ID_EVENTO,
             E.TITULO,
@@ -1103,14 +1107,20 @@ BEGIN
             E.FECHA_HORA,
             P.ID_PRIORIDAD,
             P.DESCRIPCION AS PRIORIDAD,
-            U.ID_USUARIO AS ID_CUIDADOR,
-            U.NOMBRE AS NOMBRE_CUIDADOR
+            CASE 
+                WHEN E.ID_USUARIO <> @ID_PACIENTE THEN U.ID_USUARIO 
+                ELSE NULL 
+            END AS ID_CUIDADOR,
+            CASE 
+                WHEN E.ID_USUARIO <> @ID_PACIENTE THEN U.NOMBRE 
+                ELSE NULL 
+            END AS NOMBRE_CUIDADOR
         FROM EVENTO E
         INNER JOIN PRIORIDAD P ON E.ID_PRIORIDAD = P.ID_PRIORIDAD
-        INNER JOIN EVENTO_USUARIO EU ON E.ID_EVENTO = EU.ID_EVENTO
-        INNER JOIN USUARIO U ON E.ID_USUARIO = U.ID_USUARIO
-        WHERE EU.ID_USUARIO = @ID_PACIENTE;
+        LEFT JOIN USUARIO U ON E.ID_USUARIO = U.ID_USUARIO
+        WHERE E.ID_USUARIO = @ID_PACIENTE;
 
+        
         SET @ID_RETURN = 1;
         SET @ERROR_ID = NULL;
         SET @ERROR_CODE = NULL;
@@ -1121,9 +1131,8 @@ BEGIN
         SET @ERROR_ID = ERROR_NUMBER();
         SET @ERROR_CODE = 'ERROR_SQL';
         SET @ERROR_DESCRIPTION = ERROR_MESSAGE();
-    END CATCH
+    END CATCH
 END;
-GO
 
 
 -- SP018: OBTENER EVENTOS DE CUIDADOR

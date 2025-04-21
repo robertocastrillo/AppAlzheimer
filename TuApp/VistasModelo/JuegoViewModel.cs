@@ -1,15 +1,12 @@
 ﻿using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Input;
 using TuApp.Entidades;
 using TuApp.Entidades.Entity;
 using TuApp.Entidades.Req.ReqJuego;
+
 
 namespace TuApp.VistasModelo
 {
@@ -58,7 +55,7 @@ namespace TuApp.VistasModelo
                     foreach (JuegoCuidador juego in res.juegosCuidadorList)
                     {
                         JuegoCuidador juegoCuidador = new JuegoCuidador();
-                        
+
                         List<PacienteAsignado> pacientes = new List<PacienteAsignado>();
 
                         foreach (PacienteAsignado pac in juego.pacientes)

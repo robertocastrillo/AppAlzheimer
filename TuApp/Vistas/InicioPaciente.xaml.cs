@@ -1,5 +1,4 @@
 using TuApp.Entidades.Entity;
-using TuApp.Vistas;
 namespace TuApp.Vistas;
 
 public partial class InicioPaciente : ContentPage

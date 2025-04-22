@@ -270,7 +270,7 @@ namespace Backend.Logica
 
             try
             {
-                // Validar request
+
                 res.listaDeErrores = Validaciones.validarObtenerEventosPaciente(req);
 
                 if (!res.listaDeErrores.Any())
@@ -280,9 +280,12 @@ namespace Backend.Logica
                     string errorCode = "";
                     string errorDescrip = "";
 
+
                     using (MiLinqDataContext linq = new MiLinqDataContext())
                     {
-                        var resultado = linq.SP_OBTENER_EVENTOS_PACIENTE(
+                        List<SP_OBTENER_EVENTOS_PACIENTEResult> listaeventos = new List<SP_OBTENER_EVENTOS_PACIENTEResult>();
+
+                        listaeventos = linq.SP_OBTENER_EVENTOS_PACIENTE(
                             req.IdPaciente,
                             ref idReturn,
                             ref errorId,
@@ -290,7 +293,12 @@ namespace Backend.Logica
                             ref errorDescrip
                         ).ToList();
 
-                        res.eventos = factoryListaEventosPaciente(resultado); 
+                        foreach (SP_OBTENER_EVENTOS_PACIENTEResult evento in listaeventos)
+                        {
+                            res.eventos.Add(this.factoriaevento(evento));
+                        }
+                        res.resultado = true;
+
                     }
 
                     if (idReturn > 0 && (errorId == null || errorId == 0))
@@ -319,6 +327,20 @@ namespace Backend.Logica
             }
 
             return res;
+        }
+        private Evento factoriaevento(SP_OBTENER_EVENTOS_PACIENTEResult evento)
+        {
+            Evento eventosretornar = new Evento();
+            eventosretornar.IdEvento = evento.ID_EVENTO;
+            eventosretornar.Titulo = evento.TITULO;
+            eventosretornar.Descripcion = evento.DESCRIPCION;
+            eventosretornar.FechaHora = evento.FECHA_HORA;
+            eventosretornar.IdPrioridad = evento.ID_PRIORIDAD;
+
+
+
+            return eventosretornar;
+
         }
         public List<ResObtenerEventosCuidador> obtenerEventosCuidador(ReqObtenerEventosCuidador req)
         {
@@ -375,25 +397,6 @@ namespace Backend.Logica
         }
 
 
-        private List<Evento> factoryListaEventosPaciente(List<SP_OBTENER_EVENTOS_PACIENTEResult> resultado)
-        {
-            List<Evento> eventos = new List<Evento>();
-
-            foreach (var item in resultado)
-            {
-                eventos.Add(new Evento
-                {
-                    IdEvento = item.ID_EVENTO,
-                    Titulo = item.TITULO,
-                    Descripcion = item.DESCRIPCION,
-                    FechaHora = item.FECHA_HORA,
-                    IdPrioridad = item.ID_PRIORIDAD,
-                    IdUsuario = item.ID_CUIDADOR
-                });
-            }
-
-            return eventos;
-        }
 
         private List<ResObtenerEventosCuidador> factoryEventoCuidador(List<SP_OBTENER_EVENTOS_CUIDADORResult> item)
         {

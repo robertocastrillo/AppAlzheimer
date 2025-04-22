@@ -257,14 +257,14 @@ namespace Backend.Logica.Juego
         {
 
             List<ResObtenerJuegosPaciente> res = new List<ResObtenerJuegosPaciente>();
-            ResObtenerJuegosPaciente juego = new ResObtenerJuegosPaciente();
-            juego.listaDeErrores = new List<Error>();
+            ResObtenerJuegosPaciente resJuego = new ResObtenerJuegosPaciente();
+            resJuego.listaDeErrores = new List<Error>();
 
             try
             {
-                juego.listaDeErrores = ValidarJuego.validarUsuario(req.idPaciente);
+                resJuego.listaDeErrores = ValidarJuego.validarUsuario(req.idPaciente);
 
-                if (!juego.listaDeErrores.Any())
+                if (!resJuego.listaDeErrores.Any())
                 {
                     int? errorId = 0;
                     string errorCode = "";
@@ -275,25 +275,27 @@ namespace Backend.Logica.Juego
 
                         if (errorId == null) // Si el ID devuelto es mayor que 0, el usuario se insertó correctamente
                         {
-                            juego.resultado = true;
+
                             foreach (var item in resultado)
                             {
+                                ResObtenerJuegosPaciente juego = new ResObtenerJuegosPaciente();
                                 juego.idJuego = item.ID_JUEGO;
                                 juego.nombre = item.NOMBRE;
                                 juego.numPreguntas = (int)item.TOTAL_PREGUNTAS;
+                                juego.resultado = true;
                                 res.Add(juego);
                             }
 
                         }
                         else // Si no se insertó, manejar el error devuelto por el SP
                         {
-                            juego.resultado = false;
-                            juego.listaDeErrores.Add(new Error
+                            resJuego.resultado = false;
+                            resJuego.listaDeErrores.Add(new Error
                             {
                                 idError = (int)errorId,
                                 error = errorCode
                             });
-                            res.Add(juego);
+                            res.Add(resJuego);
                         }
 
 
@@ -304,14 +306,15 @@ namespace Backend.Logica.Juego
             }
             catch (Exception ex)
             {
-                juego.resultado = false;
+                resJuego.resultado = false;
                 Error error = new Error();
                 error.idError = -1;
                 error.error = ex.Message;
-                juego.listaDeErrores.Add(error);
-                res.Add(juego);
-            }
+                resJuego.listaDeErrores.Add(error);
+                res.Add(resJuego);
 
+               
+            }
             return res;
         }
 

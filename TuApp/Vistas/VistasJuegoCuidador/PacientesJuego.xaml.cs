@@ -17,7 +17,7 @@ public partial class PacientesJuego : ContentPage
         this.viewModel = viewModel;
 
         // Buscar la instancia actualizada del juego desde el ViewModel
-        this.juego = viewModel.ListaJuegos.FirstOrDefault(j => j.idJuego == juego.idJuego);
+        this.juego = viewModel.ListaJuegosCuidador.FirstOrDefault(j => j.idJuego == juego.idJuego);
 
         BindingContext = this.juego;
     }

@@ -338,19 +338,11 @@ namespace Backend.Logica
 
                     using (MiLinqDataContext linq = new MiLinqDataContext())
                     {
-                        var resultado = linq.SP_OBTENER_EVENTOS_CUIDADOR(
-                            req.IdCuidador,
-                            ref errorId,
-                            ref errorCode,
-                            ref errorDescrip
-                        ).ToList();
+                        var resultado = linq.SP_OBTENER_EVENTOS_CUIDADOR(req.IdCuidador, ref errorId, ref errorCode, ref errorDescrip).ToList();
 
-                        if (resultado.Any())
+                        if (errorId < 1 || errorId == null)
                         {
-                            foreach (var item in resultado)
-                            {
-                                res.Add(factoryEventoCuidador(item));
-                            }
+                            res = factoryEventoCuidador(resultado);
                         }
 
                         if (errorId == null || errorId == 0)
@@ -403,38 +395,33 @@ namespace Backend.Logica
             return eventos;
         }
 
-        private ResObtenerEventosCuidador factoryEventoCuidador(SP_OBTENER_EVENTOS_CUIDADORResult item)
+        private List<ResObtenerEventosCuidador> factoryEventoCuidador(List<SP_OBTENER_EVENTOS_CUIDADORResult> item)
         {
-            ResObtenerEventosCuidador resEvento = new ResObtenerEventosCuidador();
-            resEvento.listaDeErrores = new List<Error>();
-            resEvento.resultado = true;
+            List<ResObtenerEventosCuidador> res = new List<ResObtenerEventosCuidador>();
 
-            resEvento.eventos = new Evento
-            {
-                IdEvento = item.ID_EVENTO,
-                Titulo = item.TITULO,
-                Descripcion = item.DESCRIPCION,
-                FechaHora = (DateTime)item.FECHA_HORA,
-                IdPrioridad = item.ID_PRIORIDAD,
-                IdUsuario = 0
-            };
 
-            try
+            foreach (var eventos in item)
             {
-                resEvento.usuarios = JsonConvert.DeserializeObject<List<Backend.Entidades.Usuario>>(item.PACIENTES);
-            }
-            catch
-            {
-                resEvento.usuarios = new List<Backend.Entidades.Usuario>();
-                resEvento.resultado = false;
-                resEvento.listaDeErrores.Add(new Error
+                ResObtenerEventosCuidador resEvento = new ResObtenerEventosCuidador();
+
+                Evento evento = new Evento();
+                evento.IdEvento = eventos.ID_EVENTO;
+                evento.Titulo = eventos.TITULO;
+                evento.Descripcion = eventos.DESCRIPCION;
+                evento.FechaHora = eventos.FECHA_HORA;
+                evento.IdPrioridad = eventos.ID_PRIORIDAD;
+                evento.IdUsuario = 0;
+                List<UsuarioEvento> usuarios = new List<UsuarioEvento>();
+                if (!string.IsNullOrWhiteSpace(eventos.PACIENTES))
                 {
-                    idError = -2,
-                    error = "Error al deserializar pacientes"
-                });
+                    usuarios = JsonConvert.DeserializeObject<List<UsuarioEvento>>(eventos.PACIENTES);
+                }
+                resEvento.evento = evento;
+                resEvento.usuarios = usuarios;
+                resEvento.resultado = true;
+                res.Add(resEvento);
             }
-
-            return resEvento;
+            return res;
         }
 
 

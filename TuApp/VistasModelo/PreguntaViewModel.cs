@@ -22,11 +22,11 @@ namespace TuApp.VistasModelo
         }
 
 
-        public async Task CargarPreguntas(JuegoCuidador juegoselec)
+        public async Task CargarPreguntas(int idJuego)
         {
             ReqObtenerPreguntas req = new ReqObtenerPreguntas
             {
-                idJuego = juegoselec.idJuego
+                idJuego = idJuego
             };
             var jsonContent = new StringContent(JsonConvert.SerializeObject(req), Encoding.UTF8, "application/json");
 
@@ -117,6 +117,7 @@ namespace TuApp.VistasModelo
                 await Application.Current.MainPage.DisplayAlert("Error inesperado", ex.Message, "OK");
             }
         }
+
 
 
         public event PropertyChangedEventHandler PropertyChanged;

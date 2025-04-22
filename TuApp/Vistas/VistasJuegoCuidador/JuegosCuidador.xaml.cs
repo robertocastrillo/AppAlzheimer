@@ -39,7 +39,7 @@ public partial class JuegosCuidador : ContentPage
 
         if (nuevoJuego != null && vm != null)
         {
-            vm.ListaJuegos.Add(nuevoJuego);
+            vm.ListaJuegosCuidador.Add(nuevoJuego);
         }
     }
     private async void EliminarJuego_Clicked(object sender, EventArgs e)

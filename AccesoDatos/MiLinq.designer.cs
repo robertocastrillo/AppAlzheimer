@@ -22,7 +22,7 @@ namespace AccesoDatos
 	using System;
 	
 	
-	[global::System.Data.Linq.Mapping.DatabaseAttribute(Name="APP_ROBERTO")]
+	[global::System.Data.Linq.Mapping.DatabaseAttribute(Name="alzheimerdb")]
 	public partial class MiLinqDataContext : System.Data.Linq.DataContext
 	{
 		
@@ -33,7 +33,7 @@ namespace AccesoDatos
     #endregion
 		
 		public MiLinqDataContext() : 
-				base(global::AccesoDatos.Properties.Settings.Default.APP_ROBERTOConnectionString3, mappingSource)
+				base(global::AccesoDatos.Properties.Settings.Default.alzheimerdbConnectionString, mappingSource)
 		{
 			OnCreated();
 		}
@@ -571,7 +571,7 @@ namespace AccesoDatos
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_FOTO_PERFIL", DbType="VarBinary(MAX)", CanBeNull=true)]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_FOTO_PERFIL", DbType="VarBinary(MAX)")]
 		public System.Data.Linq.Binary FOTO_PERFIL
 		{
 			get
@@ -763,7 +763,7 @@ namespace AccesoDatos
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_FOTO_PERFIL", DbType="VarBinary(MAX)", CanBeNull=true)]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_FOTO_PERFIL", DbType="VarBinary(MAX)")]
 		public System.Data.Linq.Binary FOTO_PERFIL
 		{
 			get
@@ -1041,7 +1041,7 @@ namespace AccesoDatos
 		
 		private string _PRIORIDAD;
 		
-		private int _ID_CUIDADOR;
+		private System.Nullable<int> _ID_CUIDADOR;
 		
 		private string _NOMBRE_CUIDADOR;
 		
@@ -1145,8 +1145,8 @@ namespace AccesoDatos
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ID_CUIDADOR", DbType="Int NOT NULL")]
-		public int ID_CUIDADOR
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ID_CUIDADOR", DbType="Int")]
+		public System.Nullable<int> ID_CUIDADOR
 		{
 			get
 			{
@@ -1161,7 +1161,7 @@ namespace AccesoDatos
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_NOMBRE_CUIDADOR", DbType="VarChar(100) NOT NULL", CanBeNull=false)]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_NOMBRE_CUIDADOR", DbType="VarChar(100)")]
 		public string NOMBRE_CUIDADOR
 		{
 			get

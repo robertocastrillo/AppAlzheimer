@@ -26,11 +26,11 @@ namespace AccesoDatos.Properties {
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.ConnectionString)]
-        [global::System.Configuration.DefaultSettingValueAttribute("Data Source=(localdb)\\BrandonDB;Initial Catalog=APP_ROBERTO;Integrated Security=T" +
-            "rue;TrustServerCertificate=True\n")]
-        public string APP_ROBERTOConnectionString3 {
+        [global::System.Configuration.DefaultSettingValueAttribute("Data Source=alzheimersever.database.windows.net;Initial Catalog=alzheimerdb;User " +
+            "ID=adminRoberto;Password=Gato$Verde2024!")]
+        public string alzheimerdbConnectionString {
             get {
-                return ((string)(this["APP_ROBERTOConnectionString3"]));
+                return ((string)(this["alzheimerdbConnectionString"]));
             }
         }
     }

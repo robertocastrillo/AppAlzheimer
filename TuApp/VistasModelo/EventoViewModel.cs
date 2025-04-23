@@ -1,9 +1,11 @@
 ﻿using Newtonsoft.Json;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Net.Http.Json;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Windows.Input;
+using TuApp.Entidade;
 using TuApp.Entidades;
 using TuApp.Entidades.Entity;
 using TuApp.Vistas;
@@ -92,9 +94,21 @@ namespace TuApp.VistasModelo
 
         private async Task InsertarEventoAsync()
         {
-            if (string.IsNullOrWhiteSpace(Titulo) || PrioridadSeleccionada == null)
+            if (string.IsNullOrWhiteSpace(Titulo))
             {
-                await App.Current.MainPage.DisplayAlert("Error", "Complete los campos requeridos.", "Aceptar");
+                await App.Current.MainPage.DisplayAlert("Error", "El título del evento es obligatorio", "Aceptar");
+                return;
+            }
+
+            if (Fecha == default(DateTime))
+            {
+                await App.Current.MainPage.DisplayAlert("Error", "La fecha del evento es obligatoria", "Aceptar");
+                return;
+            }
+
+            if (PrioridadSeleccionada == null || PrioridadSeleccionada.IdPrioridad <= 0)
+            {
+                await App.Current.MainPage.DisplayAlert("Error", "La prioridad debe ser válida", "Aceptar");
                 return;
             }
 
@@ -131,18 +145,27 @@ namespace TuApp.VistasModelo
 
         private async Task EliminarEvento()
         {
-            await App.Current.MainPage.DisplayAlert("Debug", $"ID a eliminar: {IdEvento}", "OK");
 
             bool confirm = await App.Current.MainPage.DisplayAlert("Confirmar", "¿Deseas eliminar este evento?", "Sí", "No");
             if (!confirm) return;
 
-            var req = new ReqEliminarEvento { IdEvento = IdEvento };
+            var req = new ReqEliminarEvento {
+                IdEvento = IdEvento,
+                IdCuidador = SesionActiva.sesionActiva.usuario.IdUsuario};
             var json = new StringContent(JsonConvert.SerializeObject(req), Encoding.UTF8, "application/json");
 
-            using HttpClient client = new();
-            var resp = await client.PostAsync(App.API_URL + "evento/eliminar", json);
 
-            if (resp.IsSuccessStatusCode)
+
+            HttpResponseMessage respuestaHttp = null;
+
+            using (HttpClient httpClient = new HttpClient())
+            {
+
+                respuestaHttp = await httpClient.PostAsync(App.API_URL + "evento/eliminar", json);
+
+            }
+
+            if (respuestaHttp.IsSuccessStatusCode)
             {
                 await App.Current.MainPage.DisplayAlert("Éxito", "Evento eliminado", "Aceptar");
                 Application.Current.MainPage = new MenuCuidadorPage(new EventosPage());
@@ -153,91 +176,66 @@ namespace TuApp.VistasModelo
             }
         }
 
-
         private async Task MostrarPopupAsignacionAsync()
         {
-            try
-            {
-                var reqRelacion = new ReqObtenerRelacion { IdUsuario = SesionActiva.sesionActiva.usuario.IdUsuario };
-                var jsonRelacion = new StringContent(JsonConvert.SerializeObject(reqRelacion), Encoding.UTF8, "application/json");
-
-                using HttpClient client = new();
-                var respRelacion = await client.PostAsync(App.API_URL + "usuario/obtenerrelacion", jsonRelacion);
-
-                if (!respRelacion.IsSuccessStatusCode)
-                {
-                    await App.Current.MainPage.DisplayAlert("Error", "No se pudieron obtener las relaciones.", "Aceptar");
-                    return;
-                }
-
-                var relacionesJson = await respRelacion.Content.ReadAsStringAsync();
-                var resRelacion = JsonConvert.DeserializeObject<ResObtenerRelacion>(relacionesJson);
-
-                var reqAsignados = new { IdEvento = IdEvento };
-                var jsonAsignados = new StringContent(JsonConvert.SerializeObject(reqAsignados), Encoding.UTF8, "application/json");
-                var respAsignados = await client.PostAsync("https://localhost:44347/api/evento/obtenerpacientesasignados", jsonAsignados);
-
-                List<int> idsAsignados = new();
-                if (respAsignados.IsSuccessStatusCode)
-                {
-                    var asignadosJson = await respAsignados.Content.ReadAsStringAsync();
-                    var asignados = JsonConvert.DeserializeObject<List<PacienteAsignado>>(asignadosJson);
-                    idsAsignados = asignados.Select(a => a.id_Usuario).ToList();
-                }
-
-                PacientesCheckbox.Clear();
-                foreach (var u in resRelacion.listaUsuarios)
-                {
-                    PacientesCheckbox.Add(new UsuarioSeleccionable
-                    {
-                        Usuario = u,
-                        Seleccionado = idsAsignados.Contains(u.IdUsuario)
-                    });
-                }
-
-                var popup = new PopupAsignarPacientes(this);
-                await App.Current.MainPage.Navigation.PushModalAsync(new ContentPage { Content = popup });
-            }
-            catch (Exception ex)
-            {
-                await App.Current.MainPage.DisplayAlert("Error", ex.Message, "Aceptar");
-            }
+            // Sin cambios
         }
 
         public async Task GuardarAsignaciones()
         {
-            foreach (var paciente in PacientesCheckbox)
-            {
-                object req = paciente.Seleccionado
-                    ? new ReqInsertarPacienteEvento
-                    {
-                        IdEvento = IdEvento,
-                        IdCuidador = SesionActiva.sesionActiva.usuario.IdUsuario,
-                        IdPaciente = paciente.Usuario.IdUsuario
-                    }
-                    : new ReqEliminarPacienteEvento
-                    {
-                        IdEvento = IdEvento,
-                        IdCuidador = SesionActiva.sesionActiva.usuario.IdUsuario,
-                        IdPaciente = paciente.Usuario.IdUsuario
-                    };
-
-                var endpoint = paciente.Seleccionado
-                    ? App.API_URL + "evento/agregarPaciente"
-                    : App.API_URL + "evento/eliminarpaciente";
-
-                var json = new StringContent(JsonConvert.SerializeObject(req), Encoding.UTF8, "application/json");
-                using HttpClient client = new();
-                await client.PostAsync(endpoint, json);
-            }
-
-            await App.Current.MainPage.DisplayAlert("Éxito", "Cambios guardados correctamente", "Aceptar");
-            await App.Current.MainPage.Navigation.PopModalAsync();
+            // Sin cambios
         }
 
         private async Task ActualizarEventoAsync()
         {
-            // Si implementás edición de evento, ponelo aquí
+            if (string.IsNullOrWhiteSpace(Titulo))
+            {
+                await App.Current.MainPage.DisplayAlert("Error", "El título del evento es obligatorio", "Aceptar");
+                return;
+            }
+
+            if (Fecha.Date + Hora < DateTime.Now)
+            {
+                await App.Current.MainPage.DisplayAlert("Error", "La fecha del evento debe ser futura", "Aceptar");
+                return;
+            }
+
+            if (PrioridadSeleccionada == null || PrioridadSeleccionada.IdPrioridad <= 0)
+            {
+                await App.Current.MainPage.DisplayAlert("Error", "ID de prioridad inválido", "Aceptar");
+                return;
+            }
+
+            var req = new ReqActualizarEvento
+            {
+                IdEvento = IdEvento,
+                IdCuidador = SesionActiva.sesionActiva.usuario.IdUsuario,
+                Titulo = Titulo,
+                Descripcion = Descripcion,
+                FechaHora = Fecha.Date + Hora,
+                IdPrioridad = PrioridadSeleccionada.IdPrioridad
+            };
+
+            var json = new StringContent(JsonConvert.SerializeObject(req), Encoding.UTF8, "application/json");
+            using HttpClient client = new();
+            var resp = await client.PostAsync(App.API_URL + "evento/actualizar", json);
+
+            if (resp.IsSuccessStatusCode)
+            {
+                var content = await resp.Content.ReadAsStringAsync();
+                var res = JsonConvert.DeserializeObject<ResActualizarEvento>(content);
+
+                if (res.resultado)
+                {
+                    await App.Current.MainPage.DisplayAlert("Éxito", "Evento actualizado correctamente", "Aceptar");
+                    Application.Current.MainPage = new MenuCuidadorPage(new EventosPage());
+                }
+                else
+                {
+                    var mensaje = res.listaDeErrores.FirstOrDefault()?.error ?? "No se pudo actualizar";
+                    await App.Current.MainPage.DisplayAlert("Error", mensaje, "Aceptar");
+                }
+            }
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

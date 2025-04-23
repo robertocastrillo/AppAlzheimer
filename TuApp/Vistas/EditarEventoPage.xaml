@@ -2,34 +2,55 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="TuApp.Vistas.EditarEventoPage"
-             Title="Editar Evento">
+             Title="Editar Evento"
+             BackgroundColor="{DynamicResource BasePageColor}">
 
     <ScrollView>
-        <StackLayout Padding="20" Spacing="15">
+        <StackLayout Padding="20" Spacing="18">
 
-            <Label Text="Título" />
-            <Entry Text="{Binding Titulo}" Placeholder="Ingrese título del evento" />
+            <Label Text="Título"
+                   FontAttributes="Bold"
+                   TextColor="{DynamicResource BaseTextColor}" />
+            <Entry Text="{Binding Titulo}"
+                   Placeholder="Ingrese título del evento"
+                   BackgroundColor="{DynamicResource EntryAndEditorsBackgroundColor}"
+                   TextColor="{DynamicResource BaseTextColor}" />
 
-            <Label Text="Descripción" />
-            <Editor Text="{Binding Descripcion}" Placeholder="Descripción (opcional)" />
+            <Label Text="Descripción"
+                   FontAttributes="Bold"
+                   TextColor="{DynamicResource BaseTextColor}" />
+            <Editor Text="{Binding Descripcion}"
+                    Placeholder="Descripción (opcional)"
+                    AutoSize="TextChanges"
+                    BackgroundColor="{DynamicResource EntryAndEditorsBackgroundColor}"
+                    TextColor="{DynamicResource BaseTextColor}" />
 
-            <Label Text="Fecha" />
-            <DatePicker Date="{Binding Fecha}" />
+            <Label Text="Fecha"
+                   FontAttributes="Bold"
+                   TextColor="{DynamicResource BaseTextColor}" />
+            <DatePicker Date="{Binding Fecha}"
+                        TextColor="{DynamicResource BaseTextColor}"
+                        BackgroundColor="{DynamicResource EntryAndEditorsBackgroundColor}" />
 
-            <Label Text="Hora" />
-            <TimePicker Time="{Binding Hora}" />
+            <Label Text="Hora"
+                   FontAttributes="Bold"
+                   TextColor="{DynamicResource BaseTextColor}" />
+            <TimePicker Time="{Binding Hora}"
+                        TextColor="{DynamicResource BaseTextColor}"
+                        BackgroundColor="{DynamicResource EntryAndEditorsBackgroundColor}" />
 
-            <Label Text="Prioridad" />
+            <Label Text="Prioridad"
+                   FontAttributes="Bold"
+                   TextColor="{DynamicResource BaseTextColor}" />
             <Picker ItemsSource="{Binding ListaPrioridades}"
                     ItemDisplayBinding="{Binding Descripcion}"
-                    SelectedItem="{Binding PrioridadSeleccionada}" />
+                    SelectedItem="{Binding PrioridadSeleccionada}"
+                    TextColor="{DynamicResource BaseTextColor}"
+                    BackgroundColor="{DynamicResource EntryAndEditorsBackgroundColor}" />
 
             <Button Text="Guardar cambios"
-                    BackgroundColor="#10b981"
-                    TextColor="White"
-                    CornerRadius="12"
-                    HeightRequest="50"
-                    Command="{Binding ActualizarEventoCommand}" />
+                    Command="{Binding ActualizarEventoCommand}"
+                    Style="{DynamicResource PrimaryButtonStyle}" />
         </StackLayout>
     </ScrollView>
 </ContentPage>

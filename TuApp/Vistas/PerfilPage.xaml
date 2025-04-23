@@ -138,7 +138,6 @@
                         x:Name="btnVolver"
                         BackgroundColor="#a65fe6"
                         TextColor="White"
-                        Clicked="VolverInicio_Clicked"
                         CornerRadius="25"
                         HeightRequest="50"
                         FontAttributes="Bold"

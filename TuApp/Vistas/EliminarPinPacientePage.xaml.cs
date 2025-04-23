@@ -1,48 +1,62 @@
-using TuApp.ViewModels;
-using TuApp.Styles;
+using Microsoft.Maui;
+using Newtonsoft.Json;
+using TuApp.Entidades.Entity;
+using TuApp.Entidades.Req.ReqUsuario;
+using TuApp.Entidades.Res.ResUsuario;
+
 namespace TuApp.Vistas;
 
 public partial class EliminarPinPacientePage : ContentPage
 {
-    private EliminarPinPacienteViewModel _viewModel;
-    private PinDialog pinDialog;
-    private CustomAlertDialog customAlertDialog;
-    private NoChangesDialog noChangesDialog;
-    public EliminarPinPacientePage()
-    {
-        InitializeComponent();
+	public EliminarPinPacientePage()
+	{
+		InitializeComponent();
+	}
 
-
-        pinDialog = new PinDialog();
-        customAlertDialog = new CustomAlertDialog();
-        noChangesDialog = new NoChangesDialog();
-
-        var originalContent = Content;
-        var mainGrid = new Grid();
-        mainGrid.Children.Add(originalContent);
-        mainGrid.Children.Add(pinDialog);
-        mainGrid.Children.Add(customAlertDialog);
-        mainGrid.Children.Add(noChangesDialog);
-
-        Content = mainGrid;
-
-        _viewModel = new EliminarPinPacienteViewModel(Navigation, this, customAlertDialog, noChangesDialog, pinDialog);
-        BindingContext = _viewModel;
-    }
-
-    // Manteniendo los manejadores de eventos originales para compatibilidad con el XAML
     private async void RegresarInicio_Clicked(object sender, EventArgs e)
     {
         await Navigation.PushAsync(new InicioPaciente());
     }
-
-    private void EliminarPin_Clicked(object sender, EventArgs e)
+    private async void EliminarPin_Clicked(object sender, EventArgs e)
     {
-        // Actualizar la propiedad del ViewModel con el valor actual del Entry
-        _viewModel.Pin = PinEntry.Text;
+        ReqEliminarPinPaciente req = new ReqEliminarPinPaciente();
+        req.Codigo = PinEntry.Text;
+        req.IdUsuario = SesionActiva.sesionActiva.usuario.IdUsuario;
 
-        // Ejecutar el comando directamente
-        if (_viewModel.EliminarPinCommand.CanExecute(null))
-            _viewModel.EliminarPinCommand.Execute(null);
+        HttpResponseMessage respuestaHttp = new HttpResponseMessage();
+
+        var jsonContent = new StringContent(JsonConvert.SerializeObject(req), System.Text.Encoding.UTF8, "application/json");
+
+        using (HttpClient httpClient = new HttpClient())
+        {
+            respuestaHttp = await httpClient.PostAsync(App.API_URL + "usuario/eliminarping", jsonContent);
+        }
+
+        if (respuestaHttp.IsSuccessStatusCode)
+        {
+            var responseContent = await respuestaHttp.Content.ReadAsStringAsync();
+
+            ResEliminarPinPaciente res = new ResEliminarPinPaciente();
+            res = JsonConvert.DeserializeObject<ResEliminarPinPaciente>(responseContent);
+
+            if (res.resultado)
+            {
+                SesionActiva.sesionActiva.usuario.pin.Codigo = null;
+                await DisplayAlert("Eliminacion correcta", "Pin eliminado correctamente", "Aceptar");
+                await Navigation.PushAsync(new InicioPaciente());
+
+            }
+            else
+            {
+                await DisplayAlert("Error eliminado pin", "pin erroneo", "Aceptar");
+            }
+
+        }
+        else
+        {
+            await DisplayAlert("Error de conexion", "No hay respuesta del servidor", "Aceptar");
+
+
+        }
     }
 }

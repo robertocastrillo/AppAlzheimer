@@ -15,12 +15,14 @@
         <!-- Lista deslizable -->
         <CollectionView Grid.Row="1"
                         ItemsSource="{Binding ListaPregunta}"
-                        SelectionMode="Single"
-                        SelectionChanged="PreguntaSeleccionada">
+                        SelectionMode="Single">
             <!--SelectionMode="Single" SelectionChanged="JuegoSeleccionado">-->
             <CollectionView.ItemTemplate>
                 <DataTemplate>
                     <Frame BackgroundColor="White" CornerRadius="20" Padding="10" Margin="0,5" BorderColor="#E0E0E0">
+                        <Frame.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="Juego_Tapped" CommandParameter="{Binding}" />
+                        </Frame.GestureRecognizers>
                         <Grid ColumnDefinitions="*, Auto"
               RowDefinitions="Auto, Auto"
               VerticalOptions="Center">

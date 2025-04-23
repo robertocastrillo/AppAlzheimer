@@ -8,6 +8,7 @@ namespace TuApp
     {
         public InsertarOpcionPopup()
         {
+            this.CanBeDismissedByTappingOutsideOfPopup = false;
             InitializeComponent();
         }
 

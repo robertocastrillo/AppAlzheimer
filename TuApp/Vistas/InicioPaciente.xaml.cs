@@ -1,12 +1,11 @@
 using TuApp.Entidades.Entity;
+using TuApp.Vistas;
 namespace TuApp.Vistas;
 
 public partial class InicioPaciente : ContentPage
 {
-
 	public InicioPaciente()
 	{
-
 		InitializeComponent();
         if (SesionActiva.sesionActiva != null && SesionActiva.sesionActiva.usuario != null)
         {
@@ -26,7 +25,7 @@ public partial class InicioPaciente : ContentPage
 
     private async void OnJuegosClicked(object sender, EventArgs e)
     {
-        Application.Current.MainPage = new NavigationPage(new JuegosPacientePage());
+        Application.Current.MainPage = new NavigationPage(new JuegosPaciente());
     }
 
     private async void OnEventosClicked(object sender, EventArgs e)

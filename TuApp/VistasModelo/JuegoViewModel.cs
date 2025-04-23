@@ -21,7 +21,8 @@ namespace TuApp.VistasModelo
             {
                 CargarCommand = new Command(async () => await CargarJuegosPaciente());
                 _ = CargarJuegosPaciente(); // Carga al instanciarse
-            } else if (SesionActiva.sesionActiva.usuario.IdTipoUsuario == 1)
+            } 
+            else if (SesionActiva.sesionActiva.usuario.IdTipoUsuario == 2)
             {
                 CargarCommand = new Command(async () => await CargarJuegos());
                 _ = CargarJuegos(); // Carga al instanciarse
@@ -40,8 +41,7 @@ namespace TuApp.VistasModelo
 
             using (HttpClient httpClient = new HttpClient())
             {
-                httpClient.BaseAddress = new Uri("https://localhost:44347/api/");
-                respuestaHttp = await httpClient.PostAsync("juego/obtenerjuegoscuidador", jsonContent);
+                respuestaHttp = await httpClient.PostAsync(App.API_URL + "juego/obtenerjuegoscuidador", jsonContent);
             }
             if (respuestaHttp.IsSuccessStatusCode)
             {
@@ -91,8 +91,7 @@ namespace TuApp.VistasModelo
 
             using (HttpClient httpClient = new HttpClient())
             {
-                httpClient.BaseAddress = new Uri("https://localhost:44347/api/");
-                respuestaHttp = await httpClient.PostAsync("juego/insertarjuego", jsonContent);
+                respuestaHttp = await httpClient.PostAsync(App.API_URL + "juego/insertarjuego", jsonContent);
             }
             if (respuestaHttp.IsSuccessStatusCode)
             {
@@ -124,8 +123,7 @@ namespace TuApp.VistasModelo
 
             using (HttpClient httpClient = new HttpClient())
             {
-                httpClient.BaseAddress = new Uri("https://localhost:44347/api/");
-                respuestaHttp = await httpClient.PostAsync("juego/eliminarjuego", jsonContent);
+                respuestaHttp = await httpClient.PostAsync(App.API_URL + "juego/eliminarjuego", jsonContent);
             }
             if (respuestaHttp.IsSuccessStatusCode)
             {
@@ -157,8 +155,7 @@ namespace TuApp.VistasModelo
 
                 using (HttpClient httpClient = new HttpClient())
                 {
-                    httpClient.BaseAddress = new Uri("https://localhost:44347/api/");
-                    var respuestaHttp = await httpClient.PostAsync("juego/insertarrelacion", jsonContent);
+                    var respuestaHttp = await httpClient.PostAsync(App.API_URL + "juego/insertarrelacion", jsonContent);
 
                     if (respuestaHttp.IsSuccessStatusCode)
                     {
@@ -199,8 +196,7 @@ namespace TuApp.VistasModelo
 
             using (HttpClient httpClient = new HttpClient())
             {
-                httpClient.BaseAddress = new Uri("https://localhost:44347/api/");
-                respuestaHttp = await httpClient.PostAsync("juego/obtenerjuegospaciente", jsonContent);
+                respuestaHttp = await httpClient.PostAsync(App.API_URL + "juego/obtenerjuegospaciente", jsonContent);
             }
             if (respuestaHttp.IsSuccessStatusCode)
             {

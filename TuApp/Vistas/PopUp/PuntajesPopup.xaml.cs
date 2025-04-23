@@ -30,8 +30,7 @@ public partial class PuntajesPopup : Popup
 
         using (HttpClient httpClient = new HttpClient())
         {
-            httpClient.BaseAddress = new Uri("https://localhost:44347/api/");
-            respuestaHttp = await httpClient.PostAsync("juego/obtenerpuntaje", jsonContent);
+            respuestaHttp = await httpClient.PostAsync(App.API_URL + "juego/obtenerpuntaje", jsonContent);
         }
 
         if (respuestaHttp.IsSuccessStatusCode)

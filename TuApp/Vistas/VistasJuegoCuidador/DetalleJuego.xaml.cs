@@ -40,14 +40,13 @@ public partial class DetalleJuego : ContentPage
             await DisplayAlert("Atención", "No se encontraron preguntas para este juego.", "Aceptar");
         }
     }
-    private async void PreguntaSeleccionada(object sender, SelectionChangedEventArgs e)
+
+    private async void Juego_Tapped(object sender, EventArgs e)
     {
-        var pregunta = e.CurrentSelection.FirstOrDefault() as Pregunta;
-        if (pregunta != null)
+        if (sender is Frame frame && frame.BindingContext is Pregunta pregunta)
         {
             await Navigation.PushAsync(new DetallePregunta(pregunta));
         }
-    ((CollectionView)sender).SelectedItem = null;
     }
     private async void AgregarPregunta_Clicked(object sender, EventArgs e)
     {

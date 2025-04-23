@@ -1,8 +1,7 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:vm="clr-namespace:TuApp.VistasModelo"
-             x:Class="TuApp.Vistas.JuegosCuidador"
-             Title="JuegosCuidador">
+             x:Class="TuApp.Vistas.JuegosCuidador">
 
     <ContentPage.BindingContext>
         <vm:JuegoViewModel />
@@ -13,8 +12,7 @@
         <!-- Lista de juegos -->
         <CollectionView Grid.Row="1"
                         ItemsSource="{Binding ListaJuegosCuidador}"
-                        SelectionMode="Single"
-                        SelectionChanged="JuegoSeleccionado">
+                        SelectionMode="Single">
             <CollectionView.ItemTemplate>
                 <DataTemplate>
                     <Frame BackgroundColor="White"
@@ -23,6 +21,9 @@
                            Margin="0,8"
                            HasShadow="True"
                            BorderColor="#e0e0e0">
+                        <Frame.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="Juego_Tapped" CommandParameter="{Binding}" />
+                        </Frame.GestureRecognizers>
 
                         <Grid ColumnDefinitions="*, Auto"
                               RowDefinitions="Auto, Auto"

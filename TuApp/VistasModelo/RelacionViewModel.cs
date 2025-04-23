@@ -44,7 +44,7 @@ public class RelacionViewModel : BaseViewModel
 
             var json = new StringContent(JsonConvert.SerializeObject(req), Encoding.UTF8, "application/json");
             using HttpClient client = new();
-            var resp = await client.PostAsync("https://localhost:44347/api/usuario/obtenerrelacion", json);
+            var resp = await client.PostAsync(App.API_URL + "usuario/obtenerrelacion", json);
 
             if (resp.IsSuccessStatusCode)
             {
@@ -92,7 +92,7 @@ public class RelacionViewModel : BaseViewModel
 
         var json = new StringContent(JsonConvert.SerializeObject(req), Encoding.UTF8, "application/json");
         using HttpClient client = new();
-        var resp = await client.PostAsync("https://localhost:44347/api/usuario/insertarrelacion", json);
+        var resp = await client.PostAsync(App.API_URL + "usuario/insertarrelacion", json);
 
         if (resp.IsSuccessStatusCode)
         {
@@ -128,7 +128,7 @@ public class RelacionViewModel : BaseViewModel
 
         var json = new StringContent(JsonConvert.SerializeObject(req), Encoding.UTF8, "application/json");
         using HttpClient client = new();
-        var resp = await client.PostAsync("https://localhost:44347/api/usuario/eliminarrelacion", json);
+        var resp = await client.PostAsync(App.API_URL + "usuario/eliminarrelacion", json);
 
         if (resp.IsSuccessStatusCode)
         {

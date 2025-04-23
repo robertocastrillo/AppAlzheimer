@@ -33,8 +33,7 @@ namespace TuApp
 
             using (HttpClient httpClient = new HttpClient())
             {
-                httpClient.BaseAddress = new Uri("https://localhost:44347/api/");
-                respuestaHttp = await httpClient.PostAsync("usuario/iniciarsesion", jsonContent);
+                respuestaHttp = await httpClient.PostAsync(App.API_URL + "usuario/iniciarsesion", jsonContent);
             }
 
             if (respuestaHttp.IsSuccessStatusCode)

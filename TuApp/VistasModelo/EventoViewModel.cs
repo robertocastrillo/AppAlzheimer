@@ -72,7 +72,7 @@ namespace TuApp.VistasModelo
                 var content = new StringContent(JsonConvert.SerializeObject(req), Encoding.UTF8, "application/json");
 
                 using HttpClient client = new();
-                var resp = await client.PostAsync("https://localhost:44347/api/evento/obtenereventoscuidador", content);
+                var resp = await client.PostAsync(App.API_URL + "evento/obtenereventoscuidador", content);
 
                 if (resp.IsSuccessStatusCode)
                 {
@@ -109,7 +109,7 @@ namespace TuApp.VistasModelo
 
             var content = new StringContent(JsonConvert.SerializeObject(req), Encoding.UTF8, "application/json");
             using HttpClient client = new();
-            var response = await client.PostAsync("https://localhost:44347/api/evento/insertar", content);
+            var response = await client.PostAsync(App.API_URL + "evento/insertar", content);
 
             if (response.IsSuccessStatusCode)
             {
@@ -140,7 +140,7 @@ namespace TuApp.VistasModelo
             var json = new StringContent(JsonConvert.SerializeObject(req), Encoding.UTF8, "application/json");
 
             using HttpClient client = new();
-            var resp = await client.PostAsync("https://localhost:44347/api/evento/eliminar", json);
+            var resp = await client.PostAsync(App.API_URL + "evento/eliminar", json);
 
             if (resp.IsSuccessStatusCode)
             {
@@ -162,7 +162,7 @@ namespace TuApp.VistasModelo
                 var jsonRelacion = new StringContent(JsonConvert.SerializeObject(reqRelacion), Encoding.UTF8, "application/json");
 
                 using HttpClient client = new();
-                var respRelacion = await client.PostAsync("https://localhost:44347/api/usuario/obtenerrelacion", jsonRelacion);
+                var respRelacion = await client.PostAsync(App.API_URL + "usuario/obtenerrelacion", jsonRelacion);
 
                 if (!respRelacion.IsSuccessStatusCode)
                 {
@@ -223,8 +223,8 @@ namespace TuApp.VistasModelo
                     };
 
                 var endpoint = paciente.Seleccionado
-                    ? "https://localhost:44347/api/evento/agregarPaciente"
-                    : "https://localhost:44347/api/evento/eliminarpaciente";
+                    ? App.API_URL + "evento/agregarPaciente"
+                    : App.API_URL + "evento/eliminarpaciente";
 
                 var json = new StringContent(JsonConvert.SerializeObject(req), Encoding.UTF8, "application/json");
                 using HttpClient client = new();

@@ -38,8 +38,7 @@ public partial class RegisterPage : ContentPage
         HttpResponseMessage respuestaHttp;
         using (HttpClient client = new HttpClient())
         {
-            client.BaseAddress = new Uri("https://localhost:44347/api/");
-            respuestaHttp = await client.PostAsync("usuario/insertar", jsonContent);
+            respuestaHttp = await client.PostAsync(App.API_URL+"usuario/insertar", jsonContent);
         }
 
         if (respuestaHttp.IsSuccessStatusCode)

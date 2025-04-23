@@ -96,7 +96,7 @@ namespace TuApp.VistasModelo
 
                 var json = new StringContent(JsonConvert.SerializeObject(req), Encoding.UTF8, "application/json");
                 using HttpClient client = new();
-                var resp = await client.PostAsync("https://localhost:44347/api/usuario/obtenerrelacion", json);
+                var resp = await client.PostAsync(App.API_URL + "usuario/obtenerrelacion", json);
 
                 if (resp.IsSuccessStatusCode)
                 {
@@ -141,7 +141,7 @@ namespace TuApp.VistasModelo
             var content = new StringContent(json, Encoding.UTF8, "application/json");
 
             using HttpClient client = new();
-            var response = await client.PostAsync("https://localhost:44347/api/mensaje/obtener", content);
+            var response = await client.PostAsync(App.API_URL + "mensaje/obtener", content);
             if (response.IsSuccessStatusCode)
             {
                 var jsonStr = await response.Content.ReadAsStringAsync();
@@ -174,7 +174,7 @@ namespace TuApp.VistasModelo
             var content = new StringContent(json, Encoding.UTF8, "application/json");
 
             using HttpClient client = new();
-            var response = await client.PostAsync("https://localhost:44347/api/mensaje/insertar", content);
+            var response = await client.PostAsync(App.API_URL + "mensaje/insertar", content);
 
             if (response.IsSuccessStatusCode)
             {

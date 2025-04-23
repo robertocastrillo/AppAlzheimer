@@ -2,30 +2,49 @@ using System.Collections.ObjectModel;
 using Newtonsoft.Json;
 using System.Text;
 using TuApp.Entidades.Entity;
-
+using TuApp.Entidades.Res.Chat;
 using TuApp.Entidades;
-using TuApp.ViewModels;
 
 namespace TuApp.Vistas;
 public partial class ChatsPacientePage : ContentPage
 {
-    private ChatsPacienteViewModel _viewModel;
+    
+    public ObservableCollection<Mensaje> Mensajes { get; set; } = new ObservableCollection<Mensaje>();
 
     public ChatsPacientePage()
     {
         InitializeComponent();
-        _viewModel = new ChatsPacienteViewModel(Navigation);
-        BindingContext = _viewModel;
+        CargarPreguntas();
+        BindingContext = this;
     }
 
-    protected override void OnAppearing()
+    public async Task CargarPreguntas()
     {
-        base.OnAppearing();
-        // Reload messages when page appears
-        _viewModel.CargarPreguntas();
+        var jsonContent = new StringContent(JsonConvert.SerializeObject(SesionActiva.sesionActiva.usuario.IdUsuario), Encoding.UTF8, "application/json");
+        HttpResponseMessage respuestaHttp = null;
+        using (HttpClient httpClient = new HttpClient())
+        {
+            respuestaHttp = await httpClient.PostAsync(App.API_URL + "mensaje/obtener", jsonContent);
+        }
+        if (respuestaHttp.IsSuccessStatusCode)
+        {
+            var contenido = await respuestaHttp.Content.ReadAsStringAsync();
+            ResCargarChatPaciente res = new ResCargarChatPaciente();
+            res = JsonConvert.DeserializeObject<ResCargarChatPaciente>(contenido);
+            if (res != null && res.resultado)
+            {
+                Mensajes.Clear();
+                foreach (Mensaje chats in res.chatspaciente)
+                {
+                    Mensaje chat = new Mensaje();
+                    chat.IdUsuarioCuidador = chats.IdUsuarioCuidador;
+                    chat.Contenido = chats.Contenido;
+                    chat.FechaEnviado = chats.FechaEnviado;
+                    Mensajes.Add(chat);
+                }
+            }
+        }
     }
-
-    // Keeping the original event handler for navigation
     private async void RegresarInicio_Clicked(object sender, EventArgs e)
     {
         await Navigation.PushAsync(new InicioPaciente());

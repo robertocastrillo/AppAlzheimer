@@ -41,8 +41,7 @@ public partial class MenuCuidadorPage : FlyoutPage
 
         using (HttpClient httpClient = new HttpClient())
         {
-            httpClient.BaseAddress = new Uri("https://localhost:44347/api/");
-            var respuestaHttp = await httpClient.PostAsync("usuario/cerrarsesion", jsonContent);
+            var respuestaHttp = await httpClient.PostAsync(App.API_URL + "usuario/cerrarsesion", jsonContent);
 
             if (respuestaHttp.IsSuccessStatusCode)
             {

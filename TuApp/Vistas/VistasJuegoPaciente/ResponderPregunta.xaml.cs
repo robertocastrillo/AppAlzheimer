@@ -127,8 +127,7 @@ public partial class ResponderPregunta : ContentPage
 
         using (HttpClient httpClient = new HttpClient())
         {
-            httpClient.BaseAddress = new Uri("https://localhost:44347/api/");
-            respuestaHttp = await httpClient.PostAsync("juego/insertarpuntaje", jsonContent);
+            respuestaHttp = await httpClient.PostAsync(App.API_URL + "juego/insertarpuntaje", jsonContent);
         }
 
         if (respuestaHttp.IsSuccessStatusCode)

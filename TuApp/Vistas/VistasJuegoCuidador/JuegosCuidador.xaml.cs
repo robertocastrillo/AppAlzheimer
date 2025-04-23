@@ -21,14 +21,12 @@ public partial class JuegosCuidador : ContentPage
         BindingContext = viewModel;
     }
 
-    private async void JuegoSeleccionado(object sender, SelectionChangedEventArgs e)
+    private async void Juego_Tapped(object sender, EventArgs e)
     {
-        var juego = e.CurrentSelection.FirstOrDefault() as JuegoCuidador;
-        if (juego != null)
+        if (sender is Frame frame && frame.BindingContext is JuegoCuidador juego)
         {
             await Navigation.PushAsync(new DetalleJuego(juego));
         }
-        ((CollectionView)sender).SelectedItem = null;
     }
     private async void AgregarJuego_Clicked(object sender, EventArgs e)
     {

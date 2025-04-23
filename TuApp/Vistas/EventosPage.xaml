@@ -3,14 +3,15 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:vm="clr-namespace:TuApp.VistasModelo"
              x:Class="TuApp.Vistas.EventosPage"
-             Title="Mis Eventos">
+             Title="Mis Eventos"
+             BackgroundColor="{DynamicResource BasePageColor}">
 
     <ContentPage.BindingContext>
         <vm:EventoViewModel />
     </ContentPage.BindingContext>
 
     <ContentPage.ToolbarItems>
-        <ToolbarItem Text="+" Clicked="OnAgregarEventoClicked"/>
+        <ToolbarItem Text="+" Clicked="OnAgregarEventoClicked" />
     </ContentPage.ToolbarItems>
 
     <StackLayout Padding="15">
@@ -18,23 +19,37 @@
         <Label Text="Eventos asignados" 
                FontAttributes="Bold" 
                FontSize="20" 
-               HorizontalOptions="Center"/>
+               HorizontalOptions="Center"
+               TextColor="{DynamicResource PrimaryColor}"/>
 
-        <CollectionView ItemsSource="{Binding ListaEventos}"
+        <CollectionView x:Name="EventosCollection"
+                        ItemsSource="{Binding ListaEventos}"
                         SelectionMode="Single"
-                        SelectionChanged="CollectionView_SelectionChanged"
                         Margin="0,15,0,0">
             <CollectionView.ItemTemplate>
                 <DataTemplate>
                     <Frame Margin="5"
                            Padding="10"
-                           CornerRadius="10"
-                           BorderColor="#7c3aed"
-                           HasShadow="True">
+                           CornerRadius="20"
+                           BorderColor="{DynamicResource PrimaryColor}"
+                           HasShadow="True"
+                           BackgroundColor="{DynamicResource White}">
+                        <Frame.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="Evento_Tapped" CommandParameter="{Binding}" />
+                        </Frame.GestureRecognizers>
                         <StackLayout>
-                            <Label Text="{Binding Titulo}" FontSize="18" FontAttributes="Bold"/>
-                            <Label Text="{Binding FechaHora, StringFormat='Fecha: {0:dd/MM/yyyy HH:mm}'}" FontSize="14"/>
-                            <Label Text="{Binding Descripcion}" FontSize="13" TextColor="Gray"/>
+                            <Label Text="{Binding Titulo}"
+                                   FontSize="18"
+                                   FontAttributes="Bold"
+                                   TextColor="{DynamicResource BaseTextColor}"/>
+
+                            <Label Text="{Binding FechaHora, StringFormat='Fecha: {0:dd/MM/yyyy HH:mm}'}"
+                                   FontSize="14"
+                                   TextColor="{DynamicResource BaseLightTextColor}"/>
+
+                            <Label Text="{Binding Descripcion}"
+                                   FontSize="13"
+                                   TextColor="{DynamicResource BaseLightTextColor}"/>
                         </StackLayout>
                     </Frame>
                 </DataTemplate>

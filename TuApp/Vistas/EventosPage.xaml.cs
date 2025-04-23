@@ -33,6 +33,14 @@ namespace TuApp.Vistas
                 vm.CargarEventosCommand.Execute(null);
             }
         }
+        private async void Evento_Tapped(object sender, EventArgs e)
+        {
+            if (sender is Frame frame && frame.BindingContext is Evento evento)
+            {
+                await Navigation.PushAsync(new DetalleEventoPage(evento));
+            }
+        }
+
 
     }
 

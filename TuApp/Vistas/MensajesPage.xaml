@@ -12,15 +12,25 @@
         <StackLayout Padding="10" Spacing="20">
 
             <!-- Lista de pacientes -->
-            <CollectionView ItemsSource="{Binding ListaPacientesRelacionados}"
-                            SelectedItem="{Binding PacienteSeleccionado}"
-                            SelectionMode="Single"
-                            HeightRequest="80"
-                            ItemsLayout="HorizontalList">
+            <CollectionView x:Name="PacientesCollection"
+                ItemsSource="{Binding ListaPacientesRelacionados}"
+                SelectedItem="{Binding PacienteSeleccionado}"
+                SelectionChanged="PacientesCollection_SelectionChanged"
+                SelectionMode="Single"
+                ItemsLayout="HorizontalList">
+
                 <CollectionView.ItemTemplate>
                     <DataTemplate>
-                        <Frame BorderColor="Gray" CornerRadius="10" Padding="10" Margin="5">
-                            <Label Text="{Binding Nombre}" />
+                        <Frame Style="{StaticResource TileButtonStyle}" WidthRequest="150">
+                            <Frame.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="Paciente_Tapped" CommandParameter="{Binding}" />
+                            </Frame.GestureRecognizers>
+                            <Label Text="{Binding Nombre}"
+                                   LineBreakMode="WordWrap"
+                                   HorizontalTextAlignment="Center"
+                                   VerticalTextAlignment="Center"
+                                   FontSize="16"
+                                   TextColor="{DynamicResource BaseTextColor}" />
                         </Frame>
                     </DataTemplate>
                 </CollectionView.ItemTemplate>
@@ -31,31 +41,34 @@
                    FontSize="18" 
                    FontAttributes="Bold"
                    HorizontalOptions="Center"
-                   TextColor="DarkSlateBlue"
+                   TextColor="{DynamicResource PrimaryColor}"
                    Margin="0,10,0,0"/>
 
             <!-- Mensajes -->
             <CollectionView ItemsSource="{Binding ListaMensajes}" HeightRequest="300">
                 <CollectionView.ItemTemplate>
                     <DataTemplate>
-                        <Frame Padding="10" Margin="5" BackgroundColor="Black">
-                            <Label Text="{Binding Contenido}" />
+                        <Frame Padding="10" Margin="5" BackgroundColor="{DynamicResource EntryAndEditorsBackgroundColor}">
+                            <Label Text="{Binding Contenido}" TextColor="{DynamicResource BaseTextColor}" />
                         </Frame>
                     </DataTemplate>
                 </CollectionView.ItemTemplate>
             </CollectionView>
 
-            <!-- Entrada de texto y botón -->
-            <StackLayout Orientation="Horizontal" Spacing="10">
-                <Entry Placeholder="Escribe un mensaje..." 
-                       Text="{Binding ContenidoNuevoMensaje}" 
-                       HorizontalOptions="FillAndExpand"
-                       BackgroundColor="Black"/>
+            <!-- StackLayout del Entry y botón de enviar -->
+            <StackLayout x:Name="MensajePanel"
+             Orientation="Horizontal"
+             Spacing="10">
+                <Entry x:Name="MensajeEntry"
+           Placeholder="Escribe un mensaje..."
+           Text="{Binding ContenidoNuevoMensaje}"
+           HorizontalOptions="FillAndExpand"
+           BackgroundColor="{DynamicResource EntryAndEditorsBackgroundColor}" />
                 <Button Text="Enviar"
-                        Command="{Binding EnviarMensajeCommand}"
-                        BackgroundColor="#4B3D8C"
-                        TextColor="White" />
+            Command="{Binding EnviarMensajeCommand}"
+            Style="{StaticResource PrimaryButtonStyle}" />
             </StackLayout>
+
 
         </StackLayout>
     </ScrollView>

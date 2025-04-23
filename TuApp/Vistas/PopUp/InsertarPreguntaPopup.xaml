@@ -4,12 +4,26 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
     x:Class="TuApp.InsertarPreguntaPopup"
-    Size="300,350">
+    Size="300,260"
+    CanBeDismissedByTappingOutsideOfPopup="False">
 
-    <VerticalStackLayout Padding="20" Spacing="15">
-        <Label Text="Agregar Pregunta" FontSize="20" HorizontalOptions="Center" />
+    <VerticalStackLayout Padding="20" Spacing="25"
+                         BackgroundColor="{DynamicResource BasePageColor}">
 
-        <Entry x:Name="descripcionEntry" Placeholder="Descripción de la pregunta" />
-        <Button Text="Guardar" Clicked="OnGuardarClicked" />
+        <Label Text="Agregar Pregunta"
+               FontSize="20"
+               FontAttributes="Bold"
+               HorizontalOptions="Center"
+               TextColor="{DynamicResource BaseTextColor}" />
+
+        <Entry x:Name="descripcionEntry"
+               Placeholder="Descripción de la pregunta"
+               HorizontalOptions="Fill" />
+
+        <Button Text="Guardar"
+                Style="{StaticResource PrimaryButtonStyle}"
+                Clicked="OnGuardarClicked"
+                HorizontalOptions="Fill" />
+
     </VerticalStackLayout>
 </toolkit:Popup>

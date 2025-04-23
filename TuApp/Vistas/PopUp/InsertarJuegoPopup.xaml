@@ -6,9 +6,23 @@
     x:Class="TuApp.InsertarJuegoPopup"
     Size="300,200">
 
-    <VerticalStackLayout Padding="20" Spacing="15">
-        <Label Text="Agregar juego" FontSize="20" HorizontalOptions="Center" />
-        <Entry x:Name="nombreEntry" Placeholder="Nombre del juego" />
-        <Button Text="Guardar" Clicked="OnGuardarClicked" />
+    <VerticalStackLayout Padding="20" Spacing="25"
+                         BackgroundColor="{DynamicResource BasePageColor}">
+
+        <Label Text="Agregar juego"
+               FontSize="20"
+               FontAttributes="Bold"
+               HorizontalOptions="Center"
+               TextColor="{DynamicResource BaseTextColor}" />
+
+        <Entry x:Name="nombreEntry"
+               Placeholder="Nombre del juego"
+               HorizontalOptions="Fill" />
+
+        <Button Text="Guardar"
+                Style="{StaticResource PrimaryButtonStyle}"
+                Clicked="OnGuardarClicked"
+                HorizontalOptions="Fill" />
+
     </VerticalStackLayout>
 </toolkit:Popup>

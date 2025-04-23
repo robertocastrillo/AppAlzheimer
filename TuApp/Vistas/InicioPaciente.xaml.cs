@@ -20,27 +20,27 @@ public partial class InicioPaciente : ContentPage
 
     private async void OnPerfilClicked(object sender, EventArgs e)
     {
-        Application.Current.MainPage = new NavigationPage(new PerfilPage());
+        await Navigation.PushAsync(new PerfilPage());
     }
 
     private async void OnJuegosClicked(object sender, EventArgs e)
     {
-        Application.Current.MainPage = new NavigationPage(new JuegosPaciente());
+        await Navigation.PushAsync(new JuegosPaciente());
     }
 
     private async void OnEventosClicked(object sender, EventArgs e)
     {
-        Application.Current.MainPage = new NavigationPage(new EventosPacientePage());
+        await Navigation.PushAsync(new EventosPacientePage());
     }
 
     private async void OnChatsClicked(object sender, EventArgs e)
     {
-        Application.Current.MainPage = new NavigationPage(new ChatsPacientePage());
+        await Navigation.PushAsync(new ChatsPacientePage());
     }
         
     private async void OnConfiguracionClicked(object sender, EventArgs e)
     {
-        Application.Current.MainPage = new NavigationPage(new ConfiguracionPacientePage());
+        await Navigation.PushAsync(new ConfiguracionPacientePage());
     }
 
 }

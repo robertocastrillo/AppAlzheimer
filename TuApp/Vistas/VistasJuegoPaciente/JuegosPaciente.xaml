@@ -12,8 +12,7 @@
         <!-- Lista de juegos -->
         <CollectionView Grid.Row="1"
                 ItemsSource="{Binding ListaJuegosPaciente}"
-                SelectionMode="Single"
-                SelectionChanged="CollectionView_SelectionChanged">
+                SelectionMode="Single">
             <CollectionView.ItemTemplate>
                 <DataTemplate>
                     <Frame BackgroundColor="White"
@@ -22,6 +21,9 @@
                        Margin="0,8"
                        HasShadow="True"
                        BorderColor="#e0e0e0">
+                        <Frame.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="Juego_Tapped" CommandParameter="{Binding}" />
+                        </Frame.GestureRecognizers>
 
                         <Grid ColumnDefinitions="*, Auto"
                           RowDefinitions="Auto, Auto"

@@ -1,5 +1,5 @@
-﻿<?xml version="1.0" encoding="utf-8"?><Database Name="APP_ROBERTO" Class="MiLinqDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
-  <Connection Mode="AppSettings" ConnectionString="Data Source=HP;Initial Catalog=APP_ROBERTO;Integrated Security=True;Trust Server Certificate=True" SettingsObjectName="AccesoDatos.Properties.Settings" SettingsPropertyName="APP_ROBERTOConnectionString3" Provider="System.Data.SqlClient" />
+﻿<?xml version="1.0" encoding="utf-8"?><Database Name="alzheimerdb" Class="MiLinqDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
+  <Connection Mode="AppSettings" ConnectionString="Data Source=alzheimersever.database.windows.net;Initial Catalog=alzheimerdb;User ID=adminRoberto" SettingsObjectName="AccesoDatos.Properties.Settings" SettingsPropertyName="alzheimerdbConnectionString" Provider="System.Data.SqlClient" />
   <Function Name="dbo.SP_ACTUALIZAR_CONTRASENA" Method="SP_ACTUALIZAR_CONTRASENA">
     <Parameter Name="ID_USUARIO" Parameter="iD_USUARIO" Type="System.Int32" DbType="Int" />
     <Parameter Name="CONTRASENA_ACTUAL" Parameter="cONTRASENA_ACTUAL" Type="System.String" DbType="VarChar(255)" />
@@ -313,8 +313,8 @@
       <Column Name="FECHA_HORA" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
       <Column Name="ID_PRIORIDAD" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
       <Column Name="PRIORIDAD" Type="System.String" DbType="VarChar(255) NOT NULL" CanBeNull="false" />
-      <Column Name="ID_CUIDADOR" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="NOMBRE_CUIDADOR" Type="System.String" DbType="VarChar(100) NOT NULL" CanBeNull="false" />
+      <Column Name="ID_CUIDADOR" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="NOMBRE_CUIDADOR" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
     </ElementType>
   </Function>
   <Function Name="dbo.SP_OBTENER_JUEGOS_CREADOS" Method="SP_OBTENER_JUEGOS_CREADOS">
@@ -326,6 +326,7 @@
       <Column Name="ID_JUEGO" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
       <Column Name="NOMBRE" Type="System.String" DbType="VarChar(255) NOT NULL" CanBeNull="false" />
       <Column Name="TOTAL_PREGUNTAS" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="PACIENTES" Type="System.String" DbType="NVarChar(MAX) NOT NULL" CanBeNull="false" />
     </ElementType>
   </Function>
   <Function Name="dbo.SP_OBTENER_JUEGOS_DISPONIBLES" Method="SP_OBTENER_JUEGOS_DISPONIBLES">
@@ -367,6 +368,8 @@
   </Function>
   <Function Name="dbo.SP_OBTENER_PUNTAJE" Method="SP_OBTENER_PUNTAJE">
     <Parameter Name="ID_PACIENTE" Parameter="iD_PACIENTE" Type="System.Int32" DbType="Int" />
+    <Parameter Name="ID_JUEGO" Parameter="iD_JUEGO" Type="System.Int32" DbType="Int" />
+    <Parameter Name="ID_CUIDADOR" Parameter="iD_CUIDADOR" Type="System.Int32" DbType="Int" />
     <Parameter Name="ERROR_ID" Parameter="eRROR_ID" Type="System.Int32" DbType="Int" Direction="InOut" />
     <Parameter Name="ERROR_CODE" Parameter="eRROR_CODE" Type="System.String" DbType="NVarChar(255)" Direction="InOut" />
     <Parameter Name="ERROR_DESCRIPTION" Parameter="eRROR_DESCRIPTION" Type="System.String" DbType="NVarChar(MAX)" Direction="InOut" />

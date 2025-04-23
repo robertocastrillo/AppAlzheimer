@@ -1,24 +1,37 @@
 <ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="TuApp.Vistas.PopUp.PopupAsignarPacientes">
+             x:Class="TuApp.Vistas.PopUp.PopupAsignarPacientes"
+             BackgroundColor="{DynamicResource BasePageColor}">
 
-    <VerticalStackLayout Spacing="10">
-        <Label Text="Asignar pacientes al evento" FontAttributes="Bold" FontSize="20" />
+    <VerticalStackLayout Spacing="20" Padding="20">
 
-        <CollectionView ItemsSource="{Binding PacientesCheckbox}">
+        <Label Text="Asignar pacientes al evento"
+               FontAttributes="Bold"
+               FontSize="20"
+               HorizontalOptions="Center"
+               TextColor="{DynamicResource BaseTextColor}" />
+
+        <CollectionView ItemsSource="{Binding PacientesCheckbox}"
+                        BackgroundColor="Transparent">
             <CollectionView.ItemTemplate>
                 <DataTemplate>
-                    <HorizontalStackLayout>
-                        <CheckBox IsChecked="{Binding Seleccionado}" />
-                        <Label Text="{Binding Usuario.Nombre}" VerticalOptions="Center" />
-                    </HorizontalStackLayout>
+                    <Frame Style="{StaticResource TileButtonStyle}">
+                        <HorizontalStackLayout Spacing="10">
+                            <CheckBox IsChecked="{Binding Seleccionado}"
+                                      Color="{DynamicResource PrimaryColor}" />
+                            <Label Text="{Binding Usuario.Nombre}"
+                                   VerticalOptions="Center"
+                                   TextColor="{DynamicResource BaseTextColor}" />
+                        </HorizontalStackLayout>
+                    </Frame>
                 </DataTemplate>
             </CollectionView.ItemTemplate>
         </CollectionView>
 
         <Button Text="Guardar asignaciones"
+                Style="{StaticResource PrimaryButtonStyle}"
                 Clicked="Guardar_Clicked"
-                BackgroundColor="Green"
-                TextColor="White" />
+                HorizontalOptions="Fill" />
+
     </VerticalStackLayout>
 </ContentView>

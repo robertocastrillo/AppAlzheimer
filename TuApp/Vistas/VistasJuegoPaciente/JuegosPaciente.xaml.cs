@@ -14,16 +14,13 @@ public partial class JuegosPaciente : ContentPage
         BindingContext = viewModel;
     }
 
-    private async void CollectionView_SelectionChanged(object sender, SelectionChangedEventArgs e)
+
+    private async void Juego_Tapped(object sender, EventArgs e)
     {
-        if (e.CurrentSelection.FirstOrDefault() is JuegoPaciente juegoSeleccionado)
+        if (sender is Frame frame && frame.BindingContext is JuegoPaciente juego)
         {
             int idUsuarioPaciente = SesionActiva.sesionActiva.usuario.IdUsuario;
-
-            await Navigation.PushAsync(new ResponderPregunta(juegoSeleccionado, idUsuarioPaciente));
-
-            // Desmarcar selección al volver
-            ((CollectionView)sender).SelectedItem = null;
+            await Navigation.PushAsync(new ResponderPregunta(juego, idUsuarioPaciente));
         }
     }
 }

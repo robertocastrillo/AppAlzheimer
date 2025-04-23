@@ -3,35 +3,40 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
     x:Class="TuApp.PuntajesPopup"
-    Size="300,400">
+    Size="300,400"
+    CanBeDismissedByTappingOutsideOfPopup="False">
 
-    <Grid RowDefinitions="Auto,*,Auto" Padding="20" RowSpacing="10">
+    <Grid RowDefinitions="Auto,*,Auto"
+          Padding="20"
+          RowSpacing="20"
+          BackgroundColor="{DynamicResource BasePageColor}">
+
         <!-- Título -->
         <Label Text="Puntajes del Paciente"
                FontSize="20"
-               HorizontalOptions="Center"
                FontAttributes="Bold"
+               HorizontalOptions="Center"
+               TextColor="{DynamicResource BaseTextColor}"
                Grid.Row="0" />
 
         <!-- Lista de puntajes -->
         <CollectionView x:Name="collectionPuntajes"
                         Grid.Row="1"
                         ItemsSource="{Binding}"
-                        Margin="0"
-                        VerticalOptions="Fill">
+                        VerticalOptions="Fill"
+                        BackgroundColor="Transparent">
             <CollectionView.ItemTemplate>
                 <DataTemplate>
-                    <Border Stroke="#CCC"
-                            StrokeThickness="1"
-                            Padding="8"
-                            Margin="0,0,0,5"
-                            BackgroundColor="White"
-                            StrokeShape="Rectangle"
-                            HorizontalOptions="Fill">
+                    <Frame Padding="10"
+                           Margin="0,0,0,8"
+                           HasShadow="False"
+                           CornerRadius="10"
+                           BackgroundColor="{DynamicResource White}"
+                           BorderColor="{DynamicResource Gray300}">
                         <Label Text="{Binding}"
                                FontSize="14"
-                               TextColor="Black" />
-                    </Border>
+                               TextColor="{DynamicResource BaseTextColor}" />
+                    </Frame>
                 </DataTemplate>
             </CollectionView.ItemTemplate>
         </CollectionView>
@@ -39,10 +44,9 @@
         <!-- Botón fijo -->
         <Button Grid.Row="2"
                 Text="Cerrar"
+                Style="{StaticResource PrimaryButtonStyle}"
                 Clicked="Cerrar_Clicked"
-                HorizontalOptions="Fill"
-                BackgroundColor="#7E57C2"
-                TextColor="White"
-                FontAttributes="Bold" />
+                HorizontalOptions="Fill" />
+
     </Grid>
 </toolkit:Popup>

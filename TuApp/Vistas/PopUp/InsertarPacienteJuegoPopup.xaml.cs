@@ -1,4 +1,5 @@
 using CommunityToolkit.Maui.Views;
+using Microsoft.Maui.Controls;
 using TuApp.Entidades;
 using TuApp.ViewModels;
 
@@ -15,18 +16,14 @@ public partial class InsertarPacienteJuegoPopup : Popup
         BindingContext = viewModel;
     }
 
-    private void OnPacienteSeleccionado(object sender, SelectionChangedEventArgs e)
+    private void OnPacienteTapped(object sender, TappedEventArgs e)
     {
-        var paciente = e.CurrentSelection.FirstOrDefault() as Usuario;
-
-        if (paciente != null)
+        if (sender is Frame frame && frame.BindingContext is Usuario paciente)
         {
-            
             Close(paciente); // Devuelve el paciente seleccionado
         }
-
-        ((CollectionView)sender).SelectedItem = null;
     }
+
 
     private void OnCerrarClicked(object sender, EventArgs e)
     {

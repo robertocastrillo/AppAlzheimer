@@ -4,20 +4,37 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
     x:Class="TuApp.InsertarOpcionPopup"
-    Size="300,250">
+    Size="300,260"
+    CanBeDismissedByTappingOutsideOfPopup="False">
 
-    <VerticalStackLayout Padding="20" Spacing="15">
-        <Label Text="Agregar Opción" FontSize="20" HorizontalOptions="Center" />
+    <VerticalStackLayout Padding="20" Spacing="25"
+                         BackgroundColor="{DynamicResource BasePageColor}">
 
-        <Entry x:Name="descripcionEntry" Placeholder="Descripción de la opción" />
+        <Label Text="Agregar Opción"
+               FontSize="20"
+               FontAttributes="Bold"
+               HorizontalOptions="Center"
+               TextColor="{DynamicResource BaseTextColor}" />
 
-        <HorizontalStackLayout Spacing="10" VerticalOptions="Center">
-            <Label Text="¿Es la respuesta correcta?" VerticalOptions="Center" />
+        <Entry x:Name="descripcionEntry"
+               Placeholder="Descripción de la opción"
+               HorizontalOptions="Fill" />
+
+        <HorizontalStackLayout Spacing="12"
+                               VerticalOptions="Center"
+                               HorizontalOptions="Center">
+            <Label Text="¿Es la respuesta correcta?"
+                   VerticalOptions="Center"
+                   TextColor="{DynamicResource BaseTextColor}" />
             <CheckBox x:Name="condicionCheck"
-              Color="#5e35b1"
-              VerticalOptions="Center" />
+                      Color="{DynamicResource PrimaryColor}"
+                      VerticalOptions="Center" />
         </HorizontalStackLayout>
 
-        <Button Text="Guardar" Clicked="OnGuardarClicked" />
+        <Button Text="Guardar"
+                Style="{StaticResource PrimaryButtonStyle}"
+                Clicked="OnGuardarClicked"
+                HorizontalOptions="Fill" />
+
     </VerticalStackLayout>
 </toolkit:Popup>

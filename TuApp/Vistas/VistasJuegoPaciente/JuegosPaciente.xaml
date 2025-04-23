@@ -2,47 +2,47 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:vm="clr-namespace:TuApp.VistasModelo"
-             x:Class="TuApp.JuegosPaciente">
+             x:Class="TuApp.JuegosPaciente"
+             BackgroundColor="{DynamicResource BasePageColor}">
+
     <ContentPage.BindingContext>
         <vm:JuegoViewModel />
     </ContentPage.BindingContext>
 
-    <Grid RowDefinitions="Auto, *, Auto" Padding="20" BackgroundColor="#fafafa">
+    <Grid RowDefinitions="Auto, *, Auto"
+          Padding="20"
+          BackgroundColor="{DynamicResource BaseTabbedPageColor}">
 
         <!-- Lista de juegos -->
         <CollectionView Grid.Row="1"
-                ItemsSource="{Binding ListaJuegosPaciente}"
-                SelectionMode="Single">
+                        ItemsSource="{Binding ListaJuegosPaciente}"
+                        SelectionMode="Single"
+                        BackgroundColor="Transparent">
             <CollectionView.ItemTemplate>
                 <DataTemplate>
-                    <Frame BackgroundColor="White"
-                       CornerRadius="20"
-                       Padding="15"
-                       Margin="0,8"
-                       HasShadow="True"
-                       BorderColor="#e0e0e0">
+                    <Frame Style="{StaticResource TileButtonStyle}">
                         <Frame.GestureRecognizers>
                             <TapGestureRecognizer Tapped="Juego_Tapped" CommandParameter="{Binding}" />
                         </Frame.GestureRecognizers>
 
                         <Grid ColumnDefinitions="*, Auto"
-                          RowDefinitions="Auto, Auto"
-                          ColumnSpacing="10"
-                          RowSpacing="8"
-                          VerticalOptions="Center">
+                              RowDefinitions="Auto, Auto"
+                              ColumnSpacing="10"
+                              RowSpacing="8"
+                              VerticalOptions="Center">
 
                             <!-- Nombre del juego -->
                             <Label Grid.Row="0" Grid.Column="0"
-                               Text="{Binding nombre}"
-                               FontSize="18"
-                               FontAttributes="Bold"
-                               TextColor="#1a1a1a" />
+                                   Text="{Binding nombre}"
+                                   FontSize="18"
+                                   FontAttributes="Bold"
+                                   TextColor="{DynamicResource BaseTextColor}" />
 
                             <!-- Total de preguntas -->
                             <Label Grid.Row="1" Grid.Column="0"
-                               Text="{Binding numPreguntas, StringFormat='Preguntas: {0}'}"
-                               FontSize="14"
-                               TextColor="#555" />
+                                   Text="{Binding numPreguntas, StringFormat='Preguntas: {0}'}"
+                                   FontSize="14"
+                                   TextColor="{DynamicResource BaseLightTextColor}" />
 
                         </Grid>
                     </Frame>

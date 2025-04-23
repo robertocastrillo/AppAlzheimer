@@ -13,8 +13,7 @@ public partial class ResponderPregunta : ContentPage
     private List<bool> respuestasCorrectas = new();
     private JuegoPaciente juegoSeleccionado;
     private int idUsuario;
-    private Opcion opcionSeleccionada;
-    private bool? opcionEsCorrecta;
+
     public ResponderPregunta(JuegoPaciente juegoSeleccionado, int idUsuario)
     {
         InitializeComponent();
@@ -55,14 +54,17 @@ public partial class ResponderPregunta : ContentPage
         if (e.Parameter is not Opcion opcionSeleccionada)
             return;
 
-        // Buscar si es correcta
+        // Evaluar si la opción es correcta
         bool esCorrecta = opcionSeleccionada.Condicion;
         respuestasCorrectas.Add(esCorrecta);
 
-        // Cambiar el color del Frame seleccionado
+        // Aplicar color dinámico del tema
         if (sender is Frame frame)
         {
-            frame.BackgroundColor = esCorrecta ? Colors.LightGreen : Colors.LightCoral;
+            var colorCorrecto = Application.Current.Resources.TryGetValue("OkColor", out var ok) ? (Color)ok : Colors.Green;
+            var colorIncorrecto = Application.Current.Resources.TryGetValue("ErrorColor", out var err) ? (Color)err : Colors.Red;
+
+            frame.BackgroundColor = esCorrecta ? colorCorrecto : colorIncorrecto;
         }
 
         await Task.Delay(500);
@@ -76,7 +78,6 @@ public partial class ResponderPregunta : ContentPage
         else
         {
             await EnviarPuntaje();
-
         }
     }
 
@@ -107,14 +108,14 @@ public partial class ResponderPregunta : ContentPage
 
     private async void btnRegresar_Clicked(object sender, EventArgs e)
     {
-        await Navigation.PopAsync(); // Regresa a JuegosPaciente
+        await Navigation.PopAsync();
     }
+
     public async Task InsertarPuntaje(int idJuego, int totalCorrectas, int totalPreguntas)
     {
-        // Calcular puntaje sobre 100
         int puntaje = (int)Math.Round(((double)totalCorrectas / totalPreguntas) * 100);
 
-        ReqInsertarPuntaje req = new ReqInsertarPuntaje
+        var req = new ReqInsertarPuntaje
         {
             idPaciente = SesionActiva.sesionActiva.usuario.IdUsuario,
             idJuego = idJuego,
@@ -123,19 +124,15 @@ public partial class ResponderPregunta : ContentPage
 
         var jsonContent = new StringContent(JsonConvert.SerializeObject(req), Encoding.UTF8, "application/json");
 
-        HttpResponseMessage respuestaHttp = null;
-
-        using (HttpClient httpClient = new HttpClient())
-        {
-            respuestaHttp = await httpClient.PostAsync(App.API_URL + "juego/insertarpuntaje", jsonContent);
-        }
+        using HttpClient httpClient = new();
+        var respuestaHttp = await httpClient.PostAsync(App.API_URL + "juego/insertarpuntaje", jsonContent);
 
         if (respuestaHttp.IsSuccessStatusCode)
         {
             var contenido = await respuestaHttp.Content.ReadAsStringAsync();
-            var res = JsonConvert.DeserializeObject<ResInsertarPuntaje>(contenido); // Asumiendo una clase genérica con bool resultado
+            var res = JsonConvert.DeserializeObject<ResInsertarPuntaje>(contenido);
 
-            if (res != null && res.resultado)
+            if (res?.resultado == true)
             {
                 MostrarResultadoFinal();
             }
@@ -151,6 +148,7 @@ public partial class ResponderPregunta : ContentPage
             await Navigation.PopAsync();
         }
     }
+
     private async void BtnFlechaVolver_Clicked(object sender, EventArgs e)
     {
         if (respuestasCorrectas.Count > 0)
@@ -164,7 +162,7 @@ public partial class ResponderPregunta : ContentPage
                 return;
         }
 
-        respuestasCorrectas.Clear(); // Limpia las respuestas
-        await Navigation.PopAsync(); // Vuelve a la pantalla anterior
+        respuestasCorrectas.Clear();
+        await Navigation.PopAsync();
     }
 }

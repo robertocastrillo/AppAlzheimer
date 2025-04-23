@@ -2,56 +2,95 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:vm="clr-namespace:TuApp.VistasModelo"
              x:Class="TuApp.ResponderPregunta"
-             NavigationPage.HasBackButton="False">
+             NavigationPage.HasBackButton="False"
+             BackgroundColor="{DynamicResource BasePageColor}">
 
     <ContentPage.BindingContext>
         <vm:PreguntaViewModel />
     </ContentPage.BindingContext>
 
-    <ScrollView>
-        <VerticalStackLayout Padding="20" Spacing="15">
+    <Grid RowDefinitions="*,Auto"
+          Padding="20"
+          BackgroundColor="{DynamicResource BasePageColor}">
 
-            <!-- Botón de regreso -->
-            <HorizontalStackLayout HorizontalOptions="End">
-                <Button x:Name="btnFlechaVolver"
-                        Text="←"
-                        FontSize="40"
-                        FontAttributes="Bold"
-                        BackgroundColor="Transparent"
-                        TextColor="Black"
-                        Clicked="BtnFlechaVolver_Clicked"/>
-            </HorizontalStackLayout>
+        <!-- Contenido desplazable -->
+        <ScrollView Grid.Row="0">
+            <VerticalStackLayout x:Name="mainLayout"
+                                 Padding="0"
+                                 Spacing="25"
+                                 VerticalOptions="Start"
+                                 HorizontalOptions="FillAndExpand">
 
-            <Label x:Name="lblPregunta" FontSize="20" FontAttributes="Bold" TextColor="Black" />
+                <!-- Botón de regreso arriba -->
+                <HorizontalStackLayout HorizontalOptions="End"
+                                       x:Name="layoutBotonVolver">
+                    <Button x:Name="btnFlechaVolver"
+                            Text="←"
+                            FontSize="36"
+                            FontAttributes="Bold"
+                            BackgroundColor="Transparent"
+                            TextColor="{DynamicResource PrimaryColor}"
+                            Clicked="BtnFlechaVolver_Clicked" />
+                </HorizontalStackLayout>
 
-            <Image x:Name="imgPregunta"
-                   HeightRequest="160"
-                   Aspect="AspectFit"
-                   VerticalOptions="Center"
-                   Margin="0,10,0,10"/>
+                <!-- Pregunta -->
+                <Label x:Name="lblPregunta"
+                       FontSize="22"
+                       FontAttributes="Bold"
+                       TextColor="{DynamicResource BaseTextColor}"
+                       HorizontalTextAlignment="Center"
+                       HorizontalOptions="Center" />
 
-            <CollectionView x:Name="OpcionesCollection"
-                            SelectionMode="None">
-                <CollectionView.ItemTemplate>
-                    <DataTemplate>
-                        <Frame Padding="10"
-                               Margin="5"
-                               BorderColor="Gray"
-                               BackgroundColor="White"
-                               x:Name="OpcionFrame">
-                            <Frame.GestureRecognizers>
-                                <TapGestureRecognizer
-                                    Tapped="Opcion_Tapped"
-                                    CommandParameter="{Binding .}" />
-                            </Frame.GestureRecognizers>
-                            <Label Text="{Binding Descripcion}" FontSize="16" />
-                        </Frame>
-                    </DataTemplate>
-                </CollectionView.ItemTemplate>
-            </CollectionView>
+                <!-- Imagen -->
+                <Image x:Name="imgPregunta"
+                       HeightRequest="160"
+                       Aspect="AspectFit"
+                       VerticalOptions="Center"
+                       Margin="0,10,0,10" />
 
-            <Label x:Name="lblResultadoFinal" FontSize="16" TextColor="Green" IsVisible="False"/>
-            <Button x:Name="btnRegresar" Text="Regresar" Clicked="btnRegresar_Clicked" IsVisible="False"/>
-        </VerticalStackLayout>
-    </ScrollView>
+                <!-- Opciones -->
+                <CollectionView x:Name="OpcionesCollection"
+                                SelectionMode="None"
+                                BackgroundColor="Transparent">
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate>
+                            <Frame Style="{StaticResource TileButtonStyle}"
+                                   Padding="10"
+                                   Margin="0,5"
+                                   BorderColor="{DynamicResource Gray300}">
+                                <Frame.GestureRecognizers>
+                                    <TapGestureRecognizer Tapped="Opcion_Tapped"
+                                                          CommandParameter="{Binding .}" />
+                                </Frame.GestureRecognizers>
+                                <Label Text="{Binding Descripcion}"
+                                       FontSize="16"
+                                       TextColor="{DynamicResource BaseTextColor}" />
+                            </Frame>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+
+                <!-- Resultado -->
+                <Label x:Name="lblResultadoFinal"
+                       FontSize="18"
+                       TextColor="{DynamicResource OkColor}"
+                       HorizontalTextAlignment="Center"
+                       HorizontalOptions="Center"
+                       IsVisible="False"
+                       Margin="0,20,0,0" />
+            </VerticalStackLayout>
+        </ScrollView>
+
+        <!-- Botón fijo abajo -->
+        <Button Grid.Row="1"
+                x:Name="btnRegresar"
+                Text="Regresar"
+                Style="{StaticResource PrimaryButtonStyle}"
+                WidthRequest="200"
+                HeightRequest="55"
+                Clicked="btnRegresar_Clicked"
+                IsVisible="False"
+                HorizontalOptions="Center"
+                Margin="0,10,0,10" />
+    </Grid>
 </ContentPage>

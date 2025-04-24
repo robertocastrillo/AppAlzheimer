@@ -159,8 +159,16 @@ namespace TuApp.Vistas
             }
             else if (usuario.IdTipoUsuario == 2)
             {
-                // Usuario tipo 2 - Cuidador
-                await Navigation.PushAsync(new InicioCuidadorPage());
+                var flyout = Application.Current.MainPage as FlyoutPage;
+
+                if (flyout != null)
+                {
+                    // Cambia la vista principal (Detail)
+                    flyout.Detail = new NavigationPage(new InicioCuidadorPage());
+
+                    // Cierra el menú lateral si está abierto
+                    flyout.IsPresented = false;
+                }
             }
             else
             {

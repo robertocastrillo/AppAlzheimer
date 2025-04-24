@@ -90,36 +90,36 @@
                         </VerticalStackLayout>
                     </Grid>
                 </Frame>
-              <VerticalStackLayout x:Name="stackCambiarPassword" IsVisible="False" Spacing="20">
+                <VerticalStackLayout x:Name="stackCambiarPassword" IsVisible="False" Spacing="20">
 
                     <!-- Contraseña Actual -->
-                <Frame BackgroundColor="#8a4bcf" CornerRadius="15" Padding="15" BorderColor="#b4b2b1">
-                    <Grid ColumnDefinitions="Auto,*" ColumnSpacing="15">
-                        <Image Source="candado.png" HeightRequest="24" WidthRequest="24" VerticalOptions="Center" />
-                        <VerticalStackLayout Grid.Column="1" Spacing="5">
-                            <Label Text="Contraseña Actual" TextColor="White" FontSize="14" />
-                   
+                    <Frame BackgroundColor="#8a4bcf" CornerRadius="15" Padding="15" BorderColor="#b4b2b1">
+                        <Grid ColumnDefinitions="Auto,*" ColumnSpacing="15">
+                            <Image Source="candado.png" HeightRequest="24" WidthRequest="24" VerticalOptions="Center" />
+                            <VerticalStackLayout Grid.Column="1" Spacing="5">
+                                <Label Text="Contraseña Actual" TextColor="White" FontSize="14" />
+
 
                                 <Entry x:Name="txtPasswordActual" Placeholder="Contraseña Actual" IsPassword="True" 
                                    TextColor="White" PlaceholderColor="#e2d0ff"  
                                    BackgroundColor="#e0cdff" ZIndex="1"/>
-                        </VerticalStackLayout>
-                    </Grid>
-                </Frame>
+                            </VerticalStackLayout>
+                        </Grid>
+                    </Frame>
 
-                <!-- Nueva Contraseña -->
+                    <!-- Nueva Contraseña -->
                     <Frame BackgroundColor="#8a4bcf" CornerRadius="15" Padding="15" BorderColor="#b4b2b1">
-                    <Grid ColumnDefinitions="Auto,*" ColumnSpacing="15">
-                        <Image Source="candado.png" HeightRequest="24" WidthRequest="24" VerticalOptions="Center" />
-                        <VerticalStackLayout Grid.Column="1" Spacing="5">
-                            <Label Text="Nueva Contraseña" TextColor="White" FontSize="14" />
-                            <Entry x:Name="txtPasswordNueva" Placeholder="Nueva Contraseña" IsPassword="True" 
+                        <Grid ColumnDefinitions="Auto,*" ColumnSpacing="15">
+                            <Image Source="candado.png" HeightRequest="24" WidthRequest="24" VerticalOptions="Center" />
+                            <VerticalStackLayout Grid.Column="1" Spacing="5">
+                                <Label Text="Nueva Contraseña" TextColor="White" FontSize="14" />
+                                <Entry x:Name="txtPasswordNueva" Placeholder="Nueva Contraseña" IsPassword="True" 
                                    TextColor="White" PlaceholderColor="#e2d0ff" 
                                    BackgroundColor="#e0cdff" ZIndex="1" />
-                        </VerticalStackLayout>
-                    </Grid>
-                </Frame>
-              </VerticalStackLayout>
+                            </VerticalStackLayout>
+                        </Grid>
+                    </Frame>
+                </VerticalStackLayout>
 
             </VerticalStackLayout>
 
@@ -138,6 +138,7 @@
                         x:Name="btnVolver"
                         BackgroundColor="#a65fe6"
                         TextColor="White"
+                        Clicked="VolverInicio_Clicked"
                         CornerRadius="25"
                         HeightRequest="50"
                         FontAttributes="Bold"

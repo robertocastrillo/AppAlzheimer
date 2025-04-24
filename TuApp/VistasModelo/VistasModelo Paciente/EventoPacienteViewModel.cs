@@ -102,8 +102,7 @@ namespace TuApp.VistasModelo
 
                 // Set timeout to avoid hanging
                 client.Timeout = TimeSpan.FromSeconds(15);
-
-                var apiUrl = "https://localhost:44347/api/evento/obtenereventospaciente";
+                var apiUrl = App.API_URL + "/evento/obtenereventospaciente";
                 Debug.WriteLine($"Calling API: {apiUrl}");
 
                 var resp = await client.PostAsync(apiUrl, content);

@@ -118,7 +118,8 @@ namespace TuApp.ViewModels
                 HttpResponseMessage respuestaHttp;
                 using (HttpClient httpClient = new HttpClient())
                 {
-                    respuestaHttp = await httpClient.PostAsync("https://localhost:44347/api/usuario/actualizarping", jsonContent);
+                   
+                    respuestaHttp = await httpClient.PostAsync(App.API_URL + "/usuario/actualizarping", jsonContent);
                 }
 
                 if (respuestaHttp.IsSuccessStatusCode)

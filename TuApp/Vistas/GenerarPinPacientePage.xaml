@@ -2,8 +2,8 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="TuApp.Vistas.GenerarPinPacientePage"
-             BackgroundColor="Transparent">
-
+             BackgroundColor="Transparent"
+             NavigationPage.HasNavigationBar="False">
     <!-- Fondo degradado -->
     <ContentPage.Background>
         <LinearGradientBrush EndPoint="1,1">
@@ -13,55 +13,118 @@
         </LinearGradientBrush>
     </ContentPage.Background>
 
-    <ScrollView>
-        <VerticalStackLayout Padding="30" Spacing="25">
+    <!-- Recursos y estilos -->
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <Style x:Key="TitleLabelStyle" TargetType="Label">
+                <Setter Property="FontSize" Value="28" />
+                <Setter Property="FontAttributes" Value="Bold" />
+                <Setter Property="TextColor" Value="White" />
+                <Setter Property="HorizontalTextAlignment" Value="Center" />
+                <Setter Property="Margin" Value="0,0,0,20" />
+            </Style>
 
-            <!-- Botón "Inicio" -->
-            <Button Text="Inicio"
+            <Style x:Key="ActionButtonStyle" TargetType="Button">
+                <Setter Property="BackgroundColor" Value="#e0cdff" />
+                <Setter Property="TextColor" Value="#3b0764" />
+                <Setter Property="FontAttributes" Value="Bold" />
+                <Setter Property="CornerRadius" Value="15" />
+                <Setter Property="HeightRequest" Value="60" />
+                <Setter Property="FontSize" Value="16" />
+                <Setter Property="Margin" Value="0,10" />
+            </Style>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+    <ScrollView>
+        <VerticalStackLayout Padding="30" Spacing="20" VerticalOptions="Center">
+            <!-- Botón de Volver -->
+            <Button Text="Volver"
                     Clicked="RegresarInicio_Clicked"
-                    FontSize="32"
-                    FontAttributes="Bold"
                     TextColor="White"
                     BackgroundColor="Transparent"
+                    FontSize="32"
+                    FontAttributes="Bold"
                     HorizontalOptions="Start"
-                    Padding="0"
-                    Margin="0,30,0,0" />
+                    Margin="0,40,0,20"
+                    Padding="0">
+                <VisualStateManager.VisualStateGroups>
+                    <VisualStateGroup x:Name="CommonStates">
+                        <VisualState x:Name="Normal" />
+                        <VisualState x:Name="Pressed">
+                            <VisualState.Setters>
+                                <Setter Property="Scale" Value="0.95" />
+                                <Setter Property="Opacity" Value="0.8" />
+                            </VisualState.Setters>
+                        </VisualState>
+                    </VisualStateGroup>
+                </VisualStateManager.VisualStateGroups>
+            </Button>
 
             <!-- Título -->
             <Label Text="Generar PIN"
-                   FontSize="28"
-                   FontAttributes="Bold"
-                   HorizontalTextAlignment="Center"
-                   TextColor="White"
-                   Margin="0,10,0,20" />
+                   Style="{StaticResource TitleLabelStyle}" />
 
-            <!-- Campo de PIN -->
-            <Frame BackgroundColor="#8a4bcf" CornerRadius="15" Padding="15" BorderColor="#b4b2b1">
-                <Grid ColumnDefinitions="Auto,*" ColumnSpacing="15">
-                    <Image Source="candado.png" HeightRequest="24" WidthRequest="24" VerticalOptions="Center" />
-                    <VerticalStackLayout Grid.Column="1" Spacing="5">
-                        <Label Text="PIN nuevo" TextColor="White" FontSize="14" />
-                        <Entry x:Name="PinEntry"
-                               Text="{Binding Pin}"
-                               Placeholder="Ingresa tu nuevo PIN"
-                               TextColor="White"
-                               PlaceholderColor="#e2d0ff"
-                               BackgroundColor="#e0cdff"
-                               Keyboard="Numeric"
-                               MaxLength="6"
-                               IsPassword="True" />
-                    </VerticalStackLayout>
-                </Grid>
+            <!-- Contenido Principal -->
+            <Frame BackgroundColor="#4e186a"
+                   CornerRadius="20"
+                   Padding="20"
+                   HasShadow="True"
+                   Margin="0,10,0,20">
+                <VerticalStackLayout Spacing="25">
+                    <!-- Campo de PIN -->
+                    <Frame BackgroundColor="#8a4bcf" 
+                           CornerRadius="15" 
+                           Padding="15" 
+                           HasShadow="False"
+                           BorderColor="Transparent"
+                           HorizontalOptions="Center"
+                           WidthRequest="240">
+                        <VerticalStackLayout Spacing="8">
+                            <Label Text="PIN nuevo" 
+                                   TextColor="White" 
+                                   FontSize="14"
+                                   HorizontalOptions="Center"
+                                   Margin="0,0,0,5" />
+                            <Entry x:Name="PinEntry"
+                                   Text="{Binding Pin}"
+                                   Placeholder="Ingresa tu nuevo PIN"
+                                   TextColor="#3b0764"
+                                   PlaceholderColor="#9333ea"
+                                   BackgroundColor="#e0cdff"
+                                   Keyboard="Numeric"
+                                   MaxLength="6"
+                                   IsPassword="True"
+                                   HorizontalTextAlignment="Center" />
+                        </VerticalStackLayout>
+                    </Frame>
+
+                    <!-- Botón de acción -->
+                    <Button Text="Generar PIN"
+                            Style="{StaticResource ActionButtonStyle}"
+                            Clicked="GenerarPin_Clicked"
+                            HorizontalOptions="Center"
+                            WidthRequest="200">
+                        <Button.Shadow>
+                            <Shadow Brush="#000000"
+                                    Offset="0,3"
+                                    Radius="6"
+                                    Opacity="0.2" />
+                        </Button.Shadow>
+                        <VisualStateManager.VisualStateGroups>
+                            <VisualStateGroup x:Name="CommonStates">
+                                <VisualState x:Name="Normal" />
+                                <VisualState x:Name="Pressed">
+                                    <VisualState.Setters>
+                                        <Setter Property="BackgroundColor" Value="White" />
+                                        <Setter Property="Scale" Value="0.98" />
+                                    </VisualState.Setters>
+                                </VisualState>
+                            </VisualStateGroup>
+                        </VisualStateManager.VisualStateGroups>
+                    </Button>
+                </VerticalStackLayout>
             </Frame>
-
-            <!-- Botón de acción -->
-            <Button Text="Generar PIN"
-                    BackgroundColor="#5e1675"
-                    TextColor="White"
-                    FontAttributes="Bold"
-                    CornerRadius="15"
-                    HeightRequest="55"
-                    Clicked="GenerarPin_Clicked" />
 
             <!-- Cargando -->
             <ActivityIndicator IsRunning="{Binding IsLoading}" 
@@ -71,7 +134,7 @@
 
             <!-- Mensaje de error -->
             <Label Text="{Binding ErrorMessage}"
-                   TextColor="Red"
+                   TextColor="#ff9b9b"
                    FontAttributes="Bold"
                    FontSize="14"
                    IsVisible="{Binding ErrorMessage, Converter={StaticResource StringNotEmptyConverter}}"

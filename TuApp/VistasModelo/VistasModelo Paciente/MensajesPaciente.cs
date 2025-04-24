@@ -87,7 +87,7 @@ namespace TuApp.ViewModels
                 HttpResponseMessage respuestaHttp;
                 using (HttpClient httpClient = new HttpClient())
                 {
-                    httpClient.BaseAddress = new Uri("https://localhost:44347/api/");
+                    httpClient.BaseAddress = new Uri(App.API_URL);
                     respuestaHttp = await httpClient.PostAsync("mensaje/obtener", jsonContent);
                 }
 

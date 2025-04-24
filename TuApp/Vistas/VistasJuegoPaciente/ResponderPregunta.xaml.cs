@@ -48,24 +48,72 @@ public partial class ResponderPregunta : ContentPage
             imgPregunta.Source = pregunta.ImagenSource;
         }
     }
-
     private async void Opcion_Tapped(object sender, TappedEventArgs e)
     {
+        // Verificar que tengamos una opción válida
         if (e.Parameter is not Opcion opcionSeleccionada)
             return;
+
+        // Obtener el frame que se tocó
+        Frame frameSeleccionado = null;
+
+        // Esta es una forma más robusta de encontrar el frame
+        if (sender is TappedEventArgs)
+        {
+            // El sender es el event args
+            var element = (sender as TappedEventArgs).Parameter as Element;
+            while (element != null && !(element is Frame))
+            {
+                element = element.Parent as Element;
+            }
+            frameSeleccionado = element as Frame;
+        }
+        else if (sender is Frame)
+        {
+            // El sender es directamente el frame
+            frameSeleccionado = sender as Frame;
+        }
+        else if (sender is Element)
+        {
+            // El sender es un elemento, buscar su frame padre
+            Element element = sender as Element;
+            while (element != null && !(element is Frame))
+            {
+                element = element.Parent as Element;
+            }
+            frameSeleccionado = element as Frame;
+        }
 
         // Evaluar si la opción es correcta
         bool esCorrecta = opcionSeleccionada.Condicion;
         respuestasCorrectas.Add(esCorrecta);
 
-        // Aplicar color dinámico del tema
-        if (sender is Frame frame)
+        if (frameSeleccionado == null)
         {
-            var colorCorrecto = Application.Current.Resources.TryGetValue("OkColor", out var ok) ? (Color)ok : Colors.Green;
-            var colorIncorrecto = Application.Current.Resources.TryGetValue("ErrorColor", out var err) ? (Color)err : Colors.Red;
+            // Si no podemos encontrar el frame, al menos procesamos la selección
+            // y continuamos con la siguiente pregunta
+            preguntaActualIndex++;
 
-            frame.BackgroundColor = esCorrecta ? colorCorrecto : colorIncorrecto;
+            if (preguntaActualIndex < viewModel.ListaPregunta.Count)
+            {
+                MostrarPregunta();
+            }
+            else
+            {
+                await EnviarPuntaje();
+            }
+
+            return;
         }
+
+        // Aplicar color dinámico del tema
+        var colorCorrecto = Application.Current.Resources.TryGetValue("OkColor", out var ok) ? (Color)ok : Colors.Green;
+        var colorIncorrecto = Application.Current.Resources.TryGetValue("ErrorColor", out var err) ? (Color)err : Colors.Red;
+
+        frameSeleccionado.BackgroundColor = esCorrecta ? colorCorrecto : colorIncorrecto;
+
+        // Deshabilitar las opciones temporalmente para evitar múltiples selecciones
+        OpcionesCollection.IsEnabled = false;
 
         await Task.Delay(500);
 
@@ -74,6 +122,7 @@ public partial class ResponderPregunta : ContentPage
         if (preguntaActualIndex < viewModel.ListaPregunta.Count)
         {
             MostrarPregunta();
+            OpcionesCollection.IsEnabled = true;
         }
         else
         {

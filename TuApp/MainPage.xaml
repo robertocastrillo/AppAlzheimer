@@ -14,7 +14,13 @@
                        TextColor="{DynamicResource PrimaryColor}"
                        Text="Identifícate" />
                 <Label Text="Correo electrónico" />
-                <Entry x:Name="txtCorreo" Keyboard="Email" />
+                <Entry x:Name="txtCorreo"
+                       Placeholder="ejemplo@correo.com"
+                        Keyboard="Email"
+                        IsEnabled="True"
+                        IsVisible="True"
+                        ReturnType="Next" />
+
                 <Label Text="Contraseña" />
                 <Entry x:Name="txtPassword" IsPassword="True" />
                 <Button Text="Ingresar"

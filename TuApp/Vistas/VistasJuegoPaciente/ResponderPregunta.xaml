@@ -1,96 +1,176 @@
+<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:vm="clr-namespace:TuApp.VistasModelo"
+             xmlns:local="clr-namespace:TuApp.VistasModelo"
              x:Class="TuApp.ResponderPregunta"
-             NavigationPage.HasBackButton="False"
-             BackgroundColor="{DynamicResource BasePageColor}">
+             NavigationPage.HasNavigationBar="False"
+             BackgroundColor="Transparent">
 
-    <ContentPage.BindingContext>
-        <vm:PreguntaViewModel />
-    </ContentPage.BindingContext>
+    <!-- Fondo degradado -->
+    <ContentPage.Background>
+        <LinearGradientBrush EndPoint="1,1">
+            <GradientStop Color="#5e1675" Offset="0.0" />
+            <GradientStop Color="#9333ea" Offset="0.5" />
+            <GradientStop Color="#3b0764" Offset="1.0" />
+        </LinearGradientBrush>
+    </ContentPage.Background>
 
-    <Grid RowDefinitions="*,Auto"
-          Padding="20"
-          BackgroundColor="{DynamicResource BasePageColor}">
+    <!-- Recursos y estilos -->
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <Style x:Key="TitleLabelStyle" TargetType="Label">
+                <Setter Property="FontSize" Value="28" />
+                <Setter Property="FontAttributes" Value="Bold" />
+                <Setter Property="TextColor" Value="White" />
+                <Setter Property="HorizontalTextAlignment" Value="Center" />
+                <Setter Property="Margin" Value="0,0,0,20" />
+            </Style>
 
-        <!-- Contenido desplazable -->
-        <ScrollView Grid.Row="0">
-            <VerticalStackLayout x:Name="mainLayout"
-                                 Padding="0"
-                                 Spacing="25"
-                                 VerticalOptions="Start"
-                                 HorizontalOptions="FillAndExpand">
+            <Style x:Key="QuestionLabelStyle" TargetType="Label">
+                <Setter Property="FontSize" Value="20" />
+                <Setter Property="FontAttributes" Value="Bold" />
+                <Setter Property="TextColor" Value="#3b0764" />
+                <Setter Property="HorizontalTextAlignment" Value="Center" />
+                <Setter Property="Margin" Value="0,10" />
+                <Setter Property="LineBreakMode" Value="WordWrap" />
+            </Style>
 
-                <!-- Botón de regreso arriba -->
-                <HorizontalStackLayout HorizontalOptions="End"
-                                       x:Name="layoutBotonVolver">
-                    <Button x:Name="btnFlechaVolver"
-                            Text="←"
-                            FontSize="36"
-                            FontAttributes="Bold"
-                            BackgroundColor="Transparent"
-                            TextColor="{DynamicResource PrimaryColor}"
-                            Clicked="BtnFlechaVolver_Clicked" />
-                </HorizontalStackLayout>
+            <Style x:Key="ResultLabelStyle" TargetType="Label">
+                <Setter Property="FontSize" Value="22" />
+                <Setter Property="FontAttributes" Value="Bold" />
+                <Setter Property="HorizontalTextAlignment" Value="Center" />
+                <Setter Property="Margin" Value="0,15" />
+                <Setter Property="IsVisible" Value="False" />
+            </Style>
 
-                <!-- Pregunta -->
-                <Label x:Name="lblPregunta"
-                       FontSize="22"
-                       FontAttributes="Bold"
-                       TextColor="{DynamicResource BaseTextColor}"
-                       HorizontalTextAlignment="Center"
-                       HorizontalOptions="Center" />
+            <Style x:Key="OptionFrameStyle" TargetType="Frame">
+                <Setter Property="BackgroundColor" Value="#e0cdff" />
+                <Setter Property="CornerRadius" Value="15" />
+                <Setter Property="HasShadow" Value="True" />
+                <Setter Property="Margin" Value="0,5,0,10" />
+                <Setter Property="Padding" Value="15" />
+            </Style>
 
-                <!-- Imagen -->
-                <Image x:Name="imgPregunta"
-                       HeightRequest="160"
-                       Aspect="AspectFit"
-                       VerticalOptions="Center"
-                       Margin="0,10,0,10" />
+            <Style x:Key="ButtonStyle" TargetType="Button">
+                <Setter Property="BackgroundColor" Value="#e0cdff" />
+                <Setter Property="TextColor" Value="#3b0764" />
+                <Setter Property="FontAttributes" Value="Bold" />
+                <Setter Property="CornerRadius" Value="15" />
+                <Setter Property="HeightRequest" Value="50" />
+                <Setter Property="FontSize" Value="16" />
+                <Setter Property="Margin" Value="0,8" />
+                <Setter Property="IsVisible" Value="False" />
+            </Style>
+        </ResourceDictionary>
+    </ContentPage.Resources>
 
-                <!-- Opciones -->
-                <CollectionView x:Name="OpcionesCollection"
-                                SelectionMode="None"
-                                BackgroundColor="Transparent">
-                    <CollectionView.ItemTemplate>
-                        <DataTemplate>
-                            <Frame Style="{StaticResource TileButtonStyle}"
-                                   Padding="10"
-                                   Margin="0,5"
-                                   BorderColor="{DynamicResource Gray300}">
-                                <Frame.GestureRecognizers>
-                                    <TapGestureRecognizer Tapped="Opcion_Tapped"
-                                                          CommandParameter="{Binding .}" />
-                                </Frame.GestureRecognizers>
-                                <Label Text="{Binding Descripcion}"
-                                       FontSize="16"
-                                       TextColor="{DynamicResource BaseTextColor}" />
-                            </Frame>
-                        </DataTemplate>
-                    </CollectionView.ItemTemplate>
-                </CollectionView>
+    <ScrollView>
+        <VerticalStackLayout Padding="30" Spacing="20" VerticalOptions="Center">
+            <!-- Botón de Volver -->
+            <Button x:Name="btnFlechaVolver"
+                    Text="Volver"
+                    Clicked="BtnFlechaVolver_Clicked"
+                    TextColor="White"
+                    BackgroundColor="Transparent"
+                    FontSize="32"
+                    FontAttributes="Bold"
+                    HorizontalOptions="Start"
+                    Margin="0,40,0,20"
+                    Padding="0">
+                <VisualStateManager.VisualStateGroups>
+                    <VisualStateGroup x:Name="CommonStates">
+                        <VisualState x:Name="Normal" />
+                        <VisualState x:Name="Pressed">
+                            <VisualState.Setters>
+                                <Setter Property="Scale" Value="0.95" />
+                                <Setter Property="Opacity" Value="0.8" />
+                            </VisualState.Setters>
+                        </VisualState>
+                    </VisualStateGroup>
+                </VisualStateManager.VisualStateGroups>
+            </Button>
 
-                <!-- Resultado -->
-                <Label x:Name="lblResultadoFinal"
-                       FontSize="18"
-                       TextColor="{DynamicResource OkColor}"
-                       HorizontalTextAlignment="Center"
-                       HorizontalOptions="Center"
-                       IsVisible="False"
-                       Margin="0,20,0,0" />
-            </VerticalStackLayout>
-        </ScrollView>
+            <!-- Título -->
+            <Label Text="Responde las preguntas"
+                   Style="{StaticResource TitleLabelStyle}" />
 
-        <!-- Botón fijo abajo -->
-        <Button Grid.Row="1"
-                x:Name="btnRegresar"
-                Text="Regresar"
-                Style="{StaticResource PrimaryButtonStyle}"
-                WidthRequest="200"
-                HeightRequest="55"
-                Clicked="btnRegresar_Clicked"
-                IsVisible="False"
-                HorizontalOptions="Center"
-                Margin="0,10,0,10" />
-    </Grid>
+            <!-- Contenedor principal -->
+            <Frame BackgroundColor="#4e186a"
+                   CornerRadius="20"
+                   Padding="20"
+                   HasShadow="True"
+                   Margin="0,10,0,20">
+                <VerticalStackLayout Spacing="15">
+                    <!-- Imagen de la pregunta -->
+                    <Image x:Name="imgPregunta"
+                           HeightRequest="200"
+                           HorizontalOptions="Center" 
+                           Aspect="AspectFit"
+                           Margin="0,10"/>
+
+                    <!-- Texto de la pregunta -->
+                    <Frame BackgroundColor="White"
+                           CornerRadius="15"
+                           Padding="15"
+                           Margin="0,0,0,15">
+                        <Label x:Name="lblPregunta"
+                               Style="{StaticResource QuestionLabelStyle}" />
+                    </Frame>
+
+                    <!-- Resultado de selección -->
+                    <Label x:Name="lblResultadoFinal"
+                           Style="{StaticResource ResultLabelStyle}" />
+
+                    <!-- Opciones de respuesta -->
+                    <CollectionView x:Name="OpcionesCollection"
+                SelectionMode="None"
+                HorizontalOptions="Fill"
+                VerticalOptions="Fill">
+                        <CollectionView.ItemTemplate>
+                            <DataTemplate>
+                                <Frame Style="{StaticResource OptionFrameStyle}">
+                                    <Frame.GestureRecognizers>
+                                        <TapGestureRecognizer Tapped="Opcion_Tapped" 
+                              CommandParameter="{Binding}" />
+                                    </Frame.GestureRecognizers>
+
+                                    <Grid>
+                                        <Label Text="{Binding Descripcion}"
+               FontSize="16"
+               TextColor="#3b0764"
+               HorizontalOptions="Start"
+               VerticalOptions="Center" />
+                                    </Grid>
+                                </Frame>
+                            </DataTemplate>
+                        </CollectionView.ItemTemplate>
+                    </CollectionView>
+
+                    <!-- Botón para continuar/regresar después de completar -->
+                    <Button x:Name="btnRegresar"
+                            Text="Continuar"
+                            Clicked="btnRegresar_Clicked"
+                            Style="{StaticResource ButtonStyle}">
+                        <Button.Shadow>
+                            <Shadow Brush="#000000"
+                                    Offset="0,3"
+                                    Radius="6"
+                                    Opacity="0.2" />
+                        </Button.Shadow>
+                        <VisualStateManager.VisualStateGroups>
+                            <VisualStateGroup x:Name="CommonStates">
+                                <VisualState x:Name="Normal" />
+                                <VisualState x:Name="Pressed">
+                                    <VisualState.Setters>
+                                        <Setter Property="BackgroundColor" Value="White" />
+                                        <Setter Property="Scale" Value="0.98" />
+                                    </VisualState.Setters>
+                                </VisualState>
+                            </VisualStateGroup>
+                        </VisualStateManager.VisualStateGroups>
+                    </Button>
+                </VerticalStackLayout>
+            </Frame>
+        </VerticalStackLayout>
+    </ScrollView>
 </ContentPage>

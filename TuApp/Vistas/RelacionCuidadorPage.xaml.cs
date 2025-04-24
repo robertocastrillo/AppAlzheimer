@@ -20,6 +20,6 @@ public partial class RelacionCuidadorPage : ContentPage
     }
     private async void RegresarInicio_Clicked(object sender, EventArgs e)
     {
-        Application.Current.MainPage = new NavigationPage(new InicioPaciente());
+        await Navigation.PushAsync(new ConfiguracionPacientePage());
     }
 }

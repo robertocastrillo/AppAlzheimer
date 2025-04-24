@@ -2,157 +2,132 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="TuApp.Vistas.InicioPaciente"
-             BackgroundColor="Transparent">
+             Shell.NavBarIsVisible="False"
+             NavigationPage.HasNavigationBar="False">
+
+    <!-- Fondo con gradiente moderno más suave -->
     <ContentPage.Background>
-        <LinearGradientBrush EndPoint="1,1">
-            <GradientStop Color="#5e1675" Offset="0.0" />
-            <GradientStop Color="#9333ea" Offset="0.5" />
-            <GradientStop Color="#3b0764" Offset="1.0" />
+        <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+            <GradientStop Color="#6033B1" Offset="0.0" />
+            <GradientStop Color="#48288C" Offset="1.0" />
         </LinearGradientBrush>
     </ContentPage.Background>
-    <ContentPage.Resources>
-        <ResourceDictionary Source="/Styles/AlzheimerTheme.xaml" />
 
-        <!-- Animación para los botones al pulsarlos -->
-        <Style x:Key="MenuTileButtonStyle" TargetType="Frame">
-            <Setter Property="BackgroundColor" Value="#FFFFFF" />
-            <Setter Property="CornerRadius" Value="15" />
-            <Setter Property="HasShadow" Value="True" />
-            <Setter Property="Padding" Value="15" />
-            <Setter Property="HeightRequest" Value="120" />
-            <Setter Property="Margin" Value="5" />
-            <Setter Property="Opacity" Value="0.9" />
-            <Setter Property="VisualStateManager.VisualStateGroups">
-                <VisualStateGroupList>
-                    <VisualStateGroup x:Name="CommonStates">
-                        <VisualState x:Name="Normal" />
-                        <VisualState x:Name="Pressed">
-                            <VisualState.Setters>
-                                <Setter Property="BackgroundColor" Value="#D8BFD8" />
-                                <Setter Property="Scale" Value="0.95" />
-                            </VisualState.Setters>
-                        </VisualState>
-                    </VisualStateGroup>
-                </VisualStateGroupList>
-            </Setter>
-        </Style>
-    </ContentPage.Resources>
-
-    <Grid Padding="20">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="*" />
-        </Grid.RowDefinitions>
-
-        <!-- Panel superior con bienvenida mejorado -->
-        <Frame Grid.Row="0" 
-               BackgroundColor="#8A2BE2" 
-               CornerRadius="20"
-               Padding="25"
-               Opacity="0.85"
-               HasShadow="True"
-               Margin="0,20,0,30">
-            <StackLayout>
+    <ScrollView>
+        <VerticalStackLayout Padding="22" Spacing="25">
+            <!-- Encabezado con estilo moderno -->
+            <VerticalStackLayout Spacing="0" Margin="0,30,0,20">
                 <Label Text="Bienvenido" 
-                       FontSize="20" 
+                       FontSize="16" 
                        TextColor="White" 
+                       Opacity="0.7"
                        HorizontalOptions="Center" 
-                       Opacity="0.85"/>
+                       Margin="0,0,0,3"/>
+
                 <Label x:Name="lblBienvenida"
-                       Text="Carlos Perez"
-                       FontSize="32"
-                       TextColor="White"
-                       HorizontalOptions="Center"
-                       FontAttributes="Bold"/>
-            </StackLayout>
-        </Frame>
+                    Text="Denia Mena Mora..!!" 
+                       FontSize="26" 
+                       TextColor="White" 
+                       FontAttributes="Bold" 
+                       HorizontalOptions="Center"/>
+            </VerticalStackLayout>
 
-        <!-- Menú de botones estilo Windows 8 -->
-        <Grid Grid.Row="1" ColumnSpacing="15" RowSpacing="15">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="*" />
-            </Grid.ColumnDefinitions>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="*" />
-                <RowDefinition Height="*" />
-                <RowDefinition Height="*" />
-            </Grid.RowDefinitions>
+            <!-- Botones con estilo minimalista moderno -->
+            <Grid RowSpacing="18" ColumnSpacing="18" Margin="0,10,0,25">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="110" />
+                    <RowDefinition Height="110" />
+                    <RowDefinition Height="65" />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
 
-            <!-- Perfil -->
-            <Frame Grid.Row="0" Grid.Column="0" Style="{StaticResource MenuTileButtonStyle}">
-                <Grid>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="*" />
-                        <RowDefinition Height="Auto" />
-                    </Grid.RowDefinitions>
-                    <Image Grid.Row="0" Source="profile_icon.png" HeightRequest="50" Aspect="AspectFit" />
-                    <Label Grid.Row="1" Text="Perfil" FontSize="18" TextColor="#5e1675" HorizontalOptions="Center" FontAttributes="Bold" />
-                </Grid>
-                <Frame.GestureRecognizers>
-                    <TapGestureRecognizer Tapped="OnPerfilClicked" />
-                </Frame.GestureRecognizers>
-            </Frame>
+                <!-- Perfil -->
+                <Border Grid.Row="0" Grid.Column="0"
+                       StrokeShape="RoundRectangle 16"
+                       Stroke="White"
+                       StrokeThickness="1.5"
+                       BackgroundColor="#8C4DD2"
+                       Opacity="0.85">
+                    <Label Text="Perfil"
+                           TextColor="White"
+                           FontSize="19"
+                           FontAttributes="Bold"
+                           HorizontalOptions="Center"
+                           VerticalOptions="Center" />
+                    <Border.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="OnPerfilClicked" />
+                    </Border.GestureRecognizers>
+                </Border>
 
-            <!-- Juegos -->
-            <Frame Grid.Row="0" Grid.Column="1" Style="{StaticResource MenuTileButtonStyle}" BackgroundColor="#9d4cec">
-                <Grid>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="*" />
-                        <RowDefinition Height="Auto" />
-                    </Grid.RowDefinitions>
-                    <Image Grid.Row="0" Source="games_icon.png" HeightRequest="50" Aspect="AspectFit" />
-                    <Label Grid.Row="1" Text="Juegos" FontSize="18" TextColor="White" HorizontalOptions="Center" FontAttributes="Bold" />
-                </Grid>
-                <Frame.GestureRecognizers>
-                    <TapGestureRecognizer Tapped="OnJuegosClicked" />
-                </Frame.GestureRecognizers>
-            </Frame>
+                <!-- Juegos -->
+                <Border Grid.Row="0" Grid.Column="1"
+                       StrokeShape="RoundRectangle 16"
+                       BackgroundColor="#A56FE2"
+                       Opacity="0.9">
+                    <Label Text="Juegos"
+                           TextColor="White"
+                           FontSize="19"
+                           FontAttributes="Bold"
+                           HorizontalOptions="Center"
+                           VerticalOptions="Center" />
+                    <Border.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="OnJuegosClicked" />
+                    </Border.GestureRecognizers>
+                </Border>
 
-            <!-- Eventos -->
-            <Frame Grid.Row="1" Grid.Column="0" Style="{StaticResource MenuTileButtonStyle}" BackgroundColor="#7026b9">
-                <Grid>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="*" />
-                        <RowDefinition Height="Auto" />
-                    </Grid.RowDefinitions>
-                    <Image Grid.Row="0" Source="events_icon.png" HeightRequest="50" Aspect="AspectFit" />
-                    <Label Grid.Row="1" Text="Eventos" FontSize="18" TextColor="White" HorizontalOptions="Center" FontAttributes="Bold" />
-                </Grid>
-                <Frame.GestureRecognizers>
-                    <TapGestureRecognizer Tapped="OnEventosClicked" />
-                </Frame.GestureRecognizers>
-            </Frame>
+                <!-- Eventos -->
+                <Border Grid.Row="1" Grid.Column="0"
+                       StrokeShape="RoundRectangle 16"
+                       BackgroundColor="#A56FE2"
+                       Opacity="0.9">
+                    <Label Text="Eventos"
+                           TextColor="White"
+                           FontSize="19"
+                           FontAttributes="Bold"
+                           HorizontalOptions="Center"
+                           VerticalOptions="Center" />
+                    <Border.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="OnEventosClicked" />
+                    </Border.GestureRecognizers>
+                </Border>
 
-            <!-- Chats -->
-            <Frame Grid.Row="1" Grid.Column="1" Style="{StaticResource MenuTileButtonStyle}">
-                <Grid>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="*" />
-                        <RowDefinition Height="Auto" />
-                    </Grid.RowDefinitions>
-                    <Image Grid.Row="0" Source="chat_icon.png" HeightRequest="50" Aspect="AspectFit" />
-                    <Label Grid.Row="1" Text="Chats" FontSize="18" TextColor="#5e1675" HorizontalOptions="Center" FontAttributes="Bold" />
-                </Grid>
-                <Frame.GestureRecognizers>
-                    <TapGestureRecognizer Tapped="OnChatsClicked" />
-                </Frame.GestureRecognizers>
-            </Frame>
+                <!-- Chats -->
+                <Border Grid.Row="1" Grid.Column="1"
+                       StrokeShape="RoundRectangle 16" 
+                       Stroke="White"
+                       StrokeThickness="1.5"
+                       BackgroundColor="#8C4DD2"
+                       Opacity="0.85">
+                    <Label Text="Chats"
+                           TextColor="White"
+                           FontSize="19"
+                           FontAttributes="Bold"
+                           HorizontalOptions="Center"
+                           VerticalOptions="Center" />
+                    <Border.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="OnChatsClicked" />
+                    </Border.GestureRecognizers>
+                </Border>
 
-            <!-- Configuración -->
-            <Frame Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" Style="{StaticResource MenuTileButtonStyle}" BackgroundColor="#5a1e99">
-                <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="Auto" />
-                        <ColumnDefinition Width="*" />
-                    </Grid.ColumnDefinitions>
-                    <Image Grid.Column="0" Source="settings_icon.png" HeightRequest="50" Aspect="AspectFit" Margin="0,0,15,0" />
-                    <Label Grid.Column="1" Text="Configuración" FontSize="20" TextColor="White" VerticalOptions="Center" FontAttributes="Bold" />
-                </Grid>
-                <Frame.GestureRecognizers>
-                    <TapGestureRecognizer Tapped="OnConfiguracionClicked" />
-                </Frame.GestureRecognizers>
-            </Frame>
-        </Grid>
-    </Grid>
+                <!-- Configuración -->
+                <Border Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2"
+                        StrokeShape="RoundRectangle 14"
+                        BackgroundColor="#7B4FC4"
+                        Opacity="0.95">
+                    <Label Text="Configuración"
+                           TextColor="White"
+                           FontSize="19"
+                           FontAttributes="Bold"
+                           HorizontalOptions="Center"
+                           VerticalOptions="Center" />
+                    <Border.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="OnConfiguracionClicked" />
+                    </Border.GestureRecognizers>
+                </Border>
+            </Grid>
+        </VerticalStackLayout>
+    </ScrollView>
 </ContentPage>

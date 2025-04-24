@@ -31,7 +31,7 @@
     <FlyoutPage.Detail>
         <NavigationPage>
             <x:Arguments>
-                <local:MainMenuPage />
+                <local:InicioCuidadorPage />
             </x:Arguments>
         </NavigationPage>
     </FlyoutPage.Detail>

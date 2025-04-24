@@ -40,23 +40,23 @@ namespace TuApp
             {
                 var contenido = await respuestaHttp.Content.ReadAsStringAsync();
 
-                ResIniciarSesion res = new ResIniciarSesion();
-                    res = JsonConvert.DeserializeObject<ResIniciarSesion>(contenido);
+                ResIniciarSesion res = JsonConvert.DeserializeObject<ResIniciarSesion>(contenido);
 
                 if (res != null && res.resultado)
                 {
                     SesionActiva.sesionActiva = res.Sesion;
+
                     if (SesionActiva.sesionActiva.usuario.IdTipoUsuario == 2)
                     {
-                        Application.Current.MainPage = new NavigationPage(new MenuCuidadorPage()); // ← ESTE es el contenedor
+                        Application.Current.MainPage = new FlyoutInicioCuidador(); // ← Nuevo contenedor correcto
                     }
-                    if (SesionActiva.sesionActiva.usuario.IdTipoUsuario == 1)
+                    else if (SesionActiva.sesionActiva.usuario.IdTipoUsuario == 1)
                     {
-                        Application.Current.MainPage = new NavigationPage(new InicioPaciente()); // ← ESTE es el contenedor
+                        Application.Current.MainPage = new NavigationPage(new InicioPaciente());
                     }
                     else
                     {
-                        Application.Current.MainPage = new NavigationPage(new MenuCuidadorPage());
+                        await DisplayAlert("Error", "Tipo de usuario no reconocido", "Aceptar");
                     }
                 }
                 else
@@ -69,6 +69,7 @@ namespace TuApp
                 await DisplayAlert("Error", "No se pudo conectar con el servidor", "Aceptar");
             }
         }
+
 
         private void btnRegistrarse_Clicked(object sender, EventArgs e)
         {

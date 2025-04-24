@@ -1,0 +1,38 @@
+<FlyoutPage
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    x:Class="TuApp.FlyoutInicioCuidador"
+    xmlns:local="clr-namespace:TuApp.Vistas">
+
+    <!-- Menú lateral -->
+    <FlyoutPage.Flyout>
+        <ContentPage Title="Menú" BackgroundColor="#f5e0ff">
+            <VerticalStackLayout Padding="20" Spacing="20">
+                <HorizontalStackLayout>
+                    <Image Source="perfil.png"
+                           HeightRequest="50"
+                           WidthRequest="50"
+                           Aspect="AspectFill"
+                           VerticalOptions="Center"/>
+                    <Label x:Name="lblNombreUsuario"
+                           Text="Nombre Usuario"
+                           VerticalOptions="Center"
+                           FontAttributes="Bold"
+                           Margin="10,0,0,0"/>
+                </HorizontalStackLayout>
+
+                <Button Text="Perfil" Clicked="Perfil_Clicked"/>
+                <Button Text="Cerrar sesión" TextColor="Red" Clicked="CerrarSesion_Clicked"/>
+            </VerticalStackLayout>
+        </ContentPage>
+    </FlyoutPage.Flyout>
+
+    <!-- Contenido principal -->
+    <FlyoutPage.Detail>
+        <NavigationPage>
+            <x:Arguments>
+                <local:MainMenuPage />
+            </x:Arguments>
+        </NavigationPage>
+    </FlyoutPage.Detail>
+</FlyoutPage>

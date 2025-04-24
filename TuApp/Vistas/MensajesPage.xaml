@@ -8,17 +8,16 @@
         <vm:MensajeViewModel />
     </ContentPage.BindingContext>
 
-    <ScrollView>
-        <StackLayout Padding="10" Spacing="20">
+    <Grid RowDefinitions="Auto,*,Auto" Padding="10">
 
-            <!-- Lista de pacientes -->
+        <!-- Sección de pacientes -->
+        <ScrollView Grid.Row="0" Orientation="Horizontal" HeightRequest="100">
             <CollectionView x:Name="PacientesCollection"
-                ItemsSource="{Binding ListaPacientesRelacionados}"
-                SelectedItem="{Binding PacienteSeleccionado}"
-                SelectionChanged="PacientesCollection_SelectionChanged"
-                SelectionMode="Single"
-                ItemsLayout="HorizontalList">
-
+                            ItemsSource="{Binding ListaPacientesRelacionados}"
+                            SelectedItem="{Binding PacienteSeleccionado}"
+                            SelectionChanged="PacientesCollection_SelectionChanged"
+                            SelectionMode="Single"
+                            ItemsLayout="HorizontalList">
                 <CollectionView.ItemTemplate>
                     <DataTemplate>
                         <Frame Style="{StaticResource TileButtonStyle}" WidthRequest="150">
@@ -35,41 +34,54 @@
                     </DataTemplate>
                 </CollectionView.ItemTemplate>
             </CollectionView>
+        </ScrollView>
+
+        <!-- Conversación + mensajes -->
+        <StackLayout Grid.Row="1" Spacing="10">
 
             <!-- Nombre del paciente -->
             <Label Text="{Binding NombrePacienteConversacion}" 
                    FontSize="18" 
                    FontAttributes="Bold"
                    HorizontalOptions="Center"
-                   TextColor="{DynamicResource PrimaryColor}"
-                   Margin="0,10,0,0"/>
+                   TextColor="{DynamicResource PrimaryColor}" />
 
             <!-- Mensajes -->
-            <CollectionView ItemsSource="{Binding ListaMensajes}" HeightRequest="300">
+            <CollectionView ItemsSource="{Binding ListaMensajes}"
+                            HeightRequest="300">
                 <CollectionView.ItemTemplate>
                     <DataTemplate>
-                        <Frame Padding="10" Margin="5" BackgroundColor="{DynamicResource EntryAndEditorsBackgroundColor}">
-                            <Label Text="{Binding Contenido}" TextColor="{DynamicResource BaseTextColor}" />
+                        <Frame Padding="10" Margin="5"
+                               BackgroundColor="{DynamicResource EntryAndEditorsBackgroundColor}">
+                            <Label Text="{Binding Contenido}" 
+                                   TextColor="{DynamicResource BaseTextColor}" />
                         </Frame>
                     </DataTemplate>
                 </CollectionView.ItemTemplate>
             </CollectionView>
+        </StackLayout>
 
-            <!-- StackLayout del Entry y botón de enviar -->
-            <StackLayout x:Name="MensajePanel"
-             Orientation="Horizontal"
-             Spacing="10">
-                <Entry x:Name="MensajeEntry"
-           Placeholder="Escribe un mensaje..."
+        <!-- Entrada de texto y botón enviar -->
+        <Grid x:Name="MensajePanel" Grid.Row="2" Padding="5">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+
+            <Entry x:Name="MensajeEntry"
            Text="{Binding ContenidoNuevoMensaje}"
-           HorizontalOptions="FillAndExpand"
-           BackgroundColor="{DynamicResource EntryAndEditorsBackgroundColor}" />
-                <Button Text="Enviar"
+           Placeholder="Escribe un mensaje..."
+           Grid.Column="0"
+           BackgroundColor="{DynamicResource EntryAndEditorsBackgroundColor}"
+           VerticalOptions="Center"
+           Margin="0,0,10,0" />
+
+            <Button Text="Enviar"
+            Grid.Column="1"
             Command="{Binding EnviarMensajeCommand}"
             Style="{StaticResource PrimaryButtonStyle}" />
-            </StackLayout>
+        </Grid>
 
 
-        </StackLayout>
-    </ScrollView>
+    </Grid>
 </ContentPage>

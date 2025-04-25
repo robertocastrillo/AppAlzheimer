@@ -13,6 +13,7 @@ namespace Backend.Entidades
         public string Descripcion { get; set; } // Puede ser null
         public DateTime FechaHora { get; set; }
         public int IdPrioridad { get; set; }
-        public int IdUsuario { get; set; }
+        public int Id_Cuidador { get; set; }
+        public string Nombre_Cuidador { get; set; }
     }
 }

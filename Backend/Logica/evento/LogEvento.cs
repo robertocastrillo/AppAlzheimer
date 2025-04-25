@@ -336,7 +336,8 @@ namespace Backend.Logica
             eventosretornar.Descripcion = evento.DESCRIPCION;
             eventosretornar.FechaHora = evento.FECHA_HORA;
             eventosretornar.IdPrioridad = evento.ID_PRIORIDAD;
-            eventosretornar.IdUsuario = 0;
+            eventosretornar.Id_Cuidador = evento.ID_CUIDADOR;
+            eventosretornar.Nombre_Cuidador = evento.NOMBRE_CUIDADOR;
 
 
 
@@ -414,7 +415,7 @@ namespace Backend.Logica
                 evento.Descripcion = eventos.DESCRIPCION;
                 evento.FechaHora = eventos.FECHA_HORA;
                 evento.IdPrioridad = eventos.ID_PRIORIDAD;
-                evento.IdUsuario = 0;
+                evento.Id_Cuidador = 0;
                 List<UsuarioEvento> usuarios = new List<UsuarioEvento>();
                 if (!string.IsNullOrWhiteSpace(eventos.PACIENTES))
                 {

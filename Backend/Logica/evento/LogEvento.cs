@@ -336,6 +336,7 @@ namespace Backend.Logica
             eventosretornar.Descripcion = evento.DESCRIPCION;
             eventosretornar.FechaHora = evento.FECHA_HORA;
             eventosretornar.IdPrioridad = evento.ID_PRIORIDAD;
+            eventosretornar.IdUsuario = 0;
 
 
 

@@ -2,51 +2,172 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="TuApp.Vistas.DetalleEventoPage"
+             BackgroundColor="Transparent"
+             NavigationPage.HasNavigationBar="True"
              Title="Detalle del Evento">
+    <!-- Fondo degradado -->
+    <ContentPage.Background>
+        <LinearGradientBrush EndPoint="1,1">
+            <GradientStop Color="#5e1675" Offset="0.0" />
+            <GradientStop Color="#9333ea" Offset="0.5" />
+            <GradientStop Color="#3b0764" Offset="1.0" />
+        </LinearGradientBrush>
+    </ContentPage.Background>
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <Style x:Key="ButtonStyle" TargetType="Button">
+                <Setter Property="TextColor" Value="White" />
+                <Setter Property="FontAttributes" Value="Bold" />
+                <Setter Property="CornerRadius" Value="15" />
+                <Setter Property="HeightRequest" Value="50" />
+                <Setter Property="FontSize" Value="16" />
+                <Setter Property="Margin" Value="0,5" />
+                <Setter Property="Padding" Value="15,0" />
+            </Style>
+
+            <Style x:Key="EditButtonStyle" TargetType="Button" BasedOn="{StaticResource ButtonStyle}">
+                <Setter Property="BackgroundColor" Value="#e0cdff" />
+                <Setter Property="TextColor" Value="#3b0764" />
+            </Style>
+
+            <Style x:Key="DeleteButtonStyle" TargetType="Button" BasedOn="{StaticResource ButtonStyle}">
+                <Setter Property="BackgroundColor" Value="#ff5e8a" />
+            </Style>
+
+            <Style x:Key="AssignButtonStyle" TargetType="Button" BasedOn="{StaticResource ButtonStyle}">
+                <Setter Property="BackgroundColor" Value="#10b981" />
+            </Style>
+
+            <Style x:Key="InfoLabelStyle" TargetType="Label">
+                <Setter Property="TextColor" Value="White" />
+                <Setter Property="FontAttributes" Value="Bold" />
+                <Setter Property="FontSize" Value="16" />
+                <Setter Property="Margin" Value="0,10,0,0" />
+            </Style>
+
+            <Style x:Key="ValueLabelStyle" TargetType="Label">
+                <Setter Property="TextColor" Value="#e0cdff" />
+                <Setter Property="FontSize" Value="18" />
+                <Setter Property="Margin" Value="0,0,0,10" />
+            </Style>
+        </ResourceDictionary>
+    </ContentPage.Resources>
 
     <ScrollView>
-        <StackLayout Padding="20" Spacing="15">
-            <Label Text="Título:" FontAttributes="Bold"/>
-            <Label Text="{Binding Titulo}" FontSize="18" />
+        <VerticalStackLayout Padding="30" Spacing="10">
+            <Frame BackgroundColor="#4e186a"
+                   CornerRadius="20"
+                   Padding="20"
+                   HasShadow="True"
+                   Margin="0,30,0,20">
+                <VerticalStackLayout Spacing="5">
+                    <Label Text="Título:" Style="{StaticResource InfoLabelStyle}"/>
+                    <Label Text="{Binding Titulo}" Style="{StaticResource ValueLabelStyle}" />
 
-            <Label Text="Descripción:" FontAttributes="Bold"/>
-            <Label Text="{Binding Descripcion}" FontSize="16" />
+                    <Label Text="Descripción:" Style="{StaticResource InfoLabelStyle}"/>
+                    <Label Text="{Binding Descripcion}" Style="{StaticResource ValueLabelStyle}" />
 
-            <Label Text="Fecha y hora:" FontAttributes="Bold"/>
-            <Label Text="{Binding FechaHoraFormateada}" FontSize="16" />
+                    <Label Text="Fecha y hora:" Style="{StaticResource InfoLabelStyle}"/>
+                    <Label Text="{Binding FechaHoraFormateada}" Style="{StaticResource ValueLabelStyle}" />
 
-            <Label Text="Prioridad:" FontAttributes="Bold"/>
-            <Label Text="{Binding DescripcionPrioridad}" FontSize="16" />
+                    <Label Text="Prioridad:" Style="{StaticResource InfoLabelStyle}"/>
+                    <Label Text="{Binding DescripcionPrioridad}" Style="{StaticResource ValueLabelStyle}" />
 
-            <Button Text="Editar evento"
-                    BackgroundColor="#3b82f6"
-                    TextColor="White"
-                    CornerRadius="10"
-                    HeightRequest="45"
-                    Clicked="OnEditarEventoClicked" />
-            <Button Text="Eliminar evento"
-                    Command="{Binding EliminarEventoCommand}"
-                    BackgroundColor="#ef4444"
-                    TextColor="White"
-                    CornerRadius="10"
-                    HeightRequest="45" />
+                    <Button Text="Editar evento"
+                            Style="{StaticResource EditButtonStyle}"
+                            Clicked="OnEditarEventoClicked">
+                        <Button.Shadow>
+                            <Shadow Brush="#000000"
+                                    Offset="0,3"
+                                    Radius="6"
+                                    Opacity="0.2" />
+                        </Button.Shadow>
+                        <VisualStateManager.VisualStateGroups>
+                            <VisualStateGroup x:Name="CommonStates">
+                                <VisualState x:Name="Normal" />
+                                <VisualState x:Name="Pressed">
+                                    <VisualState.Setters>
+                                        <Setter Property="BackgroundColor" Value="White" />
+                                        <Setter Property="Scale" Value="0.98" />
+                                    </VisualState.Setters>
+                                </VisualState>
+                            </VisualStateGroup>
+                        </VisualStateManager.VisualStateGroups>
+                    </Button>
 
-            <!-- Asignación -->
-            <Label Text="Asignar a paciente:" FontAttributes="Bold" />
-            <Button Text="Asignar pacientes "
-                  Command="{Binding MostrarPopupAsignacionCommand}"
-                    BackgroundColor="#10b981"
-                    TextColor="White"
-                    CornerRadius="10"
-                    HeightRequest="45" />
+                    <Button Text="Eliminar evento"
+                            Style="{StaticResource DeleteButtonStyle}"
+                            Command="{Binding EliminarEventoCommand}">
+                        <Button.Shadow>
+                            <Shadow Brush="#000000"
+                                    Offset="0,3"
+                                    Radius="6"
+                                    Opacity="0.2" />
+                        </Button.Shadow>
+                        <VisualStateManager.VisualStateGroups>
+                            <VisualStateGroup x:Name="CommonStates">
+                                <VisualState x:Name="Normal" />
+                                <VisualState x:Name="Pressed">
+                                    <VisualState.Setters>
+                                        <Setter Property="BackgroundColor" Value="#ff4471" />
+                                        <Setter Property="Scale" Value="0.98" />
+                                    </VisualState.Setters>
+                                </VisualState>
+                            </VisualStateGroup>
+                        </VisualStateManager.VisualStateGroups>
+                    </Button>
 
+                    <!-- Asignación -->
+                    <Label Text="Asignar a paciente:" 
+                           Style="{StaticResource InfoLabelStyle}"
+                           Margin="0,15,0,5"/>
 
-            <Button Text="Asignar evento"
-                    Command="{Binding AsignarEventoCommand}"
-                    BackgroundColor="#6366f1"
-                    TextColor="White"
-                    CornerRadius="10"
-                    HeightRequest="45" />
-        </StackLayout>
+                    <Button Text="Asignar pacientes"
+                            Style="{StaticResource AssignButtonStyle}"
+                            Command="{Binding MostrarPopupAsignacionCommand}">
+                        <Button.Shadow>
+                            <Shadow Brush="#000000"
+                                    Offset="0,3"
+                                    Radius="6"
+                                    Opacity="0.2" />
+                        </Button.Shadow>
+                        <VisualStateManager.VisualStateGroups>
+                            <VisualStateGroup x:Name="CommonStates">
+                                <VisualState x:Name="Normal" />
+                                <VisualState x:Name="Pressed">
+                                    <VisualState.Setters>
+                                        <Setter Property="BackgroundColor" Value="#0d9669" />
+                                        <Setter Property="Scale" Value="0.98" />
+                                    </VisualState.Setters>
+                                </VisualState>
+                            </VisualStateGroup>
+                        </VisualStateManager.VisualStateGroups>
+                    </Button>
+
+                    <Button Text="Asignar evento"
+                            Style="{StaticResource AssignButtonStyle}"
+                            Command="{Binding AsignarEventoCommand}">
+                        <Button.Shadow>
+                            <Shadow Brush="#000000"
+                                    Offset="0,3"
+                                    Radius="6"
+                                    Opacity="0.2" />
+                        </Button.Shadow>
+                        <VisualStateManager.VisualStateGroups>
+                            <VisualStateGroup x:Name="CommonStates">
+                                <VisualState x:Name="Normal" />
+                                <VisualState x:Name="Pressed">
+                                    <VisualState.Setters>
+                                        <Setter Property="BackgroundColor" Value="#0d9669" />
+                                        <Setter Property="Scale" Value="0.98" />
+                                    </VisualState.Setters>
+                                </VisualState>
+                            </VisualStateGroup>
+                        </VisualStateManager.VisualStateGroups>
+                    </Button>
+                </VerticalStackLayout>
+            </Frame>
+        </VerticalStackLayout>
     </ScrollView>
 </ContentPage>

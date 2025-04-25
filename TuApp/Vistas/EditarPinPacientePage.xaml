@@ -52,32 +52,10 @@
     <ScrollView>
         <VerticalStackLayout Padding="30" Spacing="25">
 
-            <!-- Botón "Inicio" -->
-            <Button Text="Volver"
-                    Clicked="RegresarInicio_Clicked"
-                    FontSize="32"
-                    FontAttributes="Bold"
-                    TextColor="White"
-                    BackgroundColor="Transparent"
-                    HorizontalOptions="Start"
-                    Padding="0"
-                    Margin="0,30,0,0">
-                <VisualStateManager.VisualStateGroups>
-                    <VisualStateGroup x:Name="CommonStates">
-                        <VisualState x:Name="Normal" />
-                        <VisualState x:Name="Pressed">
-                            <VisualState.Setters>
-                                <Setter Property="Scale" Value="0.95" />
-                                <Setter Property="Opacity" Value="0.8" />
-                            </VisualState.Setters>
-                        </VisualState>
-                    </VisualStateGroup>
-                </VisualStateManager.VisualStateGroups>
-            </Button>
-
             <!-- Título -->
             <Label Text="Actualizar PIN"
-                   Style="{StaticResource TitleLabelStyle}" />
+                   Style="{StaticResource TitleLabelStyle}"
+                   Margin="0,60,0,20" />
 
             <!-- Contenedor -->
             <Border StrokeShape="RoundRectangle 20"
@@ -132,6 +110,30 @@
                     <Button Text="Actualizar PIN"
                             Style="{StaticResource ActionButtonStyle}"
                             Clicked="ActualizarPin_Clicked">
+                        <Button.Shadow>
+                            <Shadow Brush="#000000"
+                                    Offset="0,4"
+                                    Radius="8"
+                                    Opacity="0.2" />
+                        </Button.Shadow>
+                        <VisualStateManager.VisualStateGroups>
+                            <VisualStateGroup x:Name="CommonStates">
+                                <VisualState x:Name="Normal" />
+                                <VisualState x:Name="Pressed">
+                                    <VisualState.Setters>
+                                        <Setter Property="BackgroundColor" Value="White" />
+                                        <Setter Property="TextColor" Value="#3b0764" />
+                                        <Setter Property="Scale" Value="0.98" />
+                                    </VisualState.Setters>
+                                </VisualState>
+                            </VisualStateGroup>
+                        </VisualStateManager.VisualStateGroups>
+                    </Button>
+
+                    <!-- Botón Volver (nuevo) con el mismo estilo que Actualizar PIN -->
+                    <Button Text="Volver"
+                            Style="{StaticResource ActionButtonStyle}"
+                            Clicked="RegresarInicio_Clicked">
                         <Button.Shadow>
                             <Shadow Brush="#000000"
                                     Offset="0,4"

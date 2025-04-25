@@ -41,6 +41,15 @@
             <Setter Property="Margin" Value="0,10" />
         </Style>
 
+        <Style x:Key="ActionButtonStyle" TargetType="Button">
+            <Setter Property="BackgroundColor" Value="#5e1675" />
+            <Setter Property="TextColor" Value="White" />
+            <Setter Property="FontAttributes" Value="Bold" />
+            <Setter Property="CornerRadius" Value="15" />
+            <Setter Property="HeightRequest" Value="55" />
+            <Setter Property="Margin" Value="0,10" />
+        </Style>
+
         <Style x:Key="TitleLabelStyle" TargetType="Label">
             <Setter Property="FontSize" Value="28" />
             <Setter Property="FontAttributes" Value="Bold" />
@@ -52,32 +61,10 @@
 
     <ScrollView>
         <VerticalStackLayout Padding="30" Spacing="25">
-            <!-- Botón de "Inicio" -->
-            <Button Text="Volver"
-                    Clicked="RegresarInicio_Clicked"
-                    FontSize="32"
-                    FontAttributes="Bold"
-                    TextColor="White"
-                    BackgroundColor="Transparent"
-                    HorizontalOptions="Start"
-                    Padding="0"
-                    Margin="0,30,0,0">
-                <VisualStateManager.VisualStateGroups>
-                    <VisualStateGroup x:Name="CommonStates">
-                        <VisualState x:Name="Normal" />
-                        <VisualState x:Name="Pressed">
-                            <VisualState.Setters>
-                                <Setter Property="Scale" Value="0.95" />
-                                <Setter Property="Opacity" Value="0.8" />
-                            </VisualState.Setters>
-                        </VisualState>
-                    </VisualStateGroup>
-                </VisualStateManager.VisualStateGroups>
-            </Button>
-
             <!-- Título principal -->
             <Label Text="Eliminar PIN"
-                   Style="{StaticResource TitleLabelStyle}" />
+                   Style="{StaticResource TitleLabelStyle}"
+                   Margin="0,60,0,20" />
 
             <!-- Contenedor principal -->
             <Border StrokeShape="RoundRectangle 20"
@@ -139,6 +126,30 @@
                                     <VisualState.Setters>
                                         <Setter Property="BackgroundColor" Value="White" />
                                         <Setter Property="TextColor" Value="#b91c1c" />
+                                        <Setter Property="Scale" Value="0.98" />
+                                    </VisualState.Setters>
+                                </VisualState>
+                            </VisualStateGroup>
+                        </VisualStateManager.VisualStateGroups>
+                    </Button>
+
+                    <!-- Botón Volver con el mismo estilo que en EditarPinPacientePage -->
+                    <Button Text="Volver"
+                            Style="{StaticResource ActionButtonStyle}"
+                            Clicked="RegresarInicio_Clicked">
+                        <Button.Shadow>
+                            <Shadow Brush="#000000"
+                                    Offset="0,4"
+                                    Radius="8"
+                                    Opacity="0.2" />
+                        </Button.Shadow>
+                        <VisualStateManager.VisualStateGroups>
+                            <VisualStateGroup x:Name="CommonStates">
+                                <VisualState x:Name="Normal" />
+                                <VisualState x:Name="Pressed">
+                                    <VisualState.Setters>
+                                        <Setter Property="BackgroundColor" Value="White" />
+                                        <Setter Property="TextColor" Value="#3b0764" />
                                         <Setter Property="Scale" Value="0.98" />
                                     </VisualState.Setters>
                                 </VisualState>

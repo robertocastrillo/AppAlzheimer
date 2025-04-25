@@ -1,24 +1,42 @@
-
 using CommunityToolkit.Maui.Views;
 using TuApp.Entidades;
 using TuApp.VistasModelo;
+using TuApp.Styles; // Añadido para importar los custom dialogs
 
 namespace TuApp.Vistas.VistasJuegoCuidador;
-
 public partial class PacientesJuego : ContentPage
 {
-
     private readonly JuegoViewModel viewModel;
     private readonly JuegoCuidador juego;
+
+    // Añadir el diálogo personalizado
+    private CustomAlertDialog customAlertDialog;
 
     public PacientesJuego(JuegoCuidador juego, JuegoViewModel viewModel)
     {
         InitializeComponent();
-        this.viewModel = viewModel;
 
+        // Crear el diálogo personalizado
+        customAlertDialog = new CustomAlertDialog();
+
+        // Guardar el contenido original
+        var originalContent = Content;
+
+        // Crear una nueva grid para contener todo
+        var mainGrid = new Grid();
+
+        // Añadir el contenido original
+        mainGrid.Children.Add(originalContent);
+
+        // Añadir el diálogo (inicialmente invisible)
+        mainGrid.Children.Add(customAlertDialog);
+
+        // Establecer la grid como el nuevo contenido
+        Content = mainGrid;
+
+        this.viewModel = viewModel;
         // Buscar la instancia actualizada del juego desde el ViewModel
         this.juego = viewModel.ListaJuegosCuidador.FirstOrDefault(j => j.idJuego == juego.idJuego);
-
         BindingContext = this.juego;
     }
 
@@ -26,13 +44,13 @@ public partial class PacientesJuego : ContentPage
     {
         var popup = new InsertarPacienteJuegoPopup();
         var paciente = await this.ShowPopupAsync(popup) as Usuario;
-
         if (paciente != null)
         {
             // Verificar si ya existe
             if (juego.pacientes.Any(p => p.id_Usuario == paciente.IdUsuario))
             {
-                await DisplayAlert("Ya existe", "Este paciente ya está asignado al juego.", "Aceptar");
+                // Reemplazar DisplayAlert con customAlertDialog
+                await customAlertDialog.ShowAsync("Ya existe", "Este paciente ya está asignado al juego.", "Aceptar");
                 return;
             }
             else
@@ -44,12 +62,12 @@ public partial class PacientesJuego : ContentPage
                 });
             }
 
-                // Llama al ViewModel que ya fue pasado
-                await viewModel.InsertarRelacionJuego(juego.idJuego, paciente.IdUsuario);
-
+            // Llama al ViewModel que ya fue pasado
+            await viewModel.InsertarRelacionJuego(juego.idJuego, paciente.IdUsuario);
             // La recarga ya está implícita en InsertarRelacionJuego (hace await CargarJuegos)
         }
     }
+
     private async void VerPuntajes_Clicked(object sender, EventArgs e)
     {
         var button = sender as Button;
@@ -57,12 +75,9 @@ public partial class PacientesJuego : ContentPage
         {
             int idPaciente = paciente.id_Usuario; // Ajusta si tu propiedad se llama distinto
             int idJuego = juego.idJuego;
-
             // Abre el popup
             var popup = new PuntajesPopup(idPaciente, idJuego);
             await Application.Current.MainPage.ShowPopupAsync(popup);
         }
     }
-
-
 }

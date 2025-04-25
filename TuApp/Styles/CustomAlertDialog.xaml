@@ -22,14 +22,25 @@
                        FontSize="16" 
                        TextColor="#e2d0ff"
                        HorizontalOptions="Center" />
-                <!-- Botón -->
-                <Button x:Name="ActionButton"
-                        BackgroundColor="#8a4bcf"
-                        TextColor="White"
-                        FontSize="16"
-                        CornerRadius="10"
-                        HorizontalOptions="Center"
-                        Clicked="OnButtonClicked" />
+                <!-- Botones -->
+                <HorizontalStackLayout HorizontalOptions="Center" Spacing="10">
+                    <!-- Botón de cancelar (inicialmente invisible) -->
+                    <Button x:Name="CancelButton"
+                            BackgroundColor="#6e3c9f"
+                            TextColor="White"
+                            FontSize="16"
+                            CornerRadius="10"
+                            IsVisible="False"
+                            Clicked="OnCancelButtonClicked" />
+
+                    <!-- Botón de aceptar (renombramos el ActionButton existente) -->
+                    <Button x:Name="ActionButton"
+                            BackgroundColor="#8a4bcf"
+                            TextColor="White"
+                            FontSize="16"
+                            CornerRadius="10"
+                            Clicked="OnButtonClicked" />
+                </HorizontalStackLayout>
             </VerticalStackLayout>
         </Frame>
     </Grid>

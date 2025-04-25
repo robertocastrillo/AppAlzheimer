@@ -74,7 +74,7 @@ namespace TuApp.ViewModels
 
         private async Task RegresarInicio()
         {
-            await _navigation.PushAsync(new InicioPaciente());
+            await _navigation.PushAsync(new ConfiguracionPacientePage());
         }
 
         private async Task EliminarPin()
@@ -116,7 +116,7 @@ namespace TuApp.ViewModels
                     {
                         SesionActiva.sesionActiva.usuario.pin.Codigo = null;
                         await _customAlertDialog.ShowAsync("Eliminación correcta", "PIN eliminado correctamente", "Aceptar");
-                        await _navigation.PushAsync(new InicioPaciente());
+                        await _navigation.PushAsync(new ConfiguracionPacientePage());
                     }
                     else
                     {

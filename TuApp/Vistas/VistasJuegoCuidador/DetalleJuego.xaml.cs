@@ -5,18 +5,38 @@ using CommunityToolkit.Maui.Storage;
 using System.IO;
 using SkiaSharp;
 using CommunityToolkit.Maui.Views;
-
-
+using TuApp.Styles; // Añadido para importar los custom dialogs
 
 namespace TuApp.Vistas;
-
 public partial class DetalleJuego : ContentPage
 {
     private PreguntaViewModel viewModel;
     private JuegoCuidador juego;
+
+    // Añadir el diálogo personalizado
+    private CustomAlertDialog customAlertDialog;
+
     public DetalleJuego(JuegoCuidador juego)
     {
         InitializeComponent();
+
+        // Crear el diálogo personalizado
+        customAlertDialog = new CustomAlertDialog();
+
+        // Guardar el contenido original
+        var originalContent = Content;
+
+        // Crear una nueva grid para contener todo
+        var mainGrid = new Grid();
+
+        // Añadir el contenido original
+        mainGrid.Children.Add(originalContent);
+
+        // Añadir el diálogo (inicialmente invisible)
+        mainGrid.Children.Add(customAlertDialog);
+
+        // Establecer la grid como el nuevo contenido
+        Content = mainGrid;
 
         try
         {
@@ -33,11 +53,11 @@ public partial class DetalleJuego : ContentPage
     private async void CargarDatos(JuegoCuidador juegocuidador)
     {
         await viewModel.CargarPreguntas(juegocuidador.idJuego);
-
         // Si no hay preguntas, muestra una alerta
         if (viewModel.ListaPregunta == null || !viewModel.ListaPregunta.Any())
         {
-            await DisplayAlert("Atención", "No se encontraron preguntas para este juego.", "Aceptar");
+            // Reemplazar DisplayAlert con customAlertDialog
+            await customAlertDialog.ShowAsync("Atención", "No se encontraron preguntas para este juego.", "Aceptar");
         }
     }
 
@@ -48,21 +68,16 @@ public partial class DetalleJuego : ContentPage
             await Navigation.PushAsync(new DetallePregunta(pregunta));
         }
     }
+
     private async void AgregarPregunta_Clicked(object sender, EventArgs e)
     {
         var popup = new InsertarPreguntaPopup();
         var pregunta = await this.ShowPopupAsync(popup) as Pregunta;
-
         if (pregunta != null)
         {
             int idJuego = juego.idJuego;
             int idUsuario = SesionActiva.sesionActiva.usuario.IdUsuario;
-
             await Navigation.PushAsync(new DetallePregunta(pregunta, viewModel, idJuego, idUsuario));
         }
     }
-
-
-
 }
-

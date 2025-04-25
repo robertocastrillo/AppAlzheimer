@@ -61,38 +61,24 @@
                 <Setter Property="Margin" Value="0,8" />
                 <Setter Property="IsVisible" Value="False" />
             </Style>
+
+            <Style x:Key="ActionButtonStyle" TargetType="Button">
+                <Setter Property="BackgroundColor" Value="#5e1675" />
+                <Setter Property="TextColor" Value="White" />
+                <Setter Property="FontAttributes" Value="Bold" />
+                <Setter Property="CornerRadius" Value="15" />
+                <Setter Property="HeightRequest" Value="55" />
+                <Setter Property="Margin" Value="0,10" />
+            </Style>
         </ResourceDictionary>
     </ContentPage.Resources>
 
     <ScrollView>
         <VerticalStackLayout Padding="30" Spacing="20" VerticalOptions="Center">
-            <!-- Botón de Volver -->
-            <Button x:Name="btnFlechaVolver"
-                    Text="Volver"
-                    Clicked="BtnFlechaVolver_Clicked"
-                    TextColor="White"
-                    BackgroundColor="Transparent"
-                    FontSize="32"
-                    FontAttributes="Bold"
-                    HorizontalOptions="Start"
-                    Margin="0,40,0,20"
-                    Padding="0">
-                <VisualStateManager.VisualStateGroups>
-                    <VisualStateGroup x:Name="CommonStates">
-                        <VisualState x:Name="Normal" />
-                        <VisualState x:Name="Pressed">
-                            <VisualState.Setters>
-                                <Setter Property="Scale" Value="0.95" />
-                                <Setter Property="Opacity" Value="0.8" />
-                            </VisualState.Setters>
-                        </VisualState>
-                    </VisualStateGroup>
-                </VisualStateManager.VisualStateGroups>
-            </Button>
-
             <!-- Título -->
             <Label Text="Responde las preguntas"
-                   Style="{StaticResource TitleLabelStyle}" />
+                   Style="{StaticResource TitleLabelStyle}"
+                   Margin="0,60,0,20" />
 
             <!-- Contenedor principal -->
             <Frame BackgroundColor="#4e186a"
@@ -163,6 +149,32 @@
                                 <VisualState x:Name="Pressed">
                                     <VisualState.Setters>
                                         <Setter Property="BackgroundColor" Value="White" />
+                                        <Setter Property="Scale" Value="0.98" />
+                                    </VisualState.Setters>
+                                </VisualState>
+                            </VisualStateGroup>
+                        </VisualStateManager.VisualStateGroups>
+                    </Button>
+
+                    <!-- Botón Salir - Añadido en la parte inferior con espaciado adicional -->
+                    <Button x:Name="btnSalir"
+                            Text="Salir"
+                            Clicked="BtnFlechaVolver_Clicked"
+                            Style="{StaticResource ActionButtonStyle}"
+                            Margin="0,25,0,10">
+                        <Button.Shadow>
+                            <Shadow Brush="#000000"
+                                    Offset="0,4"
+                                    Radius="8"
+                                    Opacity="0.2" />
+                        </Button.Shadow>
+                        <VisualStateManager.VisualStateGroups>
+                            <VisualStateGroup x:Name="CommonStates">
+                                <VisualState x:Name="Normal" />
+                                <VisualState x:Name="Pressed">
+                                    <VisualState.Setters>
+                                        <Setter Property="BackgroundColor" Value="White" />
+                                        <Setter Property="TextColor" Value="#3b0764" />
                                         <Setter Property="Scale" Value="0.98" />
                                     </VisualState.Setters>
                                 </VisualState>

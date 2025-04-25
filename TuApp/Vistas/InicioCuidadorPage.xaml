@@ -1,67 +1,117 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="TuApp.Vistas.InicioCuidadorPage">
+             x:Class="TuApp.Vistas.InicioCuidadorPage"
+             Shell.NavBarIsVisible="True"
+             NavigationPage.HasNavigationBar="True"
+             Title="">
 
+    <!-- Fondo con gradiente moderno más suave -->
     <ContentPage.Background>
-        <LinearGradientBrush EndPoint="1,1">
-            <GradientStop Color="#5e1675" Offset="0.0" />
-            <GradientStop Color="#9333ea" Offset="0.5" />
-            <GradientStop Color="#3b0764" Offset="1.0" />
+        <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+            <GradientStop Color="#6033B1" Offset="0.0" />
+            <GradientStop Color="#48288C" Offset="1.0" />
         </LinearGradientBrush>
     </ContentPage.Background>
 
     <ScrollView>
-        <VerticalStackLayout Padding="30" Spacing="30" VerticalOptions="Center">
+        <VerticalStackLayout Padding="22" Spacing="25">
+            <!-- Encabezado con estilo moderno -->
+            <VerticalStackLayout Spacing="0" Margin="0,10,0,20">
+                <Label Text="Bienvenido" 
+                       FontSize="16" 
+                       TextColor="White" 
+                       Opacity="0.7"
+                       HorizontalOptions="Center" 
+                       Margin="0,0,0,3"/>
 
-            <!-- Panel superior con bienvenida -->
-            <Frame BackgroundColor="White" CornerRadius="20" Padding="25" Opacity="0.15" HasShadow="False">
                 <Label x:Name="lblBienvenida"
-                       Text="lblNombre"
-                       FontSize="28"
-                       TextColor="Black"
-                       HorizontalTextAlignment="Center"
-                       FontAttributes="Bold"/>
-            </Frame>
+                       Text="Nombre del Cuidador" 
+                       FontSize="26" 
+                       TextColor="White" 
+                       FontAttributes="Bold" 
+                       HorizontalOptions="Center"/>
+            </VerticalStackLayout>
 
-            <!-- Botones -->
-            <Button Text="Juegos"
-                    x:Name="btnJuegos"
-                    BackgroundColor="#7c3aed"
-                    TextColor="White"
-                    FontAttributes="Bold"
-                    CornerRadius="12"
-                    HeightRequest="50"
-                    Clicked="btnJuegos_Cliked"/>
+            <!-- Botones con estilo minimalista moderno -->
+            <Grid RowSpacing="18" ColumnSpacing="18" Margin="0,10,0,25">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="110" />
+                    <RowDefinition Height="110" />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
 
-            <Button Text="Eventos"
-                    x:Name="btnEventos"
-                    BackgroundColor="#7c3aed"
-                    TextColor="White"
-                    FontAttributes="Bold"
-                    CornerRadius="12"
-                    HeightRequest="50"
-                    Clicked="btnEventos_Clicked"/>
+                <!-- Juegos -->
+                <Border Grid.Row="0" Grid.Column="0"
+                       StrokeShape="RoundRectangle 16"
+                       Stroke="White"
+                       StrokeThickness="1.5"
+                       BackgroundColor="#8C4DD2"
+                       Opacity="0.85">
+                    <Label Text="Juegos"
+                           TextColor="White"
+                           FontSize="19"
+                           FontAttributes="Bold"
+                           HorizontalOptions="Center"
+                           VerticalOptions="Center" />
+                    <Border.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="btnJuegos_Cliked" />
+                    </Border.GestureRecognizers>
+                </Border>
 
+                <!-- Eventos -->
+                <Border Grid.Row="0" Grid.Column="1"
+                       StrokeShape="RoundRectangle 16"
+                       BackgroundColor="#A56FE2"
+                       Opacity="0.9">
+                    <Label Text="Eventos"
+                           TextColor="White"
+                           FontSize="19"
+                           FontAttributes="Bold"
+                           HorizontalOptions="Center"
+                           VerticalOptions="Center" />
+                    <Border.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="btnEventos_Clicked" />
+                    </Border.GestureRecognizers>
+                </Border>
 
-            <Button Text="Relacion"
-                    x:Name="btnRealacion"
-                    BackgroundColor="#7c3aed"
-                    TextColor="White"
-                    FontAttributes="Bold"
-                    CornerRadius="12"
-                    HeightRequest="50"
-                    Clicked="btnRealacion_Clicked"/>
-            <Button Text="Mensajes"
-                    x:Name="btnMensajes"
-                    BackgroundColor="#7c3aed"
-                    TextColor="White"
-                    FontAttributes="Bold"
-                    CornerRadius="12"
-                    HeightRequest="50"
-                    Clicked="btnMensajes_Clicked"/>
+                <!-- Relación -->
+                <Border Grid.Row="1" Grid.Column="0"
+                       StrokeShape="RoundRectangle 16"
+                       BackgroundColor="#A56FE2"
+                       Opacity="0.9">
+                    <Label Text="Relación"
+                           TextColor="White"
+                           FontSize="19"
+                           FontAttributes="Bold"
+                           HorizontalOptions="Center"
+                           VerticalOptions="Center" />
+                    <Border.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="btnRealacion_Clicked" />
+                    </Border.GestureRecognizers>
+                </Border>
 
-
+                <!-- Mensajes -->
+                <Border Grid.Row="1" Grid.Column="1"
+                       StrokeShape="RoundRectangle 16" 
+                       Stroke="White"
+                       StrokeThickness="1.5"
+                       BackgroundColor="#8C4DD2"
+                       Opacity="0.85">
+                    <Label Text="Mensajes"
+                           TextColor="White"
+                           FontSize="19"
+                           FontAttributes="Bold"
+                           HorizontalOptions="Center"
+                           VerticalOptions="Center" />
+                    <Border.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="btnMensajes_Clicked" />
+                    </Border.GestureRecognizers>
+                </Border>
+            </Grid>
         </VerticalStackLayout>
     </ScrollView>
 </ContentPage>

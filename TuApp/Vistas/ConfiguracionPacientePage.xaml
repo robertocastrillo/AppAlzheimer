@@ -3,7 +3,8 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="TuApp.Vistas.ConfiguracionPacientePage"
              BackgroundColor="Transparent"
-             NavigationPage.HasNavigationBar="False">
+             NavigationPage.HasNavigationBar="True"
+             Title="Configuración">
     <!-- Fondo degradado -->
     <ContentPage.Background>
         <LinearGradientBrush EndPoint="1,1">
@@ -27,6 +28,12 @@
                 <Setter Property="Padding" Value="15,0" />
             </Style>
 
+            <Style x:Key="DisabledButtonStyle" TargetType="Button" BasedOn="{StaticResource MenuTileButtonStyle}">
+                <Setter Property="BackgroundColor" Value="#CCCCCC" />
+                <Setter Property="TextColor" Value="#888888" />
+                <Setter Property="IsEnabled" Value="False" />
+            </Style>
+
             <Style x:Key="LogoutButtonStyle" TargetType="Button">
                 <Setter Property="BackgroundColor" Value="#ff5e8a" />
                 <Setter Property="TextColor" Value="White" />
@@ -37,54 +44,22 @@
                 <Setter Property="Margin" Value="0,25,0,8" />
                 <Setter Property="Padding" Value="15,0" />
             </Style>
-
-            <Style x:Key="TitleLabelStyle" TargetType="Label">
-                <Setter Property="FontSize" Value="28" />
-                <Setter Property="FontAttributes" Value="Bold" />
-                <Setter Property="TextColor" Value="White" />
-                <Setter Property="HorizontalTextAlignment" Value="Center" />
-                <Setter Property="Margin" Value="0,0,0,20" />
-            </Style>
         </ResourceDictionary>
     </ContentPage.Resources>
 
     <ScrollView>
         <VerticalStackLayout Padding="30" Spacing="20" VerticalOptions="Center">
-            <!-- Botón de Inicio -->
-            <Button Text="Inicio"
-                    Clicked="RegresarInicio_Clicked"
-                    TextColor="White"
-                    BackgroundColor="Transparent"
-                    FontSize="32"
-                    FontAttributes="Bold"
-                    HorizontalOptions="Start"
-                    Margin="0,40,0,20"
-                    Padding="0">
-                <VisualStateManager.VisualStateGroups>
-                    <VisualStateGroup x:Name="CommonStates">
-                        <VisualState x:Name="Normal" />
-                        <VisualState x:Name="Pressed">
-                            <VisualState.Setters>
-                                <Setter Property="Scale" Value="0.95" />
-                                <Setter Property="Opacity" Value="0.8" />
-                            </VisualState.Setters>
-                        </VisualState>
-                    </VisualStateGroup>
-                </VisualStateManager.VisualStateGroups>
-            </Button>
-
-            <!-- Título -->
-            <Label Text="Configuración"
-                   Style="{StaticResource TitleLabelStyle}" />
+            <!-- Se eliminaron el botón "Inicio" y el título "Configuración" -->
 
             <!-- Botones de Configuración -->
             <Frame BackgroundColor="#4e186a"
                    CornerRadius="20"
                    Padding="20"
                    HasShadow="True"
-                   Margin="0,10,0,20">
+                   Margin="0,30,0,20">
                 <VerticalStackLayout Spacing="15">
-                    <Button Text="Editar PIN"
+                    <Button x:Name="BtnEditarPin"
+                            Text="Editar PIN"
                             Style="{StaticResource MenuTileButtonStyle}"
                             Clicked="EditarPin_Clicked">
                         <Button.Shadow>
@@ -106,7 +81,8 @@
                         </VisualStateManager.VisualStateGroups>
                     </Button>
 
-                    <Button Text="Crear PIN"
+                    <Button x:Name="BtnCrearPin"
+                            Text="Crear PIN"
                             Style="{StaticResource MenuTileButtonStyle}"
                             Clicked="GenerarPin_Clicked">
                         <Button.Shadow>
@@ -128,7 +104,8 @@
                         </VisualStateManager.VisualStateGroups>
                     </Button>
 
-                    <Button Text="Eliminar PIN"
+                    <Button x:Name="BtnEliminarPin"
+                            Text="Eliminar PIN"
                             Style="{StaticResource MenuTileButtonStyle}"
                             Clicked="EliminarPin_Clicked">
                         <Button.Shadow>

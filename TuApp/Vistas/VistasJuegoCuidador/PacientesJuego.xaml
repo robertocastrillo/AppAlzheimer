@@ -1,63 +1,131 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="TuApp.Vistas.VistasJuegoCuidador.PacientesJuego">
+             x:Class="TuApp.Vistas.VistasJuegoCuidador.PacientesJuego"
+             BackgroundColor="Transparent"
+             NavigationPage.HasNavigationBar="True"
+             Title="Pacientes Asignados">
 
-    <Grid RowDefinitions="*, Auto" Padding="20">
+    <!-- Fondo degradado -->
+    <ContentPage.Background>
+        <LinearGradientBrush EndPoint="1,1">
+            <GradientStop Color="#5e1675" Offset="0.0" />
+            <GradientStop Color="#9333ea" Offset="0.5" />
+            <GradientStop Color="#3b0764" Offset="1.0" />
+        </LinearGradientBrush>
+    </ContentPage.Background>
 
-        <!-- Contenido scrollable -->
-        <VerticalStackLayout Grid.Row="0">
-            <Label Text="Pacientes Asignados:"
-                   FontAttributes="Bold"
-                   FontSize="18"
-                   Margin="0,10,0,5"
-                   TextColor="Black" />
+    <!-- Recursos y estilos -->
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <Style x:Key="TitleLabelStyle" TargetType="Label">
+                <Setter Property="FontSize" Value="22" />
+                <Setter Property="FontAttributes" Value="Bold" />
+                <Setter Property="TextColor" Value="White" />
+                <Setter Property="Margin" Value="0,10,0,15" />
+            </Style>
 
-            <CollectionView ItemsSource="{Binding pacientes}" Margin="0,0,0,20">
-                <CollectionView.ItemTemplate>
-                    <DataTemplate>
-                        <Frame BackgroundColor="#f3e5f5"
-                               BorderColor="#b39ddb"
-                               CornerRadius="12"
-                               Padding="10"
-                               Margin="5,5,5,0">
-                            <Grid ColumnDefinitions="*, Auto" VerticalOptions="Center">
-                                <!-- Nombre del paciente -->
-                                <Label Grid.Column="0"
-                                   Text="{Binding nombre}"
-                                   FontSize="16"
-                                   TextColor="#4a148c"
-                                   VerticalOptions="Center" />
+            <Style x:Key="ItemFrameStyle" TargetType="Frame">
+                <Setter Property="BackgroundColor" Value="#e0cdff" />
+                <Setter Property="CornerRadius" Value="15" />
+                <Setter Property="HasShadow" Value="True" />
+                <Setter Property="Margin" Value="0,5,0,10" />
+                <Setter Property="Padding" Value="15" />
+            </Style>
 
-                                <Button Grid.Column="1"
-                                    Text="PUNTAJES"
-                                    FontSize="12"
-                                    Padding="10,2"
-                                    BackgroundColor="#7E57C2"
-                                    TextColor="White"
-                                    CornerRadius="16"
-                                    VerticalOptions="Center"
-                                    Clicked="VerPuntajes_Clicked"
-                                    CommandParameter="{Binding .}" />
+            <Style x:Key="ActionButtonStyle" TargetType="Button">
+                <Setter Property="BackgroundColor" Value="#5e1675" />
+                <Setter Property="TextColor" Value="White" />
+                <Setter Property="FontAttributes" Value="Bold" />
+                <Setter Property="CornerRadius" Value="15" />
+                <Setter Property="Padding" Value="15,8" />
+            </Style>
+        </ResourceDictionary>
+    </ContentPage.Resources>
 
-                            </Grid>
-                        </Frame>
-                    </DataTemplate>
-                </CollectionView.ItemTemplate>
-            </CollectionView>
+    <ScrollView>
+        <VerticalStackLayout Padding="30" Spacing="20">
+            <!-- Contenedor principal -->
+            <Frame BackgroundColor="#4e186a"
+                   CornerRadius="20"
+                   Padding="20"
+                   HasShadow="True"
+                   Margin="0,30,0,20">
+                <VerticalStackLayout>
+                    <!-- Título -->
+                    <Label Text="Pacientes Asignados"
+                           Style="{StaticResource TitleLabelStyle}" />
+
+                    <!-- Lista de pacientes -->
+                    <CollectionView ItemsSource="{Binding pacientes}" 
+                                    Margin="0,0,0,10">
+                        <CollectionView.EmptyView>
+                            <VerticalStackLayout HorizontalOptions="Center" VerticalOptions="Center">
+                                <Label Text="No hay pacientes asignados"
+                                       FontSize="18"
+                                       TextColor="White"
+                                       HorizontalOptions="Center" />
+                            </VerticalStackLayout>
+                        </CollectionView.EmptyView>
+                        <CollectionView.ItemTemplate>
+                            <DataTemplate>
+                                <Frame Style="{StaticResource ItemFrameStyle}">
+                                    <Grid ColumnDefinitions="*, Auto" VerticalOptions="Center">
+                                        <!-- Nombre del paciente -->
+                                        <Label Grid.Column="0"
+                                               Text="{Binding nombre}"
+                                               FontSize="16"
+                                               TextColor="#3b0764"
+                                               VerticalOptions="Center" />
+
+                                        <!-- Botón de puntajes -->
+                                        <Button Grid.Column="1"
+                                                Text="PUNTAJES"
+                                                FontSize="12"
+                                                Padding="12,6"
+                                                BackgroundColor="#7E57C2"
+                                                TextColor="White"
+                                                CornerRadius="16"
+                                                VerticalOptions="Center"
+                                                Clicked="VerPuntajes_Clicked"
+                                                CommandParameter="{Binding .}" />
+                                    </Grid>
+                                </Frame>
+                            </DataTemplate>
+                        </CollectionView.ItemTemplate>
+                    </CollectionView>
+                </VerticalStackLayout>
+            </Frame>
+
+            <!-- Botón agregar paciente -->
+            <Button Text="+" 
+                    FontSize="28"
+                    WidthRequest="60"
+                    HeightRequest="60"
+                    BackgroundColor="#5e1675"
+                    TextColor="White"
+                    CornerRadius="30"
+                    HorizontalOptions="Center"
+                    Clicked="AgregarPaciente_Clicked"
+                    Margin="0,10">
+                <Button.Shadow>
+                    <Shadow Brush="#000000"
+                            Offset="0,4"
+                            Radius="8"
+                            Opacity="0.2" />
+                </Button.Shadow>
+                <VisualStateManager.VisualStateGroups>
+                    <VisualStateGroup x:Name="CommonStates">
+                        <VisualState x:Name="Normal" />
+                        <VisualState x:Name="Pressed">
+                            <VisualState.Setters>
+                                <Setter Property="Scale" Value="0.95" />
+                                <Setter Property="BackgroundColor" Value="#9333ea" />
+                            </VisualState.Setters>
+                        </VisualState>
+                    </VisualStateGroup>
+                </VisualStateManager.VisualStateGroups>
+            </Button>
         </VerticalStackLayout>
-
-        <!-- Botón fijo abajo -->
-        <Button Text="+" 
-                Grid.Row="1"
-                FontSize="28"
-                WidthRequest="60"
-                HeightRequest="60"
-                BackgroundColor="#7E57C2"
-                TextColor="White"
-                CornerRadius="30"
-                HorizontalOptions="Center"
-                VerticalOptions="End"
-                Clicked="AgregarPaciente_Clicked" />
-    </Grid>
+    </ScrollView>
 </ContentPage>

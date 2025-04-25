@@ -4,32 +4,116 @@
     x:Class="TuApp.FlyoutInicioCuidador"
     xmlns:local="clr-namespace:TuApp.Vistas">
 
-    <!-- Menú lateral -->
+    <!-- Menú lateral con estilo similar a ConfiguracionPacientePage pero sin marco interno -->
     <FlyoutPage.Flyout>
-        <ContentPage Title="Menú" BackgroundColor="#f5e0ff">
-            <VerticalStackLayout Padding="20" Spacing="20">
-                <HorizontalStackLayout>
-                    <Image Source="perfil.png"
-                           HeightRequest="50"
-                           WidthRequest="50"
-                           Aspect="AspectFill"
-                           VerticalOptions="Center"/>
-                    <Label x:Name="lblNombreUsuario"
-                           Text="Nombre Usuario"
-                           VerticalOptions="Center"
-                           FontAttributes="Bold"
-                           Margin="10,0,0,0"/>
-                    
+        <ContentPage Title="Menú">
+            <!-- Fondo degradado igual al de ConfiguracionPacientePage -->
+            <ContentPage.Background>
+                <LinearGradientBrush EndPoint="1,1">
+                    <GradientStop Color="#5e1675" Offset="0.0" />
+                    <GradientStop Color="#9333ea" Offset="0.5" />
+                    <GradientStop Color="#3b0764" Offset="1.0" />
+                </LinearGradientBrush>
+            </ContentPage.Background>
 
-                </HorizontalStackLayout>
+            <!-- Recursos y estilos -->
+            <ContentPage.Resources>
+                <ResourceDictionary>
+                    <Style x:Key="MenuTileButtonStyle" TargetType="Button">
+                        <Setter Property="BackgroundColor" Value="#e0cdff" />
+                        <Setter Property="TextColor" Value="#3b0764" />
+                        <Setter Property="FontAttributes" Value="Bold" />
+                        <Setter Property="CornerRadius" Value="15" />
+                        <Setter Property="HeightRequest" Value="60" />
+                        <Setter Property="FontSize" Value="16" />
+                        <Setter Property="Margin" Value="0,8" />
+                        <Setter Property="Padding" Value="15,0" />
+                    </Style>
 
-                <Button Text="Perfil"
-                        Clicked="Perfil_Clicked"
-                        BackgroundColor="#ede9fe"
-                        TextColor="Black"/>
+                    <Style x:Key="LogoutButtonStyle" TargetType="Button">
+                        <Setter Property="BackgroundColor" Value="#ff5e8a" />
+                        <Setter Property="TextColor" Value="White" />
+                        <Setter Property="FontAttributes" Value="Bold" />
+                        <Setter Property="CornerRadius" Value="15" />
+                        <Setter Property="HeightRequest" Value="60" />
+                        <Setter Property="FontSize" Value="16" />
+                        <Setter Property="Margin" Value="0,25,0,8" />
+                        <Setter Property="Padding" Value="15,0" />
+                    </Style>
+                </ResourceDictionary>
+            </ContentPage.Resources>
 
-                <Button Text="Cerrar sesión" TextColor="Red" Clicked="CerrarSesion_Clicked"/>
-            </VerticalStackLayout>
+            <ScrollView>
+                <VerticalStackLayout Padding="30" Spacing="20">
+                    <!-- Información de usuario directamente sobre el fondo -->
+                    <HorizontalStackLayout Margin="0,30,0,15">
+                        <Frame BackgroundColor="#a970ff" 
+                               CornerRadius="25" 
+                               Padding="0" 
+                               IsClippedToBounds="True"
+                               HeightRequest="50"
+                               WidthRequest="50">
+                            <Image Source="perfil.png"
+                                   Aspect="AspectFill"
+                                   VerticalOptions="Center"
+                                   HorizontalOptions="Center"/>
+                        </Frame>
+                        <Label x:Name="lblNombreUsuario"
+                               Text="Nombre Usuario"
+                               VerticalOptions="Center"
+                               TextColor="White"
+                               FontSize="18"
+                               FontAttributes="Bold"
+                               Margin="15,0,0,0"/>
+                    </HorizontalStackLayout>
+
+                    <!-- Botón de Perfil -->
+                    <Button Text="Perfil"
+                            Style="{StaticResource MenuTileButtonStyle}"
+                            Clicked="Perfil_Clicked">
+                        <Button.Shadow>
+                            <Shadow Brush="#000000"
+                                    Offset="0,3"
+                                    Radius="6"
+                                    Opacity="0.2" />
+                        </Button.Shadow>
+                        <VisualStateManager.VisualStateGroups>
+                            <VisualStateGroup x:Name="CommonStates">
+                                <VisualState x:Name="Normal" />
+                                <VisualState x:Name="Pressed">
+                                    <VisualState.Setters>
+                                        <Setter Property="BackgroundColor" Value="White" />
+                                        <Setter Property="Scale" Value="0.98" />
+                                    </VisualState.Setters>
+                                </VisualState>
+                            </VisualStateGroup>
+                        </VisualStateManager.VisualStateGroups>
+                    </Button>
+
+                    <!-- Botón de Cerrar Sesión -->
+                    <Button Text="Cerrar Sesión"
+                            Style="{StaticResource LogoutButtonStyle}"
+                            Clicked="CerrarSesion_Clicked">
+                        <Button.Shadow>
+                            <Shadow Brush="#000000"
+                                    Offset="0,3"
+                                    Radius="6"
+                                    Opacity="0.2" />
+                        </Button.Shadow>
+                        <VisualStateManager.VisualStateGroups>
+                            <VisualStateGroup x:Name="CommonStates">
+                                <VisualState x:Name="Normal" />
+                                <VisualState x:Name="Pressed">
+                                    <VisualState.Setters>
+                                        <Setter Property="BackgroundColor" Value="#ff4471" />
+                                        <Setter Property="Scale" Value="0.98" />
+                                    </VisualState.Setters>
+                                </VisualState>
+                            </VisualStateGroup>
+                        </VisualStateManager.VisualStateGroups>
+                    </Button>
+                </VerticalStackLayout>
+            </ScrollView>
         </ContentPage>
     </FlyoutPage.Flyout>
 

@@ -1,77 +1,136 @@
 <?xml version="1.0" encoding="utf-8" ?>
-
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:vm="clr-namespace:TuApp.VistasModelo"
              x:Class="TuApp.Vistas.DetalleJuego"
-             BackgroundColor="{DynamicResource BasePageColor}">
+             BackgroundColor="Transparent"
+             NavigationPage.HasNavigationBar="True"
+             Title="Detalle del Juego">
+
+    <!-- Fondo degradado -->
+    <ContentPage.Background>
+        <LinearGradientBrush EndPoint="1,1">
+            <GradientStop Color="#5e1675" Offset="0.0" />
+            <GradientStop Color="#9333ea" Offset="0.5" />
+            <GradientStop Color="#3b0764" Offset="1.0" />
+        </LinearGradientBrush>
+    </ContentPage.Background>
 
     <ContentPage.BindingContext>
         <vm:PreguntaViewModel />
     </ContentPage.BindingContext>
 
-    <Grid RowDefinitions="Auto, * , Auto" Padding="20" BackgroundColor="{DynamicResource BaseTabbedPageColor}">
+    <!-- Recursos y estilos -->
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <Style x:Key="TitleLabelStyle" TargetType="Label">
+                <Setter Property="FontSize" Value="22" />
+                <Setter Property="FontAttributes" Value="Bold" />
+                <Setter Property="TextColor" Value="White" />
+                <Setter Property="Margin" Value="0,10,0,15" />
+            </Style>
 
-        <!-- Lista deslizable -->
-        <CollectionView Grid.Row="1"
-                        ItemsSource="{Binding ListaPregunta}"
-                        SelectionMode="Single">
-            <CollectionView.ItemTemplate>
-                <DataTemplate>
-                    <Frame Style="{StaticResource TileButtonStyle}">
-                        <Frame.GestureRecognizers>
-                            <TapGestureRecognizer Tapped="Juego_Tapped" CommandParameter="{Binding}" />
-                        </Frame.GestureRecognizers>
+            <Style x:Key="ItemFrameStyle" TargetType="Frame">
+                <Setter Property="BackgroundColor" Value="#e0cdff" />
+                <Setter Property="CornerRadius" Value="15" />
+                <Setter Property="HasShadow" Value="True" />
+                <Setter Property="Margin" Value="0,5,0,10" />
+                <Setter Property="Padding" Value="15" />
+            </Style>
 
-                        <Grid ColumnDefinitions="*, Auto"
-                              RowDefinitions="Auto, Auto"
-                              VerticalOptions="Center">
+            <Style x:Key="FloatingButtonStyle" TargetType="Button">
+                <Setter Property="BackgroundColor" Value="#5e1675" />
+                <Setter Property="TextColor" Value="White" />
+                <Setter Property="FontAttributes" Value="Bold" />
+                <Setter Property="CornerRadius" Value="30" />
+                <Setter Property="WidthRequest" Value="60" />
+                <Setter Property="HeightRequest" Value="60" />
+                <Setter Property="FontSize" Value="28" />
+                <Setter Property="Padding" Value="0" />
+                <Setter Property="HorizontalOptions" Value="Center" />
+            </Style>
+        </ResourceDictionary>
+    </ContentPage.Resources>
 
-                            <!-- Descripción -->
-                            <Label Grid.Row="0" Grid.Column="0"
-                                   Text="{Binding Descripcion}"
-                                   FontSize="16"
-                                   FontAttributes="Bold"
-                                   TextColor="{DynamicResource BaseTextColor}"
-                                   VerticalOptions="Center"
-                                   HorizontalOptions="Start" />
+    <ScrollView>
+        <VerticalStackLayout Padding="30" Spacing="20">
+            <!-- Contenedor principal -->
+            <Frame BackgroundColor="#4e186a"
+                   CornerRadius="20"
+                   Padding="20"
+                   HasShadow="True"
+                   Margin="0,30,0,20">
+                <VerticalStackLayout>
+                    <!-- Título -->
+                    <Label Text="Preguntas del Juego"
+                           Style="{StaticResource TitleLabelStyle}" />
 
-                            <!-- Imagen debajo de la descripción -->
-                            <Image Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2"
-                                   Source="{Binding ImagenSource}"
-                                   HeightRequest="160"
-                                   Aspect="AspectFit"
-                                   VerticalOptions="Center"
-                                   Margin="0,10,0,0" />
+                    <!-- Lista de preguntas -->
+                    <CollectionView ItemsSource="{Binding ListaPregunta}"
+                                    SelectionMode="Single">
+                        <CollectionView.EmptyView>
+                            <VerticalStackLayout HorizontalOptions="Center" VerticalOptions="Center">
+                                <Label Text="No hay preguntas disponibles"
+                                       FontSize="18"
+                                       TextColor="White"
+                                       HorizontalOptions="Center" />
+                            </VerticalStackLayout>
+                        </CollectionView.EmptyView>
+                        <CollectionView.ItemTemplate>
+                            <DataTemplate>
+                                <Frame Style="{StaticResource ItemFrameStyle}">
+                                    <Frame.GestureRecognizers>
+                                        <TapGestureRecognizer Tapped="Juego_Tapped" CommandParameter="{Binding}" />
+                                    </Frame.GestureRecognizers>
+                                    <Grid RowDefinitions="Auto, Auto"
+                                          VerticalOptions="Center">
+                                        <!-- Descripción -->
+                                        <Label Grid.Row="0"
+                                               Text="{Binding Descripcion}"
+                                               FontSize="16"
+                                               FontAttributes="Bold"
+                                               TextColor="#3b0764"
+                                               VerticalOptions="Center"
+                                               HorizontalOptions="Start" />
 
-                        </Grid>
-                    </Frame>
-                </DataTemplate>
-            </CollectionView.ItemTemplate>
-        </CollectionView>
+                                        <!-- Imagen debajo de la descripción -->
+                                        <Image Grid.Row="1"
+                                               Source="{Binding ImagenSource}"
+                                               HeightRequest="160"
+                                               Aspect="AspectFit"
+                                               VerticalOptions="Center"
+                                               Margin="0,10,0,0" />
+                                    </Grid>
+                                </Frame>
+                            </DataTemplate>
+                        </CollectionView.ItemTemplate>
+                    </CollectionView>
+                </VerticalStackLayout>
+            </Frame>
 
-        <!-- Botón flotante "+" -->
-        <Button Text="+"
-                FontSize="36"
-                FontAttributes="Bold"
-                Padding="0"
-                Clicked="AgregarPregunta_Clicked"
-                WidthRequest="60"
-                HeightRequest="60"
-                CornerRadius="30"
-                BackgroundColor="{DynamicResource PrimaryColor}"
-                TextColor="{DynamicResource White}"
-                HorizontalOptions="Center"
-                VerticalOptions="End"
-                Grid.Row="2"
-                Margin="0,10">
-            <Button.Shadow>
-                <Shadow Brush="#55000000"
-                        Offset="0,4"
-                        Radius="8"
-                        Opacity="0.4" />
-            </Button.Shadow>
-        </Button>
-
-    </Grid>
+            <!-- Botón agregar pregunta -->
+            <Button Text="+"
+                    Style="{StaticResource FloatingButtonStyle}"
+                    Clicked="AgregarPregunta_Clicked"
+                    Margin="0,10">
+                <Button.Shadow>
+                    <Shadow Brush="#000000"
+                            Offset="0,4"
+                            Radius="8"
+                            Opacity="0.2" />
+                </Button.Shadow>
+                <VisualStateManager.VisualStateGroups>
+                    <VisualStateGroup x:Name="CommonStates">
+                        <VisualState x:Name="Normal" />
+                        <VisualState x:Name="Pressed">
+                            <VisualState.Setters>
+                                <Setter Property="Scale" Value="0.95" />
+                                <Setter Property="BackgroundColor" Value="#9333ea" />
+                            </VisualState.Setters>
+                        </VisualState>
+                    </VisualStateGroup>
+                </VisualStateManager.VisualStateGroups>
+            </Button>
+        </VerticalStackLayout>
+    </ScrollView>
 </ContentPage>

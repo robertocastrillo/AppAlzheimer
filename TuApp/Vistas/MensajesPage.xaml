@@ -1,87 +1,244 @@
+<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:vm="clr-namespace:TuApp.VistasModelo"
              x:Class="TuApp.Vistas.MensajesPage"
+             BackgroundColor="Transparent"
+             NavigationPage.HasNavigationBar="True"
              Title="Mensajes">
+
+    <!-- Fondo degradado más sutil -->
+    <ContentPage.Background>
+        <LinearGradientBrush EndPoint="1,1">
+            <GradientStop Color="#5e1675" Offset="0.0" />
+            <GradientStop Color="#7d42ad" Offset="1.0" />
+        </LinearGradientBrush>
+    </ContentPage.Background>
 
     <ContentPage.BindingContext>
         <vm:MensajeViewModel />
     </ContentPage.BindingContext>
 
-    <Grid RowDefinitions="Auto,*,Auto" Padding="10">
+    <!-- Recursos y estilos -->
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <Style x:Key="TitleLabelStyle" TargetType="Label">
+                <Setter Property="FontSize" Value="22" />
+                <Setter Property="FontAttributes" Value="Bold" />
+                <Setter Property="TextColor" Value="White" />
+                <Setter Property="Margin" Value="15,15,0,10" />
+            </Style>
 
-        <!-- Sección de pacientes -->
-        <ScrollView Grid.Row="0" Orientation="Horizontal" HeightRequest="100">
-            <CollectionView x:Name="PacientesCollection"
-                            ItemsSource="{Binding ListaPacientesRelacionados}"
-                            SelectedItem="{Binding PacienteSeleccionado}"
-                            SelectionChanged="PacientesCollection_SelectionChanged"
-                            SelectionMode="Single"
-                            ItemsLayout="HorizontalList">
-                <CollectionView.ItemTemplate>
-                    <DataTemplate>
-                        <Frame Style="{StaticResource TileButtonStyle}" WidthRequest="150">
-                            <Frame.GestureRecognizers>
-                                <TapGestureRecognizer Tapped="Paciente_Tapped" CommandParameter="{Binding}" />
-                            </Frame.GestureRecognizers>
-                            <Label Text="{Binding Nombre}"
-                                   LineBreakMode="WordWrap"
-                                   HorizontalTextAlignment="Center"
-                                   VerticalTextAlignment="Center"
-                                   FontSize="16"
-                                   TextColor="{DynamicResource BaseTextColor}" />
-                        </Frame>
-                    </DataTemplate>
-                </CollectionView.ItemTemplate>
-            </CollectionView>
-        </ScrollView>
+            <!-- Frames de paciente mejorados para mejor selección táctil y visualización completa del nombre -->
+            <Style x:Key="PacienteFrameStyle" TargetType="Frame">
+                <Setter Property="BackgroundColor" Value="White" />
+                <Setter Property="CornerRadius" Value="15" />
+                <Setter Property="HasShadow" Value="True" />
+                <Setter Property="Margin" Value="5" />
+                <Setter Property="Padding" Value="15" />
+                <Setter Property="WidthRequest" Value="200" />
+                <Setter Property="HeightRequest" Value="55" />
+                <Setter Property="BorderColor" Value="#9333ea" />
+            </Style>
+
+            <Style x:Key="SelectedPacienteFrameStyle" TargetType="Frame">
+                <Setter Property="BackgroundColor" Value="#9333ea" />
+                <Setter Property="CornerRadius" Value="15" />
+                <Setter Property="HasShadow" Value="True" />
+                <Setter Property="Margin" Value="5" />
+                <Setter Property="Padding" Value="15" />
+                <Setter Property="WidthRequest" Value="200" />
+                <Setter Property="HeightRequest" Value="55" />
+                <Setter Property="BorderColor" Value="White" />
+            </Style>
+
+            <Style x:Key="MensajeFrameStyle" TargetType="Frame">
+                <Setter Property="BackgroundColor" Value="White" />
+                <Setter Property="CornerRadius" Value="15" />
+                <Setter Property="HasShadow" Value="False" />
+                <Setter Property="Margin" Value="5,3" />
+                <Setter Property="Padding" Value="12,8" />
+                <Setter Property="MaximumWidthRequest" Value="280" />
+                <Setter Property="HorizontalOptions" Value="Start" />
+            </Style>
+
+            <Style x:Key="MiMensajeFrameStyle" TargetType="Frame">
+                <Setter Property="BackgroundColor" Value="#9333ea" />
+                <Setter Property="CornerRadius" Value="15" />
+                <Setter Property="HasShadow" Value="False" />
+                <Setter Property="Margin" Value="5,3" />
+                <Setter Property="Padding" Value="12,8" />
+                <Setter Property="MaximumWidthRequest" Value="280" />
+                <Setter Property="HorizontalOptions" Value="End" />
+            </Style>
+
+            <!-- Estilos mejorados para mostrar nombres completos -->
+            <Style x:Key="PatientNameStyle" TargetType="Label">
+                <Setter Property="FontSize" Value="15" />
+                <Setter Property="FontAttributes" Value="Bold" />
+                <Setter Property="TextColor" Value="#5e1675" />
+                <Setter Property="HorizontalTextAlignment" Value="Center" />
+                <Setter Property="VerticalTextAlignment" Value="Center" />
+                <Setter Property="LineBreakMode" Value="NoWrap" />
+            </Style>
+
+            <Style x:Key="SelectedPatientNameStyle" TargetType="Label">
+                <Setter Property="FontSize" Value="15" />
+                <Setter Property="FontAttributes" Value="Bold" />
+                <Setter Property="TextColor" Value="White" />
+                <Setter Property="HorizontalTextAlignment" Value="Center" />
+                <Setter Property="VerticalTextAlignment" Value="Center" />
+                <Setter Property="LineBreakMode" Value="NoWrap" />
+            </Style>
+
+            <Style x:Key="ConversationTitleStyle" TargetType="Label">
+                <Setter Property="FontSize" Value="18" />
+                <Setter Property="FontAttributes" Value="Bold" />
+                <Setter Property="TextColor" Value="White" />
+                <Setter Property="HorizontalOptions" Value="Center" />
+                <Setter Property="Margin" Value="0,10,0,15" />
+                <Setter Property="LineBreakMode" Value="WordWrap" />
+                <Setter Property="HorizontalTextAlignment" Value="Center" />
+            </Style>
+
+            <Style x:Key="MessageTextStyle" TargetType="Label">
+                <Setter Property="FontSize" Value="14" />
+                <Setter Property="TextColor" Value="#333333" />
+                <Setter Property="LineBreakMode" Value="WordWrap" />
+            </Style>
+
+            <Style x:Key="MyMessageTextStyle" TargetType="Label">
+                <Setter Property="FontSize" Value="14" />
+                <Setter Property="TextColor" Value="White" />
+                <Setter Property="LineBreakMode" Value="WordWrap" />
+            </Style>
+
+            <Style x:Key="EntryStyle" TargetType="Entry">
+                <Setter Property="BackgroundColor" Value="White" />
+                <Setter Property="TextColor" Value="#333333" />
+                <Setter Property="PlaceholderColor" Value="#999999" />
+                <Setter Property="VerticalOptions" Value="Center" />
+                <Setter Property="HeightRequest" Value="40" />
+            </Style>
+
+            <Style x:Key="SendButtonStyle" TargetType="Button">
+                <Setter Property="BackgroundColor" Value="#5e1675" />
+                <Setter Property="TextColor" Value="White" />
+                <Setter Property="CornerRadius" Value="10" />
+                <Setter Property="FontAttributes" Value="Bold" />
+                <Setter Property="HeightRequest" Value="40" />
+                <Setter Property="Padding" Value="15,0" />
+            </Style>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+    <Grid RowDefinitions="Auto,Auto,*,Auto" Padding="12,5">
+        <!-- Sección de título/header -->
+        <Label Text="Mis Pacientes" 
+               Style="{StaticResource TitleLabelStyle}"
+               Grid.Row="0" 
+               Margin="15,15,0,0"/>
+
+        <!-- Sección de pacientes mejorada -->
+        <Frame Grid.Row="1" 
+               BackgroundColor="#4e186a"
+               CornerRadius="20"
+               Padding="10,10"
+               HasShadow="False"
+               Margin="0,10,0,10">
+            <ScrollView Orientation="Horizontal" 
+                      HorizontalScrollBarVisibility="Never"
+                      Margin="0,0,0,0">
+                <CollectionView x:Name="PacientesCollection"
+                               ItemsSource="{Binding ListaPacientesRelacionados}"
+                               SelectedItem="{Binding PacienteSeleccionado, Mode=TwoWay}"
+                               SelectionChanged="PacientesCollection_SelectionChanged"
+                               SelectionMode="Single"
+                               ItemsLayout="HorizontalList">
+                    <CollectionView.EmptyView>
+                        <Label Text="No hay pacientes disponibles" 
+                              TextColor="White" 
+                              FontSize="16" 
+                              HorizontalOptions="Center"
+                              VerticalOptions="Center"/>
+                    </CollectionView.EmptyView>
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate>
+                            <!-- Frame más grande y fácil de tocar -->
+                            <Frame Style="{StaticResource PacienteFrameStyle}">
+                                <Frame.GestureRecognizers>
+                                    <TapGestureRecognizer Tapped="Paciente_Tapped" CommandParameter="{Binding}" />
+                                </Frame.GestureRecognizers>
+                                <!-- Usar el nombre o nombre completo según esté disponible -->
+                                <Label Text="{Binding Nombre}"
+                                      Style="{StaticResource PatientNameStyle}" />
+                            </Frame>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+            </ScrollView>
+        </Frame>
 
         <!-- Conversación + mensajes -->
-        <StackLayout Grid.Row="1" Spacing="10">
+        <Grid Grid.Row="2">
+            <!-- Nombre del paciente seleccionado -->
+            <StackLayout>
+                <Label Text="{Binding NombrePacienteConversacion}" 
+                      Style="{StaticResource ConversationTitleStyle}"
+                      Margin="0,5,0,10"/>
 
-            <!-- Nombre del paciente -->
-            <Label Text="{Binding NombrePacienteConversacion}" 
-                   FontSize="18" 
-                   FontAttributes="Bold"
-                   HorizontalOptions="Center"
-                   TextColor="{DynamicResource PrimaryColor}" />
+                <!-- Mensajes - Contenedor con scroll -->
+                <ScrollView VerticalScrollBarVisibility="Never"
+                            VerticalOptions="FillAndExpand"
+                            x:Name="MensajesScrollView">
+                    <CollectionView ItemsSource="{Binding ListaMensajes}"
+                                  ItemsLayout="VerticalList"
+                                  VerticalOptions="End">
+                        <CollectionView.EmptyView>
+                            <StackLayout HorizontalOptions="Center" VerticalOptions="Center">
+                                <Label Text="No hay mensajes" 
+                                      TextColor="White" 
+                                      FontSize="16" 
+                                      HorizontalOptions="Center"/>
+                                <Label Text="Seleccione un paciente para comenzar a chatear" 
+                                      TextColor="White" 
+                                      FontSize="14" 
+                                      HorizontalOptions="Center"/>
+                            </StackLayout>
+                        </CollectionView.EmptyView>
+                        <CollectionView.ItemTemplate>
+                            <DataTemplate>
+                                <Frame Style="{StaticResource MensajeFrameStyle}">
+                                    <Label Text="{Binding Contenido}" 
+                                          Style="{StaticResource MessageTextStyle}" />
+                                </Frame>
+                            </DataTemplate>
+                        </CollectionView.ItemTemplate>
+                    </CollectionView>
+                </ScrollView>
+            </StackLayout>
+        </Grid>
 
-            <!-- Mensajes -->
-            <CollectionView ItemsSource="{Binding ListaMensajes}"
-                            HeightRequest="300">
-                <CollectionView.ItemTemplate>
-                    <DataTemplate>
-                        <Frame Padding="10" Margin="5"
-                               BackgroundColor="{DynamicResource EntryAndEditorsBackgroundColor}">
-                            <Label Text="{Binding Contenido}" 
-                                   TextColor="{DynamicResource BaseTextColor}" />
-                        </Frame>
-                    </DataTemplate>
-                </CollectionView.ItemTemplate>
-            </CollectionView>
-        </StackLayout>
-
-        <!-- Entrada de texto y botón enviar -->
-        <Grid x:Name="MensajePanel" Grid.Row="2" Padding="5">
+        <!-- Panel de entrada de mensaje con visibilidad controlada por el code-behind -->
+        <Grid x:Name="MensajePanel" Grid.Row="3" Padding="0,5" Margin="0,5,0,10">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
-
-            <Entry x:Name="MensajeEntry"
-           Text="{Binding ContenidoNuevoMensaje}"
-           Placeholder="Escribe un mensaje..."
-           Grid.Column="0"
-           BackgroundColor="{DynamicResource EntryAndEditorsBackgroundColor}"
-           VerticalOptions="Center"
-           Margin="0,0,10,0" />
-
+            <Border Grid.Column="0" 
+                   BackgroundColor="White" 
+                   StrokeShape="RoundRectangle 20,20,20,20"
+                   Margin="0,0,8,0">
+                <Entry x:Name="MensajeEntry"
+                      Text="{Binding ContenidoNuevoMensaje}"
+                      Placeholder="Escribe un mensaje..."
+                      Style="{StaticResource EntryStyle}"
+                      Margin="10,0" />
+            </Border>
             <Button Text="Enviar"
-            Grid.Column="1"
-            Command="{Binding EnviarMensajeCommand}"
-            Style="{StaticResource PrimaryButtonStyle}" />
+                   Grid.Column="1"
+                   Command="{Binding EnviarMensajeCommand}"
+                   Style="{StaticResource SendButtonStyle}" />
         </Grid>
-
-
     </Grid>
 </ContentPage>

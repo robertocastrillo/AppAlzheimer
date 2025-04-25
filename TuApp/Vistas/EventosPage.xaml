@@ -3,8 +3,17 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:vm="clr-namespace:TuApp.VistasModelo"
              x:Class="TuApp.Vistas.EventosPage"
-             Title="Mis Eventos"
-             BackgroundColor="{DynamicResource BasePageColor}">
+             BackgroundColor="Transparent"
+             NavigationPage.HasNavigationBar="True"
+             Title="Mis Eventos">
+    <!-- Fondo degradado -->
+    <ContentPage.Background>
+        <LinearGradientBrush EndPoint="1,1">
+            <GradientStop Color="#5e1675" Offset="0.0" />
+            <GradientStop Color="#9333ea" Offset="0.5" />
+            <GradientStop Color="#3b0764" Offset="1.0" />
+        </LinearGradientBrush>
+    </ContentPage.Background>
 
     <ContentPage.BindingContext>
         <vm:EventoViewModel />
@@ -14,47 +23,91 @@
         <ToolbarItem Text="+" Clicked="OnAgregarEventoClicked" />
     </ContentPage.ToolbarItems>
 
-    <StackLayout Padding="15">
+    <!-- Recursos y estilos -->
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <Style x:Key="TitleLabelStyle" TargetType="Label">
+                <Setter Property="FontSize" Value="22" />
+                <Setter Property="FontAttributes" Value="Bold" />
+                <Setter Property="TextColor" Value="White" />
+                <Setter Property="Margin" Value="0,10,0,15" />
+            </Style>
 
-        <Label Text="Eventos asignados" 
-               FontAttributes="Bold" 
-               FontSize="20" 
-               HorizontalOptions="Center"
-               TextColor="{DynamicResource PrimaryColor}"/>
+            <Style x:Key="ItemFrameStyle" TargetType="Frame">
+                <Setter Property="BackgroundColor" Value="White" />
+                <Setter Property="CornerRadius" Value="15" />
+                <Setter Property="HasShadow" Value="True" />
+                <Setter Property="Margin" Value="0,5,0,10" />
+                <Setter Property="Padding" Value="15" />
+            </Style>
 
-        <CollectionView x:Name="EventosCollection"
-                        ItemsSource="{Binding ListaEventos}"
-                        SelectionMode="Single"
-                        Margin="0,15,0,0">
-            <CollectionView.ItemTemplate>
-                <DataTemplate>
-                    <Frame Margin="5"
-                           Padding="10"
-                           CornerRadius="20"
-                           BorderColor="{DynamicResource PrimaryColor}"
-                           HasShadow="True"
-                           BackgroundColor="{DynamicResource White}">
-                        <Frame.GestureRecognizers>
-                            <TapGestureRecognizer Tapped="Evento_Tapped" CommandParameter="{Binding}" />
-                        </Frame.GestureRecognizers>
-                        <StackLayout>
-                            <Label Text="{Binding Titulo}"
-                                   FontSize="18"
-                                   FontAttributes="Bold"
-                                   TextColor="{DynamicResource BaseTextColor}"/>
+            <Style x:Key="EventTitleStyle" TargetType="Label">
+                <Setter Property="FontSize" Value="18" />
+                <Setter Property="FontAttributes" Value="Bold" />
+                <Setter Property="TextColor" Value="#3b0764" />
+            </Style>
 
-                            <Label Text="{Binding FechaHora, StringFormat='Fecha: {0:dd/MM/yyyy HH:mm}'}"
-                                   FontSize="14"
-                                   TextColor="{DynamicResource BaseLightTextColor}"/>
+            <Style x:Key="EventDateStyle" TargetType="Label">
+                <Setter Property="FontSize" Value="14" />
+                <Setter Property="TextColor" Value="#9333ea" />
+            </Style>
 
-                            <Label Text="{Binding Descripcion}"
-                                   FontSize="13"
-                                   TextColor="{DynamicResource BaseLightTextColor}"/>
-                        </StackLayout>
-                    </Frame>
-                </DataTemplate>
-            </CollectionView.ItemTemplate>
-        </CollectionView>
+            <Style x:Key="EventDescriptionStyle" TargetType="Label">
+                <Setter Property="FontSize" Value="13" />
+                <Setter Property="TextColor" Value="#666666" />
+            </Style>
+        </ResourceDictionary>
+    </ContentPage.Resources>
 
-    </StackLayout>
+    <ScrollView>
+        <VerticalStackLayout Padding="30" Spacing="10">
+            <!-- Contenedor principal -->
+            <Frame BackgroundColor="#4e186a"
+                   CornerRadius="20"
+                   Padding="20"
+                   HasShadow="True"
+                   Margin="0,30,0,20">
+                <VerticalStackLayout>
+                    <!-- Título -->
+                    <Label Text="Eventos asignados"
+                           Style="{StaticResource TitleLabelStyle}" />
+
+                    <!-- Lista de eventos -->
+                    <CollectionView x:Name="EventosCollection"
+                                    ItemsSource="{Binding ListaEventos}"
+                                    SelectionMode="None">
+                        <CollectionView.EmptyView>
+                            <VerticalStackLayout HorizontalOptions="Center" VerticalOptions="Center">
+                                <Label Text="No hay eventos registrados" 
+                                       TextColor="White" 
+                                       FontSize="18" 
+                                       HorizontalOptions="Center"/>
+                                <Label Text="Pulse el botón + para agregar un evento nuevo" 
+                                       TextColor="White" 
+                                       FontSize="14" 
+                                       HorizontalOptions="Center"/>
+                            </VerticalStackLayout>
+                        </CollectionView.EmptyView>
+                        <CollectionView.ItemTemplate>
+                            <DataTemplate>
+                                <Frame Style="{StaticResource ItemFrameStyle}">
+                                    <Frame.GestureRecognizers>
+                                        <TapGestureRecognizer Tapped="Evento_Tapped" CommandParameter="{Binding}" />
+                                    </Frame.GestureRecognizers>
+                                    <VerticalStackLayout Spacing="5">
+                                        <Label Text="{Binding Titulo}"
+                                               Style="{StaticResource EventTitleStyle}"/>
+                                        <Label Text="{Binding FechaHora, StringFormat='Fecha: {0:dd/MM/yyyy HH:mm}'}"
+                                               Style="{StaticResource EventDateStyle}"/>
+                                        <Label Text="{Binding Descripcion}"
+                                               Style="{StaticResource EventDescriptionStyle}"/>
+                                    </VerticalStackLayout>
+                                </Frame>
+                            </DataTemplate>
+                        </CollectionView.ItemTemplate>
+                    </CollectionView>
+                </VerticalStackLayout>
+            </Frame>
+        </VerticalStackLayout>
+    </ScrollView>
 </ContentPage>

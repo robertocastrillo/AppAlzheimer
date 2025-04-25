@@ -3,9 +3,9 @@ using Newtonsoft.Json;
 using System.Text;
 using TuApp.Entidades;
 using TuApp.Entidades.Entity;
+using TuApp.Styles; // No es necesario modificar este archivo ya que no tiene DisplayAlert
 
 namespace TuApp;
-
 public partial class PuntajesPopup : Popup
 {
     public PuntajesPopup(int idPaciente, int idJuego)
@@ -16,35 +16,28 @@ public partial class PuntajesPopup : Popup
 
     private async void ObtenerPuntajes(int idPaciente, int idJuego)
     {
-
         ReqObtenerPuntajes req = new ReqObtenerPuntajes
         {
             idPaciente = idPaciente,
             idCuidador = SesionActiva.sesionActiva.usuario.IdUsuario,
             idJuego = idJuego
         };
-
         var jsonContent = new StringContent(JsonConvert.SerializeObject(req), Encoding.UTF8, "application/json");
-
         HttpResponseMessage respuestaHttp = null;
-
         using (HttpClient httpClient = new HttpClient())
         {
             respuestaHttp = await httpClient.PostAsync(App.API_URL + "juego/obtenerpuntaje", jsonContent);
         }
-
         if (respuestaHttp.IsSuccessStatusCode)
         {
             var contenido = await respuestaHttp.Content.ReadAsStringAsync();
             var res = JsonConvert.DeserializeObject<ResObtenerPuntajes>(contenido);
-
             if (res != null && res.resultado && res.puntajes != null)
             {
                 if (res.puntajes.Count > 0)
                 {
                     var listaFormateada = res.puntajes.Select(p =>
                         $"Puntaje: {p.ValorPuntaje} - Fecha: {p.FechaHora:dd/MM/yyyy}").ToList();
-
                     collectionPuntajes.ItemsSource = listaFormateada;
                 }
                 else
@@ -58,7 +51,6 @@ public partial class PuntajesPopup : Popup
             }
         }
     }
-
 
     private void Cerrar_Clicked(object sender, EventArgs e)
     {

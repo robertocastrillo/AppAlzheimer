@@ -3,6 +3,7 @@ using System.Text;
 using TuApp.Entidades;
 using TuApp.Entidades.Entity;
 using TuApp.VistasModelo;
+using TuApp.Styles; // Añadido para importar los custom dialogs
 
 namespace TuApp;
 
@@ -14,9 +15,34 @@ public partial class ResponderPregunta : ContentPage
     private JuegoPaciente juegoSeleccionado;
     private int idUsuario;
 
+    // Añadir los diálogos personalizados
+    private CustomAlertDialog customAlertDialog;
+    private NoChangesDialog noChangesDialog;
+
     public ResponderPregunta(JuegoPaciente juegoSeleccionado, int idUsuario)
     {
         InitializeComponent();
+
+        // Crear los diálogos personalizados
+        customAlertDialog = new CustomAlertDialog();
+        noChangesDialog = new NoChangesDialog();
+
+        // Guardar el contenido original
+        var originalContent = Content;
+
+        // Crear una nueva grid para contener todo
+        var mainGrid = new Grid();
+
+        // Añadir el contenido original
+        mainGrid.Children.Add(originalContent);
+
+        // Añadir los diálogos (inicialmente invisibles)
+        mainGrid.Children.Add(customAlertDialog);
+        mainGrid.Children.Add(noChangesDialog);
+
+        // Establecer la grid como el nuevo contenido
+        Content = mainGrid;
+
         this.BindingContext = viewModel = new PreguntaViewModel();
         this.juegoSeleccionado = juegoSeleccionado;
         this.idUsuario = idUsuario;
@@ -33,7 +59,8 @@ public partial class ResponderPregunta : ContentPage
         }
         else
         {
-            await DisplayAlert("Aviso", "No se encontraron preguntas.", "OK");
+            // Reemplazar DisplayAlert con customAlertDialog
+            await customAlertDialog.ShowAsync("Aviso", "No se encontraron preguntas.", "OK");
             await Navigation.PopAsync();
         }
     }
@@ -137,7 +164,8 @@ public partial class ResponderPregunta : ContentPage
 
         if (total == 0)
         {
-            await DisplayAlert("Aviso", "No se respondieron preguntas.", "OK");
+            // Reemplazar DisplayAlert con customAlertDialog
+            await customAlertDialog.ShowAsync("Aviso", "No se respondieron preguntas.", "OK");
             return;
         }
 
@@ -149,7 +177,7 @@ public partial class ResponderPregunta : ContentPage
         lblPregunta.Text = "¡Preguntas respondidas correctamente!";
         OpcionesCollection.IsVisible = false;
         imgPregunta.IsVisible = false;
-        btnFlechaVolver.IsVisible = false;
+    
         lblResultadoFinal.IsVisible = true;
         lblResultadoFinal.Text = $"Tuviste {respuestasCorrectas.Count(r => r)} respuestas correctas de {respuestasCorrectas.Count}.";
         btnRegresar.IsVisible = true;
@@ -187,13 +215,15 @@ public partial class ResponderPregunta : ContentPage
             }
             else
             {
-                await Application.Current.MainPage.DisplayAlert("Error", "No se pudo registrar el puntaje.", "OK");
+                // Reemplazar DisplayAlert con customAlertDialog
+                await customAlertDialog.ShowAsync("Error", "No se pudo registrar el puntaje.", "OK");
                 await Navigation.PopAsync();
             }
         }
         else
         {
-            await Application.Current.MainPage.DisplayAlert("Error", "Error de conexión al registrar puntaje.", "OK");
+            // Reemplazar DisplayAlert con customAlertDialog
+            await customAlertDialog.ShowAsync("Error", "Error de conexión al registrar puntaje.", "OK");
             await Navigation.PopAsync();
         }
     }
@@ -202,16 +232,24 @@ public partial class ResponderPregunta : ContentPage
     {
         if (respuestasCorrectas.Count > 0)
         {
-            bool confirmacion = await DisplayAlert(
+            var resultado = await customAlertDialog.ShowWithConfirmationAsync(
                 "Advertencia",
                 "Si regresas, se perderán las respuestas registradas. ¿Deseas continuar?",
                 "Sí", "No");
 
-            if (!confirmacion)
-                return;
+           
+            if (resultado == "Sí")
+            {
+                respuestasCorrectas.Clear();
+                await Navigation.PopAsync();
+            }
+          
         }
-
-        respuestasCorrectas.Clear();
-        await Navigation.PopAsync();
+        else
+        {
+            
+            respuestasCorrectas.Clear();
+            await Navigation.PopAsync();
+        }
     }
 }

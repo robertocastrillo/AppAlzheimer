@@ -3,12 +3,10 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:vm="clr-namespace:TuApp.ViewModels"
              x:Class="TuApp.Vistas.RelacionPage"
+             BackgroundColor="Transparent"
+             NavigationPage.HasNavigationBar="True"
              Title="Relaciones">
-
-    <ContentPage.BindingContext>
-        <vm:RelacionViewModel />
-    </ContentPage.BindingContext>
-
+    <!-- Fondo degradado -->
     <ContentPage.Background>
         <LinearGradientBrush EndPoint="1,1">
             <GradientStop Color="#5e1675" Offset="0.0" />
@@ -17,43 +15,130 @@
         </LinearGradientBrush>
     </ContentPage.Background>
 
+    <ContentPage.BindingContext>
+        <vm:RelacionViewModel />
+    </ContentPage.BindingContext>
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <Style x:Key="ActionButtonStyle" TargetType="Button">
+                <Setter Property="BackgroundColor" Value="#e0cdff" />
+                <Setter Property="TextColor" Value="#3b0764" />
+                <Setter Property="FontAttributes" Value="Bold" />
+                <Setter Property="CornerRadius" Value="15" />
+                <Setter Property="HeightRequest" Value="50" />
+                <Setter Property="FontSize" Value="16" />
+                <Setter Property="Margin" Value="0,8" />
+            </Style>
+
+            <Style x:Key="DeleteButtonStyle" TargetType="Button">
+                <Setter Property="BackgroundColor" Value="#ff5e8a" />
+                <Setter Property="TextColor" Value="White" />
+                <Setter Property="FontAttributes" Value="Bold" />
+                <Setter Property="CornerRadius" Value="10" />
+                <Setter Property="HeightRequest" Value="40" />
+                <Setter Property="FontSize" Value="14" />
+            </Style>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
     <ScrollView>
-        <VerticalStackLayout Padding="20" Spacing="15">
-            <Label Text="Pacientes Relacionados"
-                   FontSize="20"
-                   FontAttributes="Bold"
-                   TextColor="White"/>
+        <VerticalStackLayout Padding="30" Spacing="20">
+            <Frame BackgroundColor="#4e186a"
+                   CornerRadius="20"
+                   Padding="20"
+                   HasShadow="True"
+                   Margin="0,30,0,20">
+                <VerticalStackLayout Spacing="15">
+                    <Label Text="Pacientes Relacionados"
+                           FontSize="20"
+                           FontAttributes="Bold"
+                           TextColor="White"
+                           HorizontalOptions="Center"
+                           Margin="0,0,0,10"/>
 
-            <CollectionView x:Name="listaPacientes"
-                            ItemsSource="{Binding Relaciones}"
-                            SelectionMode="None">
-                <CollectionView.ItemTemplate>
-                    <DataTemplate>
-                        <Frame BorderColor="White" CornerRadius="15" Padding="10" Margin="0,5">
-                            <Grid ColumnDefinitions="*,Auto">
-                                <Label Text="{Binding Nombre}" FontSize="18" VerticalOptions="Center" />
-                                <Button Text="Eliminar"
-                                        BackgroundColor="DarkRed"
-                                        TextColor="White"
-                                        Command="{Binding Source={RelativeSource AncestorType={x:Type CollectionView}}, Path=BindingContext.EliminarCommand}"
-                                        CommandParameter="{Binding .}"
-                                        Grid.Column="1" />
-                            </Grid>
-                        </Frame>
-                    </DataTemplate>
-                </CollectionView.ItemTemplate>
-            </CollectionView>
+                    <CollectionView x:Name="listaPacientes"
+                                    ItemsSource="{Binding Relaciones}"
+                                    SelectionMode="None">
+                        <CollectionView.EmptyView>
+                            <VerticalStackLayout HorizontalOptions="Center" VerticalOptions="Center">
+                                <Label Text="No tienes pacientes relacionados"
+                                       FontSize="16"
+                                       TextColor="White"
+                                       HorizontalOptions="Center" />
+                            </VerticalStackLayout>
+                        </CollectionView.EmptyView>
+                        <CollectionView.ItemTemplate>
+                            <DataTemplate>
+                                <Frame BorderColor="White" 
+                                       CornerRadius="15" 
+                                       BackgroundColor="White" 
+                                       Opacity="0.9"
+                                       Padding="15" 
+                                       Margin="0,5"
+                                       HasShadow="True">
+                                    <Grid ColumnDefinitions="*,Auto">
+                                        <Label Text="{Binding Nombre}" 
+                                               FontSize="18" 
+                                               TextColor="#3b0764"
+                                               VerticalOptions="Center" />
+                                        <Button Text="Eliminar"
+                                                Style="{StaticResource DeleteButtonStyle}"
+                                                Command="{Binding Source={RelativeSource AncestorType={x:Type CollectionView}}, Path=BindingContext.EliminarCommand}"
+                                                CommandParameter="{Binding .}"
+                                                Grid.Column="1">
+                                            <Button.Shadow>
+                                                <Shadow Brush="#000000"
+                                                        Offset="0,2"
+                                                        Radius="4"
+                                                        Opacity="0.2" />
+                                            </Button.Shadow>
+                                        </Button>
+                                    </Grid>
+                                </Frame>
+                            </DataTemplate>
+                        </CollectionView.ItemTemplate>
+                    </CollectionView>
 
-            <Label Text="Agregar relación con paciente (código):"
-                   FontSize="16"
-                   TextColor="White" />
-            <Entry Placeholder="Ej: ABC123"
-                   Text="{Binding CodigoPaciente}" />
+                    <Label Text="Agregar relación con paciente:"
+                           FontSize="16"
+                           TextColor="White"
+                           Margin="0,15,0,0" />
 
-            <Button Text="Agregar Relación"
-                    BackgroundColor="#7c3aed"
-                    TextColor="White"
-                    Command="{Binding AgregarCommand}" />
+                    <Frame BackgroundColor="White"
+                           CornerRadius="10"
+                           Padding="5,0"
+                           HasShadow="False">
+                        <Entry Placeholder="Ingrese código (Ej: ABC123)"
+                               Text="{Binding CodigoPaciente}"
+                               TextColor="#3b0764"
+                               PlaceholderColor="#9333ea"
+                               FontSize="16" />
+                    </Frame>
+
+                    <Button Text="Agregar Relación"
+                            Style="{StaticResource ActionButtonStyle}"
+                            Command="{Binding AgregarCommand}">
+                        <Button.Shadow>
+                            <Shadow Brush="#000000"
+                                    Offset="0,3"
+                                    Radius="6"
+                                    Opacity="0.2" />
+                        </Button.Shadow>
+                        <VisualStateManager.VisualStateGroups>
+                            <VisualStateGroup x:Name="CommonStates">
+                                <VisualState x:Name="Normal" />
+                                <VisualState x:Name="Pressed">
+                                    <VisualState.Setters>
+                                        <Setter Property="BackgroundColor" Value="White" />
+                                        <Setter Property="Scale" Value="0.98" />
+                                    </VisualState.Setters>
+                                </VisualState>
+                            </VisualStateGroup>
+                        </VisualStateManager.VisualStateGroups>
+                    </Button>
+                </VerticalStackLayout>
+            </Frame>
         </VerticalStackLayout>
     </ScrollView>
 </ContentPage>

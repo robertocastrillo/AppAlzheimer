@@ -87,7 +87,7 @@ namespace TuApp.ViewModels
 
         private async Task RegresarInicio()
         {
-            await _navigation.PushAsync(new InicioPaciente());
+            await _navigation.PushAsync(new ConfiguracionPacientePage());
         }
 
         private async Task ActualizarPin()
@@ -131,7 +131,7 @@ namespace TuApp.ViewModels
                     {
                         SesionActiva.sesionActiva.usuario.pin.Codigo = NuevoPin;
                         await _customAlertDialog.ShowAsync("Actualización correcta", "PIN actualizado correctamente", "Aceptar");
-                        await _navigation.PushAsync(new InicioPaciente());
+                        await _navigation.PushAsync(new ConfiguracionPacientePage());
                     }
                     else
                     {

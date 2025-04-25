@@ -22,9 +22,11 @@ namespace TuApp.Vistas
             var viewModel = (EventoPacienteViewModel)BindingContext;
             await viewModel.CargarEventosPacienteAsync();
         }
-        private async void RegresarInicio_Clicked(object sender, EventArgs e)
+        protected override bool OnBackButtonPressed()
         {
-            await Navigation.PushAsync(new InicioPaciente());
+            // Si quieres personalizar el comportamiento del botón Back
+            Application.Current.MainPage = new NavigationPage(new InicioPaciente());
+            return true; // Indicar que hemos manejado el evento
         }
     }
 

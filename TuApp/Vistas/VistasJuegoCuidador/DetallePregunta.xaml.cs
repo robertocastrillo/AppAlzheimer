@@ -1,8 +1,8 @@
-
 using CommunityToolkit.Maui.Views;
 using SkiaSharp;
 using TuApp.Entidades;
 using TuApp.VistasModelo;
+using TuApp.Styles; // Añadido para importar los custom dialogs
 
 namespace TuApp.Vistas;
 
@@ -14,9 +14,31 @@ public partial class DetallePregunta : ContentPage
     private readonly int idUsuario;
     private PreguntaViewModel viewModel;
     public bool MostrarBotonEliminar { get; set; } = true;
+
+    // Añadir el diálogo personalizado
+    private CustomAlertDialog customAlertDialog;
+
     public DetallePregunta(Pregunta pregunta, PreguntaViewModel viewModel, int idJuego, int idUsuario)
     {
         InitializeComponent();
+
+        // Crear el diálogo personalizado
+        customAlertDialog = new CustomAlertDialog();
+
+        // Guardar el contenido original
+        var originalContent = Content;
+
+        // Crear una nueva grid para contener todo
+        var mainGrid = new Grid();
+
+        // Añadir el contenido original
+        mainGrid.Children.Add(originalContent);
+
+        // Añadir el diálogo (inicialmente invisible)
+        mainGrid.Children.Add(customAlertDialog);
+
+        // Establecer la grid como el nuevo contenido
+        Content = mainGrid;
 
         this.pregunta = pregunta;
         this.viewModel = viewModel;
@@ -28,8 +50,25 @@ public partial class DetallePregunta : ContentPage
 
     public DetallePregunta(Pregunta pregunta)
     {
-        
         InitializeComponent();
+
+        // Crear el diálogo personalizado
+        customAlertDialog = new CustomAlertDialog();
+
+        // Guardar el contenido original
+        var originalContent = Content;
+
+        // Crear una nueva grid para contener todo
+        var mainGrid = new Grid();
+
+        // Añadir el contenido original
+        mainGrid.Children.Add(originalContent);
+
+        // Añadir el diálogo (inicialmente invisible)
+        mainGrid.Children.Add(customAlertDialog);
+
+        // Establecer la grid como el nuevo contenido
+        Content = mainGrid;
 
         this.pregunta = pregunta;
         BindingContext = pregunta;
@@ -37,8 +76,6 @@ public partial class DetallePregunta : ContentPage
         btnAgregar.IsVisible = false;
         btnSubirImagen.IsVisible = false;
         MostrarBotonEliminar = false;
-
-
     }
 
     private async void AgregarOpcion_Clicked(object sender, EventArgs e)
@@ -66,7 +103,8 @@ public partial class DetallePregunta : ContentPage
             if (result == null)
             {
                 // Usuario canceló el diálogo de selección
-                await Application.Current.MainPage.DisplayAlert("Cancelado", "No se seleccionó ninguna imagen.", "OK");
+                // Reemplazar DisplayAlert con customAlertDialog
+                await customAlertDialog.ShowAsync("Cancelado", "No se seleccionó ninguna imagen.", "OK");
                 return;
             }
 
@@ -74,7 +112,8 @@ public partial class DetallePregunta : ContentPage
             var extensionesPermitidas = new[] { ".jpg", ".jpeg", ".png" };
             if (!extensionesPermitidas.Contains(Path.GetExtension(result.FileName).ToLower()))
             {
-                await Application.Current.MainPage.DisplayAlert("Error", "Formato no soportado. Seleccione una imagen JPG o PNG.", "OK");
+                // Reemplazar DisplayAlert con customAlertDialog
+                await customAlertDialog.ShowAsync("Error", "Formato no soportado. Seleccione una imagen JPG o PNG.", "OK");
                 return;
             }
 
@@ -87,7 +126,8 @@ public partial class DetallePregunta : ContentPage
             // Validación del tamaño (opcional)
             if (imagenOriginal.Length > 2 * 1024 * 1024) // 2MB
             {
-                await Application.Current.MainPage.DisplayAlert("Advertencia", "La imagen es muy grande. Seleccione una menor a 2MB.", "OK");
+                // Reemplazar DisplayAlert con customAlertDialog
+                await customAlertDialog.ShowAsync("Advertencia", "La imagen es muy grande. Seleccione una menor a 2MB.", "OK");
                 return;
             }
 
@@ -101,10 +141,10 @@ public partial class DetallePregunta : ContentPage
         }
         catch (Exception ex)
         {
-            await Application.Current.MainPage.DisplayAlert("Error al cargar imagen", ex.Message, "OK");
+            // Reemplazar DisplayAlert con customAlertDialog
+            await customAlertDialog.ShowAsync("Error al cargar imagen", ex.Message, "OK");
         }
     }
-
 
     private byte[] ComprimirImagen(byte[] originalBytes, int calidad = 75, int ancho = 400, int alto = 300)
     {
@@ -125,13 +165,15 @@ public partial class DetallePregunta : ContentPage
     {
         if (pregunta == null || pregunta.opciones.Count == 0)
         {
-            await DisplayAlert("Validación", "La pregunta debe tener al menos una opción.", "OK");
+            // Reemplazar DisplayAlert con customAlertDialog
+            await customAlertDialog.ShowAsync("Validación", "La pregunta debe tener al menos una opción.", "OK");
             return;
         }
 
         await viewModel.InsertarPregunta(pregunta, idJuego, idUsuario);
         await Navigation.PopAsync(); // Regresa a DetalleJuego
     }
+
     private void EliminarOpcion(Opcion opcion)
     {
         if (opcion != null && pregunta.opciones.Contains(opcion))

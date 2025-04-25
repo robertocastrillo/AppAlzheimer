@@ -3,8 +3,9 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:local="clr-namespace:TuApp.VistasModelo"
              x:Class="TuApp.Vistas.EventosPacientePage"
-             Title="Mis Eventos"
-             BackgroundColor="Transparent">
+             BackgroundColor="Transparent"
+             NavigationPage.HasNavigationBar="True"
+             Title="Mis Eventos">
 
     <!-- Fondo degradado -->
     <ContentPage.Background>
@@ -22,32 +23,15 @@
 
     <ScrollView>
         <VerticalStackLayout Padding="30" Spacing="25">
-
-            <!-- Botón visual de "Inicio" -->
-            <Button Text="Inicio"
-                    Clicked="RegresarInicio_Clicked"
-                    FontSize="32"
-                    FontAttributes="Bold"
-                    TextColor="White"
-                    BackgroundColor="Transparent"
-                    HorizontalOptions="Start"
-                    Padding="0"
-                    Margin="0,30,0,0" />
-
-            <!-- Título -->
-            <Label Text="Mis Eventos"
-                   FontSize="28"
-                   FontAttributes="Bold"
-                   HorizontalTextAlignment="Center"
-                   TextColor="White"
-                   Margin="0,0,0,20" />
-
+            <!-- Se eliminó el botón "Inicio" y el título "Mis Eventos" -->
+            
             <!-- Debug info -->
             <Frame BackgroundColor="White"
                    Opacity="0.8"
                    CornerRadius="15"
                    Padding="10"
-                   IsVisible="True">
+                   IsVisible="True"
+                   Margin="0,30,0,0">
                 <VerticalStackLayout>
                     <Label Text="{Binding DebugMessage}"
                            TextColor="#333"

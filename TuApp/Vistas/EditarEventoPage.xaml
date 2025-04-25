@@ -1,56 +1,129 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:TuApp.VistasModelo"
              x:Class="TuApp.Vistas.EditarEventoPage"
-             Title="Editar Evento"
-             BackgroundColor="{DynamicResource BasePageColor}">
+             BackgroundColor="Transparent"
+             NavigationPage.HasNavigationBar="True"
+             Title="Editar Evento">
+    <!-- Fondo degradado -->
+    <ContentPage.Background>
+        <LinearGradientBrush EndPoint="1,1">
+            <GradientStop Color="#5e1675" Offset="0.0" />
+            <GradientStop Color="#9333ea" Offset="0.5" />
+            <GradientStop Color="#3b0764" Offset="1.0" />
+        </LinearGradientBrush>
+    </ContentPage.Background>
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <Style x:Key="FormLabelStyle" TargetType="Label">
+                <Setter Property="TextColor" Value="White" />
+                <Setter Property="FontSize" Value="16" />
+                <Setter Property="FontAttributes" Value="Bold" />
+                <Setter Property="Margin" Value="0,10,0,5" />
+            </Style>
+
+            <Style x:Key="InputBaseStyle" TargetType="InputView">
+                <Setter Property="BackgroundColor" Value="White" />
+                <Setter Property="TextColor" Value="#3b0764" />
+            </Style>
+
+            <Style x:Key="EntryStyle" TargetType="Entry" BasedOn="{StaticResource InputBaseStyle}">
+                <Setter Property="PlaceholderColor" Value="#9333ea" />
+                <Setter Property="FontSize" Value="16" />
+            </Style>
+
+            <Style x:Key="PickerStyle" TargetType="Picker" BasedOn="{StaticResource InputBaseStyle}">
+                <Setter Property="FontSize" Value="16" />
+                <Setter Property="TitleColor" Value="#9333ea" />
+            </Style>
+
+            <Style x:Key="DateTimePickerStyle" TargetType="DatePicker" BasedOn="{StaticResource InputBaseStyle}">
+                <Setter Property="FontSize" Value="16" />
+            </Style>
+
+            <Style x:Key="SaveButtonStyle" TargetType="Button">
+                <Setter Property="BackgroundColor" Value="#e0cdff" />
+                <Setter Property="TextColor" Value="#3b0764" />
+                <Setter Property="FontAttributes" Value="Bold" />
+                <Setter Property="CornerRadius" Value="15" />
+                <Setter Property="HeightRequest" Value="60" />
+                <Setter Property="FontSize" Value="18" />
+                <Setter Property="Margin" Value="0,20,0,10" />
+            </Style>
+        </ResourceDictionary>
+    </ContentPage.Resources>
 
     <ScrollView>
-        <StackLayout Padding="20" Spacing="18">
+        <VerticalStackLayout Padding="30" Spacing="10">
+            <Frame BackgroundColor="#4e186a"
+                   CornerRadius="20"
+                   Padding="20"
+                   HasShadow="True"
+                   Margin="0,30,0,20">
+                <VerticalStackLayout Spacing="5">
+                    <Label Text="Título" Style="{StaticResource FormLabelStyle}" />
+                    <Frame BackgroundColor="White" Padding="5,0" CornerRadius="10" HasShadow="False">
+                        <Entry Placeholder="Ingrese título del evento" 
+                               Text="{Binding Titulo}" 
+                               Style="{StaticResource EntryStyle}" />
+                    </Frame>
 
-            <Label Text="Título"
-                   FontAttributes="Bold"
-                   TextColor="{DynamicResource BaseTextColor}" />
-            <Entry Text="{Binding Titulo}"
-                   Placeholder="Ingrese título del evento"
-                   BackgroundColor="{DynamicResource EntryAndEditorsBackgroundColor}"
-                   TextColor="{DynamicResource BaseTextColor}" />
+                    <Label Text="Descripción" Style="{StaticResource FormLabelStyle}" />
+                    <Frame BackgroundColor="White" Padding="10" CornerRadius="10" HasShadow="False">
+                        <Editor Placeholder="Descripción del evento (opcional)" 
+                                Text="{Binding Descripcion}"
+                                BackgroundColor="White"
+                                TextColor="#3b0764" 
+                                PlaceholderColor="#9333ea"
+                                HeightRequest="100" />
+                    </Frame>
 
-            <Label Text="Descripción"
-                   FontAttributes="Bold"
-                   TextColor="{DynamicResource BaseTextColor}" />
-            <Editor Text="{Binding Descripcion}"
-                    Placeholder="Descripción (opcional)"
-                    AutoSize="TextChanges"
-                    BackgroundColor="{DynamicResource EntryAndEditorsBackgroundColor}"
-                    TextColor="{DynamicResource BaseTextColor}" />
+                    <Label Text="Fecha del evento" Style="{StaticResource FormLabelStyle}" />
+                    <Frame BackgroundColor="White" Padding="10,0" CornerRadius="10" HasShadow="False">
+                        <DatePicker Date="{Binding Fecha}" 
+                                    Style="{StaticResource DateTimePickerStyle}" />
+                    </Frame>
 
-            <Label Text="Fecha"
-                   FontAttributes="Bold"
-                   TextColor="{DynamicResource BaseTextColor}" />
-            <DatePicker Date="{Binding Fecha}"
-                        TextColor="{DynamicResource BaseTextColor}"
-                        BackgroundColor="{DynamicResource EntryAndEditorsBackgroundColor}" />
+                    <Label Text="Hora del evento" Style="{StaticResource FormLabelStyle}" />
+                    <Frame BackgroundColor="White" Padding="10,0" CornerRadius="10" HasShadow="False">
+                        <TimePicker Time="{Binding Hora}" 
+                                    Style="{StaticResource DateTimePickerStyle}" />
+                    </Frame>
 
-            <Label Text="Hora"
-                   FontAttributes="Bold"
-                   TextColor="{DynamicResource BaseTextColor}" />
-            <TimePicker Time="{Binding Hora}"
-                        TextColor="{DynamicResource BaseTextColor}"
-                        BackgroundColor="{DynamicResource EntryAndEditorsBackgroundColor}" />
+                    <Label Text="Prioridad" Style="{StaticResource FormLabelStyle}" />
+                    <Frame BackgroundColor="White" Padding="10,0" CornerRadius="10" HasShadow="False">
+                        <Picker Title="Seleccione prioridad"
+                                ItemsSource="{Binding ListaPrioridades}"
+                                ItemDisplayBinding="{Binding Descripcion}"
+                                SelectedItem="{Binding PrioridadSeleccionada}"
+                                Style="{StaticResource PickerStyle}" />
+                    </Frame>
 
-            <Label Text="Prioridad"
-                   FontAttributes="Bold"
-                   TextColor="{DynamicResource BaseTextColor}" />
-            <Picker ItemsSource="{Binding ListaPrioridades}"
-                    ItemDisplayBinding="{Binding Descripcion}"
-                    SelectedItem="{Binding PrioridadSeleccionada}"
-                    TextColor="{DynamicResource BaseTextColor}"
-                    BackgroundColor="{DynamicResource EntryAndEditorsBackgroundColor}" />
-
-            <Button Text="Guardar cambios"
-                    Command="{Binding ActualizarEventoCommand}"
-                    Style="{DynamicResource PrimaryButtonStyle}" />
-        </StackLayout>
+                    <Button Text="Guardar cambios"
+                            Style="{StaticResource SaveButtonStyle}"
+                            Command="{Binding ActualizarEventoCommand}">
+                        <Button.Shadow>
+                            <Shadow Brush="#000000"
+                                    Offset="0,3"
+                                    Radius="6"
+                                    Opacity="0.2" />
+                        </Button.Shadow>
+                        <VisualStateManager.VisualStateGroups>
+                            <VisualStateGroup x:Name="CommonStates">
+                                <VisualState x:Name="Normal" />
+                                <VisualState x:Name="Pressed">
+                                    <VisualState.Setters>
+                                        <Setter Property="BackgroundColor" Value="White" />
+                                        <Setter Property="Scale" Value="0.98" />
+                                    </VisualState.Setters>
+                                </VisualState>
+                            </VisualStateGroup>
+                        </VisualStateManager.VisualStateGroups>
+                    </Button>
+                </VerticalStackLayout>
+            </Frame>
+        </VerticalStackLayout>
     </ScrollView>
 </ContentPage>

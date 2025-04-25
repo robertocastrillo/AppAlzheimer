@@ -76,7 +76,7 @@ namespace TuApp.ViewModels
 
         private async Task RegresarInicio()
         {
-            await _navigation.PushAsync(new InicioPaciente());
+            await _navigation.PushAsync(new ConfiguracionPacientePage());
         }
 
         private async Task GenerarPin()
@@ -118,7 +118,7 @@ namespace TuApp.ViewModels
                     {
                         SesionActiva.sesionActiva.usuario.pin.Codigo = Pin;
                         await _customAlertDialog.ShowAsync("Creación correcta", "PIN generado correctamente", "Aceptar");
-                        await _navigation.PushAsync(new InicioPaciente());
+                        await _navigation.PushAsync(new ConfiguracionPacientePage());
                     }
                     else
                     {

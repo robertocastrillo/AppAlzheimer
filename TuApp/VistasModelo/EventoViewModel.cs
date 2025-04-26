@@ -187,11 +187,6 @@ namespace TuApp.VistasModelo
         }
 
 
-        public async Task GuardarAsignaciones()
-        {
-            // Sin cambios
-        }
-
         private async Task ActualizarEventoAsync()
         {
             if (string.IsNullOrWhiteSpace(Titulo))
@@ -241,6 +236,41 @@ namespace TuApp.VistasModelo
                     var mensaje = res.listaDeErrores.FirstOrDefault()?.error ?? "No se pudo actualizar";
                     await App.Current.MainPage.DisplayAlert("Error", mensaje, "Aceptar");
                 }
+            }
+        }
+
+        public async Task GuardarAsignaciones(Usuario paciente, Evento evento)
+        {
+            try
+            {
+
+                    ReqInsertarPacienteEvento req = new ReqInsertarPacienteEvento
+                    {
+                        IdPaciente = paciente.IdUsuario,
+                        IdCuidador = SesionActiva.sesionActiva.usuario.IdUsuario,
+                        IdEvento = evento.IdEvento
+
+                    };
+
+                    var json = new StringContent(JsonConvert.SerializeObject(req), Encoding.UTF8, "application/json");
+                    using HttpClient client = new();
+                    var resp = await client.PostAsync(App.API_URL + "evento/agregarpaciente", json);
+
+                    if (resp.IsSuccessStatusCode)
+                    {
+                        await App.Current.MainPage.DisplayAlert("Éxito", $"Paciente {paciente.Nombre} asignado correctamente", "Aceptar");
+                    }
+                    else
+                    {
+                    await App.Current.MainPage.DisplayAlert("Error", $"No se pudo asignar a {paciente.Nombre}", "Aceptar");
+                    }
+
+
+
+            }
+            catch (Exception ex)
+            {
+                await App.Current.MainPage.DisplayAlert("Error", ex.Message, "Aceptar");
             }
         }
 

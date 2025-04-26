@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<toolkit:Popup
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+    x:Class="TuApp.InsertarPacienteEventoPopup"
+    Size="300,420">
+
+    <VerticalStackLayout Padding="20" Spacing="20"
+                         BackgroundColor="{DynamicResource BasePageColor}">
+
+        <Label Text="Seleccione un paciente"
+               FontSize="18"
+               FontAttributes="Bold"
+               HorizontalOptions="Center"
+               TextColor="{DynamicResource BaseTextColor}" />
+
+        <CollectionView ItemsSource="{Binding Relaciones}"
+                        SelectionMode="Single"
+                        BackgroundColor="Transparent">
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <Frame Style="{StaticResource TileButtonStyle}">
+                        <Frame.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="OnPacienteTapped" CommandParameter="{Binding}" />
+                        </Frame.GestureRecognizers>
+                        <Label Text="{Binding Nombre}"
+                               Padding="10"
+                               TextColor="{DynamicResource PrimaryDarkColor}" />
+                    </Frame>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+
+        <Button Text="Cerrar"
+                Style="{StaticResource SecondaryButtonStyle}"
+                Clicked="OnCerrarClicked"
+                HorizontalOptions="Fill" />
+
+    </VerticalStackLayout>
+</toolkit:Popup>

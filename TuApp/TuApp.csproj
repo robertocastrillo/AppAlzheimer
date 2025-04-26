@@ -163,10 +163,10 @@
 	  <MauiXaml Update="Vistas\PopUp\InsertarOpcionPopup.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="Vistas\PopUp\InsertarPreguntaPopup.xaml">
+	  <MauiXaml Update="Vistas\PopUp\InsertarPacienteEventoPopup.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="Vistas\PopUp\PopupAsignarPacientes.xaml">
+	  <MauiXaml Update="Vistas\PopUp\InsertarPreguntaPopup.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Vistas\PopUp\PuntajesPopup.xaml">

@@ -125,7 +125,7 @@
 
                     <Button Text="Asignar pacientes"
                             Style="{StaticResource AssignButtonStyle}"
-                            Command="{Binding MostrarPopupAsignacionCommand}">
+                            Clicked="AgregarPaciente_Clicked">
                         <Button.Shadow>
                             <Shadow Brush="#000000"
                                     Offset="0,3"

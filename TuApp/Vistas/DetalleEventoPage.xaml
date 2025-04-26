@@ -144,28 +144,6 @@
                             </VisualStateGroup>
                         </VisualStateManager.VisualStateGroups>
                     </Button>
-
-                    <Button Text="Asignar evento"
-                            Style="{StaticResource AssignButtonStyle}"
-                            Command="{Binding AsignarEventoCommand}">
-                        <Button.Shadow>
-                            <Shadow Brush="#000000"
-                                    Offset="0,3"
-                                    Radius="6"
-                                    Opacity="0.2" />
-                        </Button.Shadow>
-                        <VisualStateManager.VisualStateGroups>
-                            <VisualStateGroup x:Name="CommonStates">
-                                <VisualState x:Name="Normal" />
-                                <VisualState x:Name="Pressed">
-                                    <VisualState.Setters>
-                                        <Setter Property="BackgroundColor" Value="#0d9669" />
-                                        <Setter Property="Scale" Value="0.98" />
-                                    </VisualState.Setters>
-                                </VisualState>
-                            </VisualStateGroup>
-                        </VisualStateManager.VisualStateGroups>
-                    </Button>
                 </VerticalStackLayout>
             </Frame>
         </VerticalStackLayout>

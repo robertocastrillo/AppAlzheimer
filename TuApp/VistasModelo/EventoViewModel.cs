@@ -1,7 +1,6 @@
 ﻿using Newtonsoft.Json;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Net.Http.Json;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Windows.Input;
@@ -9,7 +8,6 @@ using TuApp.Entidade;
 using TuApp.Entidades;
 using TuApp.Entidades.Entity;
 using TuApp.Vistas;
-using TuApp.Vistas.PopUp;
 
 namespace TuApp.VistasModelo
 {
@@ -178,8 +176,16 @@ namespace TuApp.VistasModelo
 
         private async Task MostrarPopupAsignacionAsync()
         {
-            // Sin cambios
+            try
+            {
+                await Shell.Current.Navigation.PushAsync(new AsignarPacientesPage(this));
+            }
+            catch (Exception ex)
+            {
+                await App.Current.MainPage.DisplayAlert("Error", $"No se pudo abrir la pantalla de asignación.\n{ex.Message}", "Aceptar");
+            }
         }
+
 
         public async Task GuardarAsignaciones()
         {
@@ -243,23 +249,5 @@ namespace TuApp.VistasModelo
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
     }
 
-    public partial class UsuarioSeleccionable : INotifyPropertyChanged
-    {
-        public Usuario Usuario { get; set; }
 
-        private bool _seleccionado;
-        public bool Seleccionado
-        {
-            get => _seleccionado;
-            set
-            {
-                _seleccionado = value;
-                OnPropertyChanged();
-            }
-        }
-
-        public event PropertyChangedEventHandler PropertyChanged;
-        protected void OnPropertyChanged([CallerMemberName] string name = null) =>
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
-    }
 }

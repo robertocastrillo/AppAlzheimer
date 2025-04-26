@@ -8,6 +8,11 @@
     <Grid BackgroundColor="{DynamicResource Gray100}">
         <Frame Margin="10" VerticalOptions="Center">
             <VerticalStackLayout Spacing="15" VerticalOptions="Center">
+                <Image 
+                        Source="icono.png"
+                        HeightRequest="120"
+                           HorizontalOptions="Center"
+                        Aspect="AspectFit" />
                 <Label FontAttributes="Bold"
                        FontSize="Large"
                        HorizontalOptions="Center"

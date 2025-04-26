@@ -3,9 +3,8 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:local="clr-namespace:TuApp.VistasModelo"
              x:Class="TuApp.Vistas.EventosPacientePage"
-             BackgroundColor="Transparent"
-             NavigationPage.HasNavigationBar="True"
-             Title="Mis Eventos">
+             Title="Mis Eventos"
+             BackgroundColor="Transparent">
 
     <!-- Fondo degradado -->
     <ContentPage.Background>
@@ -18,103 +17,99 @@
 
     <!-- BindingContext -->
     <ContentPage.BindingContext>
-        <local:EventoPacienteViewModel />
+        <local:EventoPacienteViewModel x:Name="ViewModel" />
     </ContentPage.BindingContext>
 
     <ScrollView>
-        <VerticalStackLayout Padding="30" Spacing="25">
-            <!-- Se eliminó el botón "Inicio" y el título "Mis Eventos" -->
-            
-            <!-- Debug info -->
-            <Frame BackgroundColor="White"
-                   Opacity="0.8"
-                   CornerRadius="15"
-                   Padding="10"
-                   IsVisible="True"
-                   Margin="0,30,0,0">
-                <VerticalStackLayout>
-                    <Label Text="{Binding DebugMessage}"
-                           TextColor="#333"
-                           FontSize="14" />
-                    <Label Text="{Binding ListaEventos.Count, StringFormat='Eventos cargados: {0}'}"
-                           TextColor="#333"
-                           FontSize="14" />
-                    <Button Text="Recargar"
-                            Command="{Binding ForceRefreshCommand}"
-                            BackgroundColor="#5e1675"
-                            TextColor="White"
-                            Margin="0,5,0,0" />
-                </VerticalStackLayout>
-            </Frame>
+        <VerticalStackLayout Padding="20" Spacing="20">
 
-            <!-- Lista de eventos con RefreshView -->
-            <RefreshView Command="{Binding CargarEventosCommand}"
-                         IsRefreshing="{Binding IsLoading}">
-                <CollectionView ItemsSource="{Binding ListaEventos}"
-                                SelectionMode="Single"
-                                SelectedItem="{Binding EventoSeleccionado}">
-                    <CollectionView.EmptyView>
-                        <VerticalStackLayout HorizontalOptions="Center" VerticalOptions="Center">
-                            <Label Text="No tienes eventos asignados"
-                                   FontSize="20"
-                                   TextColor="White"
-                                   HorizontalOptions="Center" />
-                        </VerticalStackLayout>
-                    </CollectionView.EmptyView>
-                    <CollectionView.ItemTemplate>
-                        <DataTemplate>
-                            <Frame Margin="0,5,0,10"
-                                   Padding="20"
-                                   CornerRadius="15"
-                                   BackgroundColor="White"
-                                   HasShadow="True">
-                                <Grid RowDefinitions="Auto,Auto,Auto"
-                                      ColumnDefinitions="*,Auto">
-                                    <!-- Título del evento -->
-                                    <Label Grid.Row="0" Grid.Column="0"
-                                           Text="{Binding Titulo}"
-                                           FontSize="20"
-                                           TextColor="#5e1675"
-                                           FontAttributes="Bold" />
+            <!-- Título (ya no es necesario porque se muestra en la barra de navegación) -->
+            <Label Text="Mis Eventos"
+                   FontSize="28"
+                   FontAttributes="Bold"
+                   HorizontalTextAlignment="Center"
+                   TextColor="White"
+                   Margin="0,0,0,0" />
 
-                                    <!-- Prioridad visual -->
-                                    <Frame Grid.Row="0" Grid.Column="1"
-                                           Padding="8,3"
-                                           CornerRadius="10"
-                                           BackgroundColor="{Binding IdPrioridad, Converter={StaticResource PrioridadColorConverter}}"
-                                           HasShadow="False">
-                                        <Label TextColor="White"
-                                               FontSize="14"
-                                               FontAttributes="Bold"
-                                               HorizontalTextAlignment="Center"
-                                               VerticalTextAlignment="Center">
-                                            <Label.Text>
-                                                <MultiBinding Converter="{StaticResource PrioridadTextConverter}">
-                                                    <Binding Path="IdPrioridad" />
-                                                </MultiBinding>
-                                            </Label.Text>
-                                        </Label>
-                                    </Frame>
+            <!-- Debug info simplificado -->
+           
 
-                                    <!-- Descripción -->
-                                    <Label Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2"
-                                           Text="{Binding Descripcion}"
-                                           FontSize="16"
-                                           TextColor="#333333"
-                                           LineBreakMode="WordWrap"
-                                           Margin="0,10,0,10" />
+            <!-- Botón para forzar recarga separado -->
+            <Button Text="Recarga"
+                    Command="{Binding ForceRefreshCommand}"
+                    BackgroundColor="#5e1675"
+                    TextColor="White"
+                    CornerRadius="10"
+                    HeightRequest="50"
+                    Margin="0,0,0,10" />
 
-                                    <!-- Fecha y hora -->
-                                    <Label Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2"
-                                           Text="{Binding FechaHora, StringFormat='Fecha: {0:dd/MM/yyyy} - Hora: {0:HH:mm}'}"
+            <!-- Lista de eventos -->
+            <CollectionView x:Name="EventosCollection"
+                            ItemsSource="{Binding ListaEventos}"
+                            SelectionMode="Single"
+                            SelectedItem="{Binding EventoSeleccionado}"
+                            HeightRequest="400">
+                <CollectionView.EmptyView>
+                    <VerticalStackLayout HorizontalOptions="Center" VerticalOptions="Center">
+                        <Label Text="No tienes eventos asignados"
+                               FontSize="20"
+                               TextColor="White"
+                               HorizontalOptions="Center" />
+                    </VerticalStackLayout>
+                </CollectionView.EmptyView>
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Frame Margin="0,5,0,10"
+                               Padding="20"
+                               CornerRadius="15"
+                               BackgroundColor="White"
+                               HasShadow="True">
+                            <Grid RowDefinitions="Auto,Auto,Auto"
+                                  ColumnDefinitions="*,Auto">
+                                <!-- Título del evento -->
+                                <Label Grid.Row="0" Grid.Column="0"
+                                       Text="{Binding Titulo}"
+                                       FontSize="20"
+                                       TextColor="#5e1675"
+                                       FontAttributes="Bold" />
+
+                                <!-- Prioridad visual -->
+                                <Frame Grid.Row="0" Grid.Column="1"
+                                       Padding="8,3"
+                                       CornerRadius="10"
+                                       BackgroundColor="{Binding IdPrioridad, Converter={StaticResource PrioridadColorConverter}}"
+                                       HasShadow="False">
+                                    <Label TextColor="White"
                                            FontSize="14"
-                                           TextColor="#666666" />
-                                </Grid>
-                            </Frame>
-                        </DataTemplate>
-                    </CollectionView.ItemTemplate>
-                </CollectionView>
-            </RefreshView>
+                                           FontAttributes="Bold"
+                                           HorizontalTextAlignment="Center"
+                                           VerticalTextAlignment="Center">
+                                        <Label.Text>
+                                            <MultiBinding Converter="{StaticResource PrioridadTextConverter}">
+                                                <Binding Path="IdPrioridad" />
+                                            </MultiBinding>
+                                        </Label.Text>
+                                    </Label>
+                                </Frame>
+
+                                <!-- Descripción -->
+                                <Label Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2"
+                                       Text="{Binding Descripcion}"
+                                       FontSize="16"
+                                       TextColor="#333333"
+                                       LineBreakMode="WordWrap"
+                                       Margin="0,10,0,10" />
+
+                                <!-- Fecha y hora -->
+                                <Label Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2"
+                                       Text="{Binding FechaHora, StringFormat='Fecha: {0:dd/MM/yyyy} - Hora: {0:HH:mm}'}"
+                                       FontSize="14"
+                                       TextColor="#666666" />
+                            </Grid>
+                        </Frame>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
 
             <!-- Loading -->
             <ActivityIndicator IsRunning="{Binding IsLoading}"
